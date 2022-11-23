@@ -1,17 +1,17 @@
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS movies;
-DROP TABLE IF EXISTS genres;
-DROP TABLE IF EXISTS actors;
 DROP TABLE IF EXISTS actor_filmography;
 DROP TABLE IF EXISTS movie_genres;
 DROP TABLE IF EXISTS user_ratings;
 DROP TABLE IF EXISTS user_watchlist;
 DROP TABLE IF EXISTS user_watched;
 DROP TABLE IF EXISTS user_comments;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS genres;
+DROP TABLE IF EXISTS actors;
 
 CREATE TABLE users (
-    id INT,
-    username VARCHAR(255) NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     displayname VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
@@ -21,12 +21,11 @@ CREATE TABLE users (
     location VARCHAR(255),
     social_twitter VARCHAR(64),
     social_instagram VARCHAR(64),
-    type TINYINT,
-    PRIMARY KEY (id)
+    type TINYINT DEFAULT 0
 );
 
 CREATE TABLE movies (
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description VARCHAR(1000) NOT NULL,
     release_date DATE NOT NULL,
@@ -41,7 +40,7 @@ CREATE TABLE genres (
 );
 
 CREATE TABLE actors (
-    id INT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     fullname VARCHAR(255),
     dateofbirth DATE,
     gender CHAR(1),
