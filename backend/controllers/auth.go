@@ -1,8 +1,10 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
+	"github.com/C305DatabaseProject/database-project/backend/database"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,9 +16,9 @@ func Hompage(c *gin.Context) {
 
 type UserRegister struct {
 	Username    string `json:"user_name"`
+	Password    string `json:"password"`
 	Email       string `json:"email"`
 	DateOfBirth string `json:"date_of_birth"`
-	Password    string `json:"password"`
 }
 type UserLogin struct {
 	Username string `json:"user_name"`
@@ -27,6 +29,15 @@ func Register(c *gin.Context) {
 	var userRegisterObj UserRegister
 	if err := c.ShouldBindJSON(&userRegisterObj); err == nil {
 		// Valid JSON body
+		sql := `INSERT INTO users (username, password, displayname, email, dateofbirth) VALUES (?, ?, ?, ?, ?);`
+		_, err := database.DB.Exec(sql, userRegisterObj.Username, userRegisterObj.Password, userRegisterObj.Username, userRegisterObj.Email, userRegisterObj.DateOfBirth)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"status":  "error",
+				"message": fmt.Sprint(err),
+			})
+			return
+		}
 		c.JSON(http.StatusOK, gin.H{
 			"status": "ok",
 			"data":   userRegisterObj,
@@ -35,7 +46,8 @@ func Register(c *gin.Context) {
 	} else {
 		// JSON body error
 		c.JSON(http.StatusBadRequest, gin.H{
-			"status": "error",
+			"status":  "error",
+			"message": "Invalid JSON body.",
 		})
 		return
 	}
