@@ -1,8 +1,6 @@
 package backend
 
 import (
-
-
 	"github.com/C305DatabaseProject/database-project/backend/controllers"
 	"github.com/gin-gonic/gin"
 )
@@ -11,15 +9,13 @@ func SetupRoutes(r *gin.Engine) {
 	api := r.Group("/api")
 	{
 		api.GET("/homepage", controllers.Hompage)
+		auth := api.Group("/auth")
+		{
+			auth.POST("/register", controllers.Register)
+			auth.POST("/login", controllers.Login)
+			auth.POST("/logout", controllers.Logout)
+		}
 	}
-
-	auth := r.Group("/auth")
-	{
-		auth.POST("/register", controllers.Register)
-		auth.POST("/login", controllers.Login)
-		auth.POST("/logout", controllers.Logout)
-	}
-	
 
 }
 
