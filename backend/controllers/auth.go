@@ -24,6 +24,11 @@ type UserLogin struct {
 	Username string `json:"user_name"`
 	Password string `json:"password"`
 }
+type User struct {
+	Username string
+	Email    string
+	Password string
+}
 
 func Register(c *gin.Context) {
 	var userRegisterObj UserRegister
@@ -37,12 +42,13 @@ func Register(c *gin.Context) {
 				"message": fmt.Sprint(err),
 			})
 			return
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"status": "ok",
+				"data":   userRegisterObj,
+			})
+			return
 		}
-		c.JSON(http.StatusOK, gin.H{
-			"status": "ok",
-			"data":   userRegisterObj,
-		})
-		return
 	} else {
 		// JSON body error
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -55,17 +61,38 @@ func Register(c *gin.Context) {
 
 func Login(c *gin.Context) {
 	var userLoginObj UserLogin
+	var user User
 	if err := c.ShouldBindJSON(&userLoginObj); err == nil {
-		// TODO: Return JWT token
-		c.JSON(http.StatusOK, gin.H{
-			"status": "ok",
-			"data":   userLoginObj,
-		})
-		return
+		result, err := database.DB.Query("SELECT email, password FROM users WHERE username=?", userLoginObj.Username)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"status":  "error",
+				"message": fmt.Sprint(err),
+			})
+			return
+		} else{
+			for result.Next() {
+				err = result.Scan(&user.Email, &user.Password)
+				if err != nil {
+					c.JSON(http.StatusBadRequest, gin.H{
+						"status":  "error",
+						"message": fmt.Sprint(err),
+					})
+					return
+				}
+			}
+			c.JSON(http.StatusOK, gin.H{
+				"status": "ok",
+				"email": user.Email,
+				"password": user.Password,
+			})
+			return
+		}
 	} else {
 		// Invalid credentials
-		c.JSON(http.StatusNotFound, gin.H{
-			"status": "error",
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  "error",
+			"message": "Invalid JSON body.",
 		})
 		return
 	}
