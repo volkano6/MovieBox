@@ -1,14 +1,16 @@
 DROP TABLE IF EXISTS actor_filmography;
 DROP TABLE IF EXISTS movie_genres;
 DROP TABLE IF EXISTS user_ratings;
-DROP TABLE IF EXISTS user_watchlist;
+DROP TABLE IF EXISTS user_watchlists;
 DROP TABLE IF EXISTS user_watched;
 DROP TABLE IF EXISTS user_comments;
 DROP TABLE IF EXISTS user_favorites;
+DROP TABLE IF EXISTS watchlist_movies;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS genres;
 DROP TABLE IF EXISTS actors;
+DROP TABLE IF EXISTS watchlists;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
