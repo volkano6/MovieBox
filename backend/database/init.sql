@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS user_ratings;
 DROP TABLE IF EXISTS user_watchlist;
 DROP TABLE IF EXISTS user_watched;
 DROP TABLE IF EXISTS user_comments;
+DROP TABLE IF EXISTS user_favorites;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS genres;
@@ -48,6 +49,19 @@ CREATE TABLE actors (
     `location` VARCHAR(255)
 );
 
+CREATE TABLE watchlists (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    watchlist_name VARCHAR(255)
+);
+
+CREATE TABLE watchlist_movies (
+    watchlist_id INT,
+    movie_id INT,
+    PRIMARY KEY (watchlist_id, movie_id),
+    CONSTRAINT watchlist_movies_watchlist_id_fk FOREIGN KEY watchlist_movies_watchlist_id_fk (watchlist_id) REFERENCES watchlists(id),
+    CONSTRAINT watchlist_movies_movie_id_fk FOREIGN KEY watchlist_movies_movie_id_fk (movie_id) REFERENCES movies(id)
+);
+
 CREATE TABLE movie_genres (
     movie_id INT,
     genre_name VARCHAR(255),
@@ -73,12 +87,11 @@ CREATE TABLE user_ratings (
     CONSTRAINT user_ratings_user_id_fk FOREIGN KEY user_ratings_user_id_fk (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE user_watchlist (
-    movie_id INT,
+CREATE TABLE user_watchlists (
+    watchlist_id INT,
     user_id INT,
-    added_date DATE,
-    PRIMARY KEY (movie_id, user_id),
-    CONSTRAINT user_watchlist_movie_id_fk FOREIGN KEY user_watchlist_movie_id_fk (movie_id) REFERENCES movies(id),
+    PRIMARY KEY (watchlist_id, user_id),
+    CONSTRAINT user_watchlist_watchlist_id_fk FOREIGN KEY user_watchlist_watchlist_id_fk (watchlist_id) REFERENCES watchlists(id),
     CONSTRAINT user_watchlist_user_id_fk FOREIGN KEY user_watchlist_user_id_fk (user_id) REFERENCES users(id)
 );
 
