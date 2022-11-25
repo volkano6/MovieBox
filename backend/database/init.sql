@@ -14,7 +14,7 @@ CREATE TABLE users (
     username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     displayname VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
     dateofbirth DATE NOT NULL,
     avatar VARCHAR(255),
     bio VARCHAR(1000),
@@ -85,16 +85,26 @@ CREATE TABLE user_watchlist (
 CREATE TABLE user_watched (
     movie_id INT,
     user_id INT,
-    watch_date DATE,
+    watched_date DATE,
     PRIMARY KEY (movie_id, user_id),
     CONSTRAINT user_watched_movie_id_fk FOREIGN KEY user_watched_movie_id_fk (movie_id) REFERENCES movies(id),
     CONSTRAINT user_watched_user_id_fk FOREIGN KEY user_watched_user_id_fk (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE user_favorites (
+    movie_id INT,
+    user_id INT,
+    favorited_date DATE,
+    PRIMARY KEY (movie_id, user_id),
+    CONSTRAINT user_favorited_movie_id_fk FOREIGN KEY user_watched_movie_id_fk (movie_id) REFERENCES movies(id),
+    CONSTRAINT user_favoriteed_user_id_fk FOREIGN KEY user_watched_user_id_fk (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE user_comments (
     movie_id INT,
     user_id INT,
     comment VARCHAR(1000),
+    watched_date DATE,
     PRIMARY KEY (movie_id, user_id),
     CONSTRAINT user_comments_movie_id_fk FOREIGN KEY user_comments_movie_id_fk (movie_id) REFERENCES movies(id),
     CONSTRAINT user_comments_user_id_fk FOREIGN KEY user_comments_user_id_fk (user_id) REFERENCES users(id)
