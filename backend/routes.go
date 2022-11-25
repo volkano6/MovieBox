@@ -9,34 +9,43 @@ func SetupRoutes(r *gin.Engine) {
 	api := r.Group("/api")
 	{
 		api.GET("/homepage", controllers.Hompage)
+		api.GET("/profile", controllers.Hompage) // JWT
+
 		auth := api.Group("/auth")
 		{
 			auth.POST("/register", controllers.Register)
 			auth.POST("/login", controllers.Login)
 			auth.POST("/logout", controllers.Logout)
 		}
+		
+		users := api.Group("/user/:id")
+		{
+			users.GET("/", controllers.GetUser)
+			users.GET("/watchlist", controllers.Watchlist)
+			users.GET("/watched", controllers.Watched)
+			users.GET("/favorites", controllers.Favorites)
+		}
 	}
-
 }
 
 /*
 
 Planned database API endpoints.
 
-GET /auth/token/
+GET /auth/token/ 
 
-POST /auth/logout/
-POST /auth/login/
-POST /auth/register/
+POST /auth/logout/ *
+POST /auth/login/ *
+POST /auth/register/ *
 
-GET /api/homepage/
+GET /api/homepage/ *
 
-GET /api/profile/ (Needs JWT header)
+GET /api/profile/ (Needs JWT header) *
 
-GET /api/users/:id/
-GET /api/users/:id/watchlists/
-GET /api/users/:id/watched/
-GET /api/users/:id/favorites/ TODO: Implement favorites table.
+GET /api/user/:id/ *  
+GET /api/user/:id/watchlist/ * 
+GET /api/user/:id/watched/ *
+GET /api/user/:id/favorites/ TODO: Implement favorites table. *
 
 PUT /api/profile/
 
