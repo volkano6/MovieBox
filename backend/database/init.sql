@@ -119,7 +119,7 @@ CREATE TABLE user_comments (
     movie_id INT,
     user_id INT,
     comment VARCHAR(1000),
-    watched_date DATE,
+    comment_date DATE,
     PRIMARY KEY (movie_id, user_id),
     CONSTRAINT user_comments_movie_id_fk FOREIGN KEY user_comments_movie_id_fk (movie_id) REFERENCES movies(id),
     CONSTRAINT user_comments_user_id_fk FOREIGN KEY user_comments_user_id_fk (user_id) REFERENCES users(id)

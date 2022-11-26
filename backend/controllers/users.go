@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"net/http"
-
+	_"fmt"
 	"github.com/C305DatabaseProject/database-project/backend/database"
 	"github.com/gin-gonic/gin"
 )
@@ -26,6 +26,14 @@ type Movie struct {
 	ReleaseDate string
 	Poster      string
 	Rating      float32
+}
+
+type Comment struct {
+	UserID		int
+	Username	string
+	MovieID		string
+	Comment		string
+	CommentDate	string
 }
 
 func GetUser(c *gin.Context) {
@@ -79,9 +87,53 @@ func Watched(c *gin.Context) {
 }
 
 func Favorites(c *gin.Context) {
-
+	id := c.Param("id")
+	// Check Favorites table with given user id
+	sql := `SELECT id, title, release_date, poster, rating
+		FROM movies LEFT JOIN user_favorites
+		ON movies.id = user_favorites.movie_id
+		WHERE user_favorites.user_id = ?;`
+	rows, err := database.DB.Query(sql, id)
+	if err != nil {
+	
+	}
+	// Return movie details with the movie ids
+	var movies []Movie
+	var movie Movie
+	for rows.Next() {
+		rows.Scan(&movie.ID, &movie.Title, &movie.ReleaseDate, &movie.Poster, &movie.Rating)
+		movies = append(movies, movie)
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status": "ok",
+		"data":   movies,
+	})
 }
 
 func Comments(c *gin.Context) {
-
+	id := c.Param("id")
+	// Check comments with user id
+	sql := `SELECT users.id, users.username, movie_id , comment, comment_date 
+	FROM project.user_comments LEFT JOIN project.users
+	ON project.user_comments.user_id = project.users.id
+	WHERE project.users.id = ?;`
+	rows, _ := database.DB.Query(sql, id)
+	// Return Comments details with the User ids
+	var comments []Comment
+	var comment Comment
+	for rows.Next() {
+		rows.Scan(&comment.UserID, &comment.Username, &comment.MovieID, &comment.Comment, &comment.CommentDate)
+		comments = append(comments, comment)
+	}
+	if (comments == nil) {
+		c.JSON(http.StatusOK, gin.H{
+			"status": "ok",
+			"data":   "User not have any comment.",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status": "ok",
+		"data":   comments,
+	})
 }
