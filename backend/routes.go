@@ -41,36 +41,50 @@ POST /auth/register/ *
 
 GET /api/homepage/ *
 
-GET /api/profile/ (Needs JWT header) *
+GET /api/profile/ (Needs JWT header) * - Sonra, Arda
+
+PUT /api/profile/ (Needs JWT header) - Sonra, Arda
 
 GET /api/user/:id/ *
-GET /api/user/:id/watchlist/ *
+GET /api/user/:id/watchlists/ * - Arda
 GET /api/user/:id/watched/ *
 GET /api/user/:id/favorites/ *
+GET /api/user/:id/comments/
 
-PUT /api/profile/
+POST /api/user/:id/watchlists/ 	Request: watchlist_name - Arda
 
+POST /api/user/:id/watchlists/:id/movie/ 	Request: watchlist_id, movie_id - Arda
 
-GET /api/movies/:id/
-GET /api/movies/:id/comments/
+DELETE /api/user/:id/watchlists/:id/movie/ 	Request: watchlist_id, movie_id - Arda
 
-POST /api/movies/
-POST /api/comments/
-POST /api/rating/
+GET /api/movies/:id/			Data: id, title, description, release_date, poster, rating, length, trailer
+GET /api/movies/:id/comments/	Data: users.id, users.displayname, comment, comment_date
 
-PUT /api/movies/:id/
-PUT /api/comments/:id/
+POST /api/movies/				Request: title, description, release_date, poster, rating, length, trailer
+POST /api/movies/:id/comments/	Request: movie_id, user_id, comment, comment_date
+POST /api/movies/:id/rating/	Request: movie_id, user_id, rating
+POST /api/movies/:id/favorite/	Request: movie_id, user_id, favorited_date
+POST /api/movies/:id/cast/		Request: movie_id, actor_id [SAME WITH POST /api/actors/:id/cast]
 
-DELETE /api/movies/:id/
-DELETE /api/comments/:id
+PUT /api/movies/:id/			Request: title, description, release_date, poster, rating, length, trailer
+PUT /api/movies/:id/comments/	Request: user_id, comment
+PUT /api/movies/:id/rating/		Request: movie_id, user_id, rating
+PUT /api/movies/:id/cast/		Request: movie_id, actor_id [SAME WITH PUT /api/actors/:id/cast]
 
+DELETE /api/movies/:id/				Delete
+DELETE /api/movies/:id/comments/	Delete, Request: movie_id, user_id
+DELETE /api/movies/:id/rating/		Delete, Request: movie_id, user_id
+DELETE /api/movies/:id/favorite/	Delete, Request: movie_id, user_id
 
-GET /api/actors/:id
+GET /api/actors/:id/			Data: id, fullname, dateofbirth, gender, bio, location, films[actor_filmography.movie_id, actor_filmography.actor_id]
 
-POST /api/actors/
+POST /api/actors/				Request: fullname, dateofbirth, gender, bio, location
+POST /api/actors/:id/cast/		Request: movie_id, actor_id [SAME WITH POST /api/movies/:id/cast]
 
-PUT /api/actors/:id
+PUT /api/actors/:id				Request: fullname, dateofbirth, gender, bio, location
+PUT /api/actors/:id/cast/		Request: movie_id, actor_id [SAME WITH PUT /api/movies/:id/cast]
 
-DELETE /api/actors/:id
+DELETE /api/actors/:id/			Delete
+
 
 */
