@@ -1,40 +1,12 @@
 package controllers
 
 import (
+	_ "fmt"
 	"net/http"
-	_"fmt"
+
 	"github.com/C305DatabaseProject/database-project/backend/database"
 	"github.com/gin-gonic/gin"
 )
-
-type User struct {
-	ID          int
-	Displayname string
-	Email       string
-	DateOfBirth string
-	Avatar      string
-	Bio         string
-	Location    string
-	Twitter     string
-	Instagram   string
-	Type        int
-}
-
-type Movie struct {
-	ID          int
-	Title       string
-	ReleaseDate string
-	Poster      string
-	Rating      float32
-}
-
-type Comment struct {
-	UserID		int
-	Username	string
-	MovieID		string
-	Comment		string
-	CommentDate	string
-}
 
 func GetUser(c *gin.Context) {
 	id := c.Param("id")
@@ -45,21 +17,15 @@ func GetUser(c *gin.Context) {
 	database.DB.QueryRow(sql, id).Scan(&user.ID, &user.Displayname, &user.Email, &user.DateOfBirth, &user.Avatar, &user.Bio, &user.Location, &user.Twitter, &user.Instagram, &user.Type)
 	if user.ID == 0 {
 		// User not found
-		c.JSON(http.StatusNotFound, gin.H{
-			"status":  "error",
-			"message": "User not found.",
-		})
+		c.JSON(http.StatusNotFound, ErrorMessage("User not found."))
 		return
 	}
 	// If it exists, retrieve user data
-	c.JSON(http.StatusOK, gin.H{
-		"status": "ok",
-		"data":   user,
-	})
+	c.JSON(http.StatusOK, OkMessage(user))
 }
 
 func Watchlist(c *gin.Context) {
-
+	// TODO: Arda buraya bakicak
 }
 
 func Watched(c *gin.Context) {
@@ -80,10 +46,7 @@ func Watched(c *gin.Context) {
 		rows.Scan(&movie.ID, &movie.Title, &movie.ReleaseDate, &movie.Poster, &movie.Rating)
 		movies = append(movies, movie)
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"status": "ok",
-		"data":   movies,
-	})
+	c.JSON(http.StatusOK, OkMessage(movies))
 }
 
 func Favorites(c *gin.Context) {
@@ -95,7 +58,8 @@ func Favorites(c *gin.Context) {
 		WHERE user_favorites.user_id = ?;`
 	rows, err := database.DB.Query(sql, id)
 	if err != nil {
-	
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
 	}
 	// Return movie details with the movie ids
 	var movies []Movie
@@ -125,7 +89,7 @@ func Comments(c *gin.Context) {
 		rows.Scan(&comment.UserID, &comment.Username, &comment.MovieID, &comment.Comment, &comment.CommentDate)
 		comments = append(comments, comment)
 	}
-	if (comments == nil) {
+	if comments == nil {
 		c.JSON(http.StatusOK, gin.H{
 			"status": "ok",
 			"data":   "User not have any comment.",
