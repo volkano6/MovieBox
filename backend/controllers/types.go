@@ -26,6 +26,7 @@ func ErrorMessage(message string) ErrorResponse {
 
 type User struct {
 	ID          int
+	Username    string
 	Displayname string
 	Email       string
 	DateOfBirth string

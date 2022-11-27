@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	_ "fmt"
 	"net/http"
 
 	"github.com/C305DatabaseProject/database-project/backend/database"
@@ -12,9 +11,9 @@ func GetUser(c *gin.Context) {
 	id := c.Param("id")
 	var user User
 	// Check if user with given id exists
-	sql := `SELECT id, displayname, email, dateofbirth, avatar, bio, location, social_twitter, social_instagram, type
+	sql := `SELECT id, username, displayname, email, dateofbirth, avatar, bio, location, social_twitter, social_instagram, type
 		FROM users WHERE id = ?`
-	database.DB.QueryRow(sql, id).Scan(&user.ID, &user.Displayname, &user.Email, &user.DateOfBirth, &user.Avatar, &user.Bio, &user.Location, &user.Twitter, &user.Instagram, &user.Type)
+	database.DB.QueryRow(sql, id).Scan(&user.ID, &user.Username, &user.Displayname, &user.Email, &user.DateOfBirth, &user.Avatar, &user.Bio, &user.Location, &user.Twitter, &user.Instagram, &user.Type)
 	if user.ID == 0 {
 		// User not found
 		c.JSON(http.StatusNotFound, ErrorMessage("User not found."))
