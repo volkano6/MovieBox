@@ -12,12 +12,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func Hompage(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"response": "ok",
-	})
-}
-
 type UserRegister struct {
 	Username    string `json:"user_name" binding:"required"`
 	Password    string `json:"password" binding:"required"`

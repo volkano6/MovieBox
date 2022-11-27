@@ -2,14 +2,15 @@ package backend
 
 import (
 	"github.com/C305DatabaseProject/database-project/backend/controllers"
+	"github.com/C305DatabaseProject/database-project/backend/middleware"
 	"github.com/gin-gonic/gin"
 )
 
 func SetupRoutes(r *gin.Engine) {
 	api := r.Group("/api")
 	{
-		api.GET("/homepage", controllers.Hompage)
-		api.GET("/profile", controllers.Hompage) // JWT
+		api.GET("/homepage", middleware.CheckAuth, controllers.Homepage)
+		api.GET("/profile", middleware.CheckAuth, controllers.Profile)
 
 		auth := api.Group("/auth")
 		{
