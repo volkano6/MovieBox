@@ -25,6 +25,10 @@ func CheckAuth(c *gin.Context) {
 		}
 		return []byte(os.Getenv("SECRET")), nil
 	})
+	if token == nil {
+		c.Next()
+		return
+	}
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		// Check exp
 		if float64(time.Now().Unix()) > claims["exp"].(float64) {
