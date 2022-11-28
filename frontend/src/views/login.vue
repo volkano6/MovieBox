@@ -4,11 +4,10 @@
       <div class="d-flex justify-content-center">
          <h2>Sign in</h2>
       </div>
-      <br />
       <form @submit.prevent="handleSubmit">
          <div>
             <div class="mb-2">
-               <label for="exampleInputPassword1" class="form-label">Username</label>
+               <label for="exampleInputPassword1" class="form-label mt-4">Username</label>
             </div>
             <div class="input-group mb-3">
                <span class="input-group-text" id="basic-addon1">@</span>
@@ -29,13 +28,15 @@
       </form>
       <div class="m-2">
          <p class="text-center">
-            <a href="/register" class="">Already have an account!!</a>
+            <a href="/register" class="">Create an account!!</a>
          </p>
       </div>
    </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
    name: "login",
    data(){
@@ -45,13 +46,27 @@ export default {
       }
    },
    methods: {
-      handleSubmit(){
-         const data = {
-            user_name: this.user_name,
-            password: this.password
+      async handleSubmit() {
+      const response = await axios.post('api/auth/login', {
+         user_name: this.user_name,
+         password: this.password
+      }).then((response) => {
+         if (response.data.status == "ok") {
+            // Set cookie for JWT
+            let d = new Date();
+            d.setTime(d.getTime() + 14 * 24 * 60 * 60 * 1000);
+            let expires = "expires=" + d.toUTCString()
+            document.cookie = "token=" + response.data.data + ";" + expires + ";path=/";
+            // Redirect to profile
+            this.$router.push("/profile")
+         } else if (response.data.status == "error") {
+            // Invalid credentials.
+            // Display user to try again.
+            console.log("err")
          }
-         console.log(data)
-      }
+      })
+      
+    }
    }
 };
 </script>

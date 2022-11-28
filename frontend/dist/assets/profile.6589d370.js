@@ -1,1 +1,0 @@
-import{_ as e,o,c as t,a as s}from"./index.0793141b.js";const c={},n=s("h1",null," profile ",-1),r=[n];function a(_,l,p,i,d,f){return o(),t("div",null,r)}const h=e(c,[["render",a]]);export{h as default};

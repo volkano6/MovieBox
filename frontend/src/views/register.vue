@@ -25,7 +25,8 @@
       <div class="row">
         <div class="mb-4">
           <label for="exampleInputPassword1" class="form-label">Date of birth</label>
-          <input class="datepicker form-control" v-model="date_of_birth" data-date-format="yyyy/mm/dd" placeholder="yyyy/mm/dd">
+          <input class="datepicker form-control" v-model="date_of_birth" data-date-format="yyyy/mm/dd"
+            placeholder="yyyy/mm/dd">
         </div>
       </div>
       <div class="row">
@@ -42,37 +43,28 @@
   
 <script>
 import axios from 'axios'
+
 export default {
-   name: "register",
-   data() {
-      return {
-        user_name:'',
-        email:'',
-        password:'',
-        date_of_birth:''
-      }
-   },
-   methods: {
-      handleSubmit(){
-        const data = {
-          user_name: this.user_name,
-          email: this.email,
-          password: this.password,
-          date_of_birth: this.date_of_birth,
-        }
-        console.log(data)
-        axios.post('http://127.0.0.1:3000/api/auth/register', data)
-          .then(
-            res => {
-              console.log(res);
-            }
-          ).catch(
-            err => {
-              console.log(err);
-            }
-          )
-      }
-   }
+  name: "register",
+  data() {
+    return {
+      user_name: '',
+      email: '',
+      password: '',
+      date_of_birth: ''
+    }
+  },
+  methods: {
+    async handleSubmit() {
+      const response = await axios.post('api/auth/register', {
+        user_name: this.user_name,
+        email: this.email,
+        password: this.password,
+        date_of_birth: this.date_of_birth,
+      });
+      this.$router.push("/login")
+    }
+  }
 };
 </script>
   
