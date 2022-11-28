@@ -26,6 +26,9 @@ func main() {
 	database.ConnectDB()
 	app.Use(static.Serve("/", static.LocalFile("./frontend/dist", true)))
 	backend.SetupRoutes(app)
+	app.NoRoute(func(c *gin.Context) {
+		c.File("./frontend/dist/index.html")
+	})
 	// Run locally with specified port inside .env
 	app.Run("127.0.0.1:" + os.Getenv("PORT"))
 }
