@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/login.vue"
 import Login from "../views/login.vue"
 import Register from "../views/register.vue"
+import NotFound from "../views/404.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,6 +26,12 @@ const router = createRouter({
       path: "/profile",
       name: "profile",
       component: () => import("../views/profile.vue"),
+    },
+    // If no path matches, return 404 component
+    {
+      path: "/:pathMatch(.*)*",
+      name: "404",
+      component: NotFound,
     }
   ],
 });
