@@ -67,10 +67,7 @@ func Favorites(c *gin.Context) {
 		rows.Scan(&movie.ID, &movie.Title, &movie.ReleaseDate, &movie.Poster, &movie.Rating)
 		movies = append(movies, movie)
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"status": "ok",
-		"data":   movies,
-	})
+	c.JSON(http.StatusOK, OkMessage(movies))
 }
 
 func Comments(c *gin.Context) {
@@ -80,7 +77,11 @@ func Comments(c *gin.Context) {
 	FROM project.user_comments LEFT JOIN project.users
 	ON project.user_comments.user_id = project.users.id
 	WHERE project.users.id = ?;`
-	rows, _ := database.DB.Query(sql, id)
+	rows, err := database.DB.Query(sql, id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
 	// Return Comments details with the User ids
 	var comments []Comment
 	var comment Comment
@@ -89,14 +90,8 @@ func Comments(c *gin.Context) {
 		comments = append(comments, comment)
 	}
 	if comments == nil {
-		c.JSON(http.StatusOK, gin.H{
-			"status": "ok",
-			"data":   "User not have any comment.",
-		})
+		c.JSON(http.StatusNotFound, ErrorMessage("User not have any comment."))
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"status": "ok",
-		"data":   comments,
-	})
+	c.JSON(http.StatusOK, OkMessage(comments))
 }
