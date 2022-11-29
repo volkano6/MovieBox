@@ -36,7 +36,8 @@ func Watched(c *gin.Context) {
 		WHERE user_watched.user_id = ?;`
 	rows, err := database.DB.Query(sql, id)
 	if err != nil {
-
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
 	}
 	// Return movie details with the movie ids
 	var movies []Movie

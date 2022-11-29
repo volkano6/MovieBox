@@ -27,6 +27,27 @@ func SetupRoutes(r *gin.Engine) {
 			users.GET("/favorites", controllers.Favorites)
 			users.GET("/comments", controllers.Comments)
 		}
+		
+		movies := api.Group("/movies")
+		{
+			//   /api/movies/...
+			movies.GET("/", controllers.GetMovies)
+			movies.POST("/", controllers.PostMovies)
+			id := api.Group("/:id") 
+			{
+				//   /api/movies/:id/...
+				id.GET("/", controllers.GetMovie)
+				id.GET("/comments", controllers.GetMovieComments)
+				id.POST("/comments", controllers.PostMovieComments)
+				id.POST("/ratings", controllers.PostMovieRating)
+				id.POST("/favorite", controllers.PostMovieFavorite)
+				id.POST("/cast", controllers.PostMovieCast)
+				
+			}
+			
+
+			
+		}
 	}
 }
 
@@ -50,7 +71,7 @@ GET /api/user/:id/ *
 GET /api/user/:id/watchlists/ * - Arda
 GET /api/user/:id/watched/ *
 GET /api/user/:id/favorites/ *
-GET /api/user/:id/comments/
+GET /api/user/:id/comments/ *
 
 POST /api/user/:id/watchlists/ 	Request: watchlist_name - Arda
 
@@ -58,14 +79,14 @@ POST /api/user/:id/watchlists/:id/movie/ 	Request: watchlist_id, movie_id - Arda
 
 DELETE /api/user/:id/watchlists/:id/movie/ 	Request: watchlist_id, movie_id - Arda
 
-GET /api/movies/:id/			Data: id, title, description, release_date, poster, rating, length, trailer
-GET /api/movies/:id/comments/	Data: users.id, users.displayname, comment, comment_date
+GET /api/movies/:id/	*		Data: id, title, description, release_date, poster, rating, length, trailer
+GET /api/movies/:id/comments/ *	Data: users.id, users.displayname, comment, comment_date
 
-POST /api/movies/				Request: title, description, release_date, poster, rating, length, trailer
-POST /api/movies/:id/comments/	Request: movie_id, user_id, comment, comment_date
-POST /api/movies/:id/rating/	Request: movie_id, user_id, rating
-POST /api/movies/:id/favorite/	Request: movie_id, user_id, favorited_date
-POST /api/movies/:id/cast/		Request: movie_id, actor_id [SAME WITH POST /api/actors/:id/cast]
+POST /api/movies/		*		Request: title, description, release_date, poster, rating, length, trailer
+POST /api/movies/:id/comments/*	Request: movie_id, user_id, comment, comment_date
+POST /api/movies/:id/rating/*	Request: movie_id, user_id, rating
+POST /api/movies/:id/favorite/*	Request: movie_id, user_id, favorited_date
+POST /api/movies/:id/cast/ *	Request: movie_id, actor_id [SAME WITH POST /api/actors/:id/cast]
 
 PUT /api/movies/:id/			Request: title, description, release_date, poster, rating, length, trailer
 PUT /api/movies/:id/comments/	Request: user_id, comment

@@ -53,3 +53,14 @@ type Comment struct {
 	Comment     string
 	CommentDate string
 }
+
+type UserRegister struct {
+	Username    string `json:"user_name" binding:"required"`
+	Password    string `json:"password" binding:"required"`
+	Email       string `json:"email" binding:"required"`
+	DateOfBirth string `json:"date_of_birth" binding:"required"`
+}
+type UserLogin struct {
+	Username string `json:"user_name" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
