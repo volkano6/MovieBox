@@ -1,4 +1,6 @@
 <template>
+    <div>
+    <Nav></Nav>
     <div style="height: 100%;background: rgb(0,4,47);
 background: linear-gradient(90deg, rgba(0,4,47,1) 0%, rgba(0,7,45,1) 51%, rgba(0,2,37,1) 100%);">
         <div style="width: 100%;padding: 5% 15% 0px 15%;height: max-content;display: flex;
@@ -74,13 +76,17 @@ background: linear-gradient(90deg, rgba(0,4,47,1) 0%, rgba(0,17,112,1) 51%, rgba
             </div>
         </div>
     </div>
+    </div>
  </template>
 
 <script>
 import axios from 'axios'
-
+import Nav from "../components/nav.vue"
 export default {
    name: "login",
+   components: {
+    Nav
+   },
    data(){
       return {
          user_name:'',

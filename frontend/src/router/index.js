@@ -32,6 +32,11 @@ const router = createRouter({
       name: "deneme",
       component: () => import("../views/deneme.vue"),
     },
+    {
+      path: "/profilee",
+      name: "profilee",
+      component: () => import("../views/profilee.vue"),
+    },
     // If no path matches, return 404 component
     {
       path: "/:pathMatch(.*)*",

@@ -15,7 +15,7 @@ func main() {
 	if err != nil {
 		panic("No .env file found.")
 	}
-	// Setup gin
+	// Setup gin 
 	app := gin.Default()
 	if os.Getenv("ENV") == "prod" {
 		gin.SetMode(gin.ReleaseMode)
