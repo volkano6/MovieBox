@@ -12,7 +12,7 @@
                 </div>
               </div>
               <div class="text-center">
-                <h4 class="m-3">{{user.Username}}</h4>
+                <h4 class="m-3">Volkan</h4>
               </div>
             </div>
           </div>
@@ -23,7 +23,7 @@
               <div class="row text-center">
                 <h4>456</h4>
                 <p class="text-secondary text-opacity-75">Watched</p>
-              </div> 
+              </div>
             </div>
             <div class="col-2">
               <div class="row text-center">
@@ -64,6 +64,13 @@
           <label class="btn btn-outline-dark" for="btnradio5">Likes</label>
         </div>
       </div>
+      <div class="row mt-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </div>
     </div>
     <Footer></Footer>
   </div>
@@ -73,12 +80,14 @@
 import axios from 'axios'
 import Nav from "../components/nav.vue"
 import Footer from "../components/footer.vue"
+import Card from "../components/movie_card.vue"
 
 export default {
   name: "profile",
   components: {
     Nav,
-    Footer
+    Footer,
+    Card
   },
   data() {
     return {
