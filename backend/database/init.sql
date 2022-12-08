@@ -31,11 +31,10 @@ CREATE TABLE movies (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description VARCHAR(1000) NOT NULL,
-    release_date DATE NOT NULL,
+    release_date VARCHAR(50) NOT NULL,
     poster VARCHAR(255) NOT NULL,
     rating FLOAT(24),
-    length INT NOT NULL,
-    trailer VARCHAR(255) NOT NULL
+    length INT NOT NULL
 );
 
 CREATE TABLE genres (
