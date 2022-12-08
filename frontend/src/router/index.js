@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/login.vue"
 import Login from "../views/login.vue"
 import Register from "../views/register.vue"
+import Films from "../views/films.vue"
 import NotFound from "../views/404.vue"
 
 const router = createRouter({
@@ -36,6 +37,11 @@ const router = createRouter({
       path: "/home",
       name: "home",
       component: () => import("../views/home.vue"),
+    },
+    {
+      path: "/films",
+      name: "films",
+      component: () => import("../views/films.vue"),
     },
     // If no path matches, return 404 component
     {
