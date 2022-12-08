@@ -6,7 +6,7 @@
         <div class="col-3 border">
           <img src="https://picsum.photos/300/400" alt="" />
           <div class="row">
-            <div class="col-6 border">
+            <div class="col-6">
                 <div class="row mt-1">
                     <div class="col">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
@@ -16,7 +16,7 @@
                     <div class="col"><p>345</p></div>
                 </div>
             </div>
-            <div class="col-6 border">
+            <div class="col-6">
                 <div class="row mt-1">
                     <div class="col">
                         <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">

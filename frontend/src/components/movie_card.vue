@@ -6,7 +6,7 @@
 		<div class="movie-content">
 			<div class="movie-content-header">
 				<a href="#">
-					<h3 class="movie-title">Man of Steel</h3>
+					<h3 class="movie-title">{{title}}</h3>
 				</a>
 				<div class="imax-logo"></div>
 			</div>
@@ -34,8 +34,20 @@
 </template>
 
 <script>
+export default {
+  props: {
+    title: String,
+    likes: Number,
+    relase_date: String,
+    rating: Number,
+    genre: String,
+    length: String
+  }
+  create() {
+    
+  }  
+};
 
-export default {};
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <section class=nav>
+  <section class="nav">
     <div class="container-sm border-bottom-dark">
       <nav class="navbar navbar-expand-lg bg-gray">
         <div class="container-fluid">
