@@ -6,7 +6,7 @@
 		<div class="movie-content">
 			<div class="movie-content-header">
 				<a href="#">
-					<h3 class="movie-title">{{title}}</h3>
+					<h3 class="movie-title">Film name</h3>
 				</a>
 				<div class="imax-logo"></div>
 			</div>
@@ -43,9 +43,7 @@ export default {
     genre: String,
     length: String
   }
-  create() {
-    
-  }  
+ 
 };
 
 </script>
