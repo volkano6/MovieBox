@@ -1,5 +1,5 @@
 <template>
-  <section class="nav">
+  <section class="navColor border-bottom">
     <div class="container-sm border-bottom-dark">
       <nav class="navbar navbar-expand-lg bg-gray">
         <div class="container-fluid">
@@ -54,6 +54,7 @@
   </section>
 </template>
 
+
 <script>
 export default {
 
@@ -61,8 +62,7 @@ export default {
 </script>
 
 <style>
-.nav {
-
-  background-image: radial-gradient(circle, #6e799e, #304b51, #273738, #1e2423)
+.navColor {
+ background-image: #484848;
 }
 </style>

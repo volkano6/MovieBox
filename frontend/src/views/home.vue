@@ -134,9 +134,6 @@ export default {
 </script>
   
 <style>
-.profile1 {
- background-image: radial-gradient(circle, #686e91, #626988, #5c647e, #575f75, #525a6b, #4a5462, #444d58, #3e474f, #343e43, #2c3638, #242d2d, #1e2423);
-}
 
 .post-list {
   position: relative;

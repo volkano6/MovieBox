@@ -1,7 +1,7 @@
 <template>
   <div>
     <Nav></Nav>
-    <section class= "profile1">
+
       <div class="container-sm">
         <div class="row">
           <div class="col-4">
@@ -75,12 +75,13 @@
         </div>
       </div>
       <Footer></Footer>
-        </section>
+
     </div>
 
 </template>
   
 <script>
+
 import axios from 'axios'
 import Nav from "../components/nav.vue"
 import Footer from "../components/footer.vue"
@@ -111,9 +112,6 @@ export default {
   
 <style>
 
-.profile1 {
- background-image: radial-gradient(circle, #686e91, #626988, #5c647e, #575f75, #525a6b, #4a5462, #444d58, #3e474f, #343e43, #2c3638, #242d2d, #1e2423);
-}
 
 .row {
   color: #626988;

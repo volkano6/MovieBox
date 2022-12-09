@@ -1,84 +1,82 @@
 <template>
   <div class="col">
     <div class="movie-card">
-		<div class="movie-header theDarkTower">
-		</div><!--movie-header-->
-		<div class="movie-content">
-			<div class="movie-content-header">
-				<a href="#">
-					<h3 class="movie-title">Film name</h3>
-				</a>
-				<div class="imax-logo"></div>
-			</div>
-			<div class="movie-info">
-				<div class="info-section">
-					<label>Date & Time</label>
-					<span>Sun 8 Sept - 10:00PM</span>
-				</div><!--date,time-->
-				<div class="info-section">
-					<label>Screen</label>
-					<span>03</span>
-				</div><!--screen-->
-				<div class="info-section">
-					<label>Row</label>
-					<span>F</span>
-				</div><!--row-->
-				<div class="info-section">
-					<label>Seat</label>
-					<span>21,22</span>
-				</div><!--seat-->
-			</div>
-		</div><!--movie-content-->
-	</div><!--movie-card-->
+      <div class="movie-header theDarkTower"></div>
+      <!--movie-header-->
+      <div class="movie-content">
+        <div class="row">
+          <div class="col-8">
+            <h4>Movie Title</h4>
+          </div>
+          <div class="col-4 mt-1">
+            <h5>(Date)</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="row mt-2">
+              <p class="text-decoration-underline">Genre</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="row mt-2">
+              <p class="text-decoration-underline">Leng(120dk)</p>
+            </div>
+          </div>
+          <div class="col">
+            <div class="row  mt-2">
+              <p class="text-decoration-underline">4.5</p>
+            </div>
+          </div>
+          
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="row">
+              <div class="col ms-4">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+            </svg>
+              </div>
+              <div class="col me-5">15k</div>
+            </div>
+            
+          </div>
+          <div class="col">
+           <div class="row">
+             <div class="col ms-4">           
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+            </svg>
+            </div>
+             <div class="col me-4">225k</div>
+           </div>
+          </div>
+        </div>
+     </div>
+
+      <!--movie-content-->
+    </div>
+    <!--movie-card-->
   </div>
 </template>
 
 <script>
-export default {
-  props: {
-    title: String,
-    likes: Number,
-    relase_date: String,
-    rating: Number,
-    genre: String,
-    length: String
-  }
- 
-};
-
+export default {};
 </script>
 
 <style scoped>
-
 * {
   -webkit-transition: 300ms;
   transition: 300ms;
 }
 
-.intro {
-  text-align: center;
-}
 
-ul {
-  list-style-type: none;
-}
-
-h1, h2, h3, h4, h5, p {
-  font-weight: 400;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-a:hover {
-  color: #6ABCEA;
-}
 
 .movie-card {
   background: #ffffff;
-  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 6px 18px rgba(130, 10, 10, 0.1);
   width: 100%;
   max-width: 315px;
   border-radius: 10px;
@@ -98,97 +96,24 @@ a:hover {
 .theDarkTower {
   background: url("https://cdn.shopify.com/s/files/1/0057/3728/3618/products/avatar-the-way-of-water_sncuhzap_480x.progressive.jpg?v=1669382994");
   background-size: cover;
-
 }
 
-
-.header-icon-container {
-  position: relative;
-}
-
-.header-icon {
-  width: 100%;
-  height: 367px;
-  line-height: 367px;
-  text-align: center;
-  vertical-align: middle;
-  margin: 0 auto;
-  color: #ffffff;
-  font-size: 54px;
-  text-shadow: 0px 0px 20px #6abcea, 0px 5px 20px #6ABCEA;
-  opacity: .85;
-}
-
-.header-icon:hover {
-  background: rgba(0, 0, 0, 0.15);
-  font-size: 74px;
-  text-shadow: 0px 0px 20px #6abcea, 0px 5px 30px #6ABCEA;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  opacity: 1;
-}
 
 .movie-card:hover {
   -webkit-transform: scale(1.03);
-          transform: scale(1.03);
+  transform: scale(1.03);
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 .movie-content {
-  padding: 18px 18px 24px 18px;
-  margin: 0;
+  padding: 8px 12px 8px 12px;
+  font-size: 12px;
 }
 
-.movie-content-header, .movie-info {
+.movie-content-header,
+.movie-info {
   display: table;
   width: 100%;
-}
-
-.movie-title {
-  font-size: 24px;
-  margin: 0;
-  display: table-cell;
-}
-
-.imax-logo {
-  width: 50px;
-  height: 15px;
-  background: url("https://6a25bbd04bd33b8a843e-9626a8b6c7858057941524bfdad5f5b0.ssl.cf5.rackcdn.com/media_kit/3e27ede823afbf139c57f1c78a03c870.jpg") no-repeat;
-  background-size: contain;
-  display: table-cell;
-  float: right;
-  position: relative;
-  margin-top: 5px;
-}
-
-.movie-info {
-  margin-top: 1em;
-}
-
-.info-section {
-  display: table-cell;
-  text-transform: uppercase;
-  text-align: center;
-}
-
-.info-section:first-of-type {
-  text-align: left;
-}
-
-.info-section:last-of-type {
-  text-align: right;
-}
-
-.info-section label {
-  display: block;
-  color: rgba(0, 0, 0, 0.5);
-  margin-bottom: .5em;
-  font-size: 9px;
-}
-
-.info-section span {
-  font-weight: 700;
-  font-size: 11px;
 }
 
 @media screen and (max-width: 500px) {
@@ -198,7 +123,5 @@ a:hover {
     margin: 1em;
     display: block;
   }
-
-
 }
 </style>
