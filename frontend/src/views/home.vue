@@ -36,68 +36,10 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container bootstrap snippets bootdey" style="margin-top: 1.5%; padding-left: 1.7%;">
     <div class="row">
-        <div class="post-list">
-            <div class="row">
-                <div class="col-sm-1">
-                    <div class="picture">
-                        <img alt="Opt wizard thumbnail" style="width: 70%; height: 70%; float: right;" src="https://bootdey.com/img/Content/user_1.jpg">
-                    </div>
-                </div>
-                <div class="col-sm-8">
-                    <h4>
-                        <a hre="#" class="username">Deyson Bejarano</a>
-                        <label class="label label-info" style="color:cornflowerblue">&nbsp; #Film Name </label>
-                    </h4>
-                    <h5> 
-                    <i class="fa fa-calendar"></i>
-                    Aug 06, 12:48 
-                    </h5>
-                    <p class="description" style="color: aliceblue;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In velit lectus, efficitur eu eros vel, luctus aliquet est. Sed sit amet ligula non mauris porta dignissim..</p>    
-                </div>
-            </div>
-        </div>
-        <div class="post-list">
-            <div class="row">
-                <div class="col-sm-1">
-                    <div class="picture">
-                        <img alt="Opt wizard thumbnail" style="width: 70%; height: 70%; float: right;" src="https://bootdey.com/img/Content/user_2.jpg">
-                    </div>
-                </div>
-                <div class="col-sm-8">
-                    <h4>
-                        <a hre="#" class="username">Starla muscle</a>
-                        <label class="label label-info" style="color:cornflowerblue">&nbsp; #Film Name </label>
-                    </h4>
-                    <h5> 
-                    <i class="fa fa-calendar"></i>
-                    Aug 06, 12:48 
-                    </h5>
-                    <p class="description" style="color: aliceblue;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In velit lectus, efficitur eu eros vel, luctus aliquet est. Sed sit amet ligula non mauris porta dignissim....</p>    
-                </div>
-                
-            </div>
-        </div>
-        <div class="post-list" >
-            <div class="row" style="border:0px">
-                <div class="col-sm-1">
-                    <div class="picture">
-                        <img alt="Opt wizard thumbnail" style="width: 70%; height: 70%; float: right;" src="https://bootdey.com/img/Content/user_3.jpg">
-                    </div>
-                </div>
-                <div class="col-sm-8">
-                    <h4>    
-                        <a hre="#" class="username">Barbao"s slim</a>
-                        <label class="label label-info" style="color:cornflowerblue">&nbsp; #Film Name </label>
-                    </h4>
-                    <h5> 
-                    <i class="fa fa-calendar"></i>
-                    Aug 06, 12:48 
-                    </h5>
-                    <p class="description" style="color: aliceblue;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In velit lectus, efficitur eu eros vel, luctus aliquet est. Sed sit amet ligula non mauris porta dignissim....</p>    
-                </div>
-                
-            </div>
-        </div>
+      <ReviewCard />
+      <ReviewCard />
+      <ReviewCard />
+      <ReviewCard />
     </div>
 </div>
     <Footer></Footer>
@@ -109,13 +51,15 @@ import axios from 'axios'
 import Nav from "../components/nav.vue"
 import Footer from "../components/footer.vue"
 import Card from "../components/movie_card.vue"
+import ReviewCard from "../components/review_card.vue"
 
 export default {
   name: "profile",
   components: {
     Nav,
     Footer,
-    Card
+    Card,
+    ReviewCard
   },
   data() {
     return {

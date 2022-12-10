@@ -182,7 +182,7 @@
                         </div>
                     </div>
 
-
+                    <ReviewCard />
 
                 </div>
             </div>
@@ -194,12 +194,14 @@
 <script>
 import Nav from "../components/nav.vue";
 import Footer from "../components/footer.vue";
+import ReviewCard from "../components/review_card.vue"
 
 export default {
     name: "films",
     components: {
         Nav,
         Footer,
+        ReviewCard
     },
 };
 </script>

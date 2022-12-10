@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <Nav></Nav>
 
       <div class="container-sm">
@@ -50,30 +51,35 @@
         <div class="row">
           
           <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-            <label class="btn btn-light" for="btnradio1">Profile</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-            <label class="btn btn-light" for="btnradio2" >Watched</label>
+            <input type="radio" @click="pageContent('UserWatched')" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+            <label class="btn btn-light" for="btnradio1" >Watched</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-            <label class="btn btn-light" for="btnradio3">Watchlist</label>
+            <input type="radio" @click="pageContent('UserWatchlit')" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+            <label class="btn btn-light" for="btnradio2">Watchlist</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-            <label class="btn btn-light" for="btnradio4">Comments</label>
+            <input type="radio" @click="pageContent('UserComments')" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+            <label class="btn btn-light" for="btnradio3">Comments</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
-            <label class="btn btn-light btn-link-color: #ff" for="btnradio5">Likes</label>
+            <input type="radio" @click="pageContent('UserLikes')" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+            <label class="btn btn-light" for="btnradio4">Likes</label>
           </div>
+
         </div>
-        <div class="row mt-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+        <div v-if="content == 'UserWatched'">
+          <UserWatched />
         </div>
+        <div v-if="content == 'UserWatchlit'">
+          <UserWatchlit />
+        </div>
+        <div v-if="content == 'UserComments'">
+          <UserComments />
+        </div>
+        <div v-if="content == 'UserLikes'">
+          <UserLikes />
+        </div>  
       </div>
+
       <Footer></Footer>
 
     </div>
@@ -85,21 +91,37 @@
 import axios from 'axios'
 import Nav from "../components/nav.vue"
 import Footer from "../components/footer.vue"
-import Card from "../components/movie_card.vue"
+import UserInfo from "../components/single_page/profile_page/user_information.vue"
+import UserWatched from "../components/single_page/profile_page/user_watched.vue"
+import UserWatchlit from "../components/single_page/profile_page/user_watchlist.vue"
+import UserComments from "../components/single_page/profile_page/user_comments.vue"
+import UserLikes from "../components/single_page/profile_page/user_likes.vue"
+
 
 export default {
   name: "profile",
   components: {
     Nav,
     Footer,
-    Card
-  },
+    UserInfo,
+    UserWatched,
+    UserWatchlit,
+    UserComments,
+    UserLikes
+    },
   data() {
     return {
-      user: null
+      user: null,
+      content: "UserWatched"
+    }
+  },
+  methods: {
+    pageContent (a) {
+      this.content = a
     }
   },
   async created() {
+  
     const response = await axios.get("api/profile");
     if (response.data.status == "error") {
       this.$router.push("/login")
