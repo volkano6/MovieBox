@@ -6,10 +6,10 @@
       <div class="movie-content">
         <div class="row">
           <div class="col-8">
-            <h4>{{ title }}</h4>
+            <h5>{{ title }}</h5>
           </div>
           <div class="col-4 mt-1">
-            <h5>{{ date }}</h5>
+            <h6>{{ date }}</h6>
           </div>
         </div>
         <div class="row">
@@ -20,7 +20,7 @@
           </div>
           <div class="col">
             <div class="row mt-2">
-              <p class="text-decoration-underline">{{ length }}</p>
+              <p class="text-decoration-underline">{{ length + "min" }}</p>
             </div>
           </div>
           <div class="col">

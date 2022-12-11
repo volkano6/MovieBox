@@ -41,9 +41,12 @@ type User struct {
 type Movie struct {
 	ID          int
 	Title       string
+	Description string
 	ReleaseDate string
 	Poster      string
 	Rating      float32
+	Length		string
+	Genre		string
 }
 
 type Comment struct {

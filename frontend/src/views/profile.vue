@@ -14,7 +14,7 @@
                   </div>
                 </div>
                 <div class="text-center">
-                  <h4 class="m-3 text-light text-opacity-75" >{{user.Username}}</h4>
+                  <h4 class="m-3 text-light text-opacity-75" >User</h4>
                 </div>
               </div>
             </div>
@@ -111,7 +111,7 @@ export default {
     },
   data() {
     return {
-      user: "User",
+      user: null,
       content: "UserWatched",
     }
   },
@@ -127,6 +127,7 @@ export default {
     } else {
       this.user = response.data.data
     }
+    this.user.Username = "Volkan"
   }
 }
 </script>
