@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+
     <Nav></Nav>
 
       <div class="container-sm">
@@ -14,7 +14,7 @@
                   </div>
                 </div>
                 <div class="text-center">
-                  <h4 class="m-3 text-light text-opacity-75" >User</h4>
+                  <h4 class="m-3 text-light text-opacity-75" >{{user.Username}}</h4>
                 </div>
               </div>
             </div>
@@ -111,8 +111,8 @@ export default {
     },
   data() {
     return {
-      user: null,
-      content: "UserWatched"
+      user: "User",
+      content: "UserWatched",
     }
   },
   methods: {
@@ -121,7 +121,6 @@ export default {
     }
   },
   async created() {
-  
     const response = await axios.get("api/profile");
     if (response.data.status == "error") {
       this.$router.push("/login")
@@ -133,8 +132,6 @@ export default {
 </script>
   
 <style>
-
-
 .row {
   color: #626988;
 }

@@ -6,11 +6,11 @@
       <h2 class="text-center" style="margin-top: 2%; color: aliceblue; border-bottom: 2px solid aliceblue; padding-bottom: 0.7%;"> Favorite of Weeks </h2> 
     </div>
       <div class="row mt-2 row-cols-1 row-cols-xl-5 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <MovieCard />
+        <MovieCard />
+        <MovieCard />
+        <MovieCard />
+        <MovieCard />
 
       </div>
 
@@ -21,11 +21,11 @@
       <h2 class="text-center" style="margin-top: 2%; color: aliceblue; border-bottom: 2px solid aliceblue; padding-bottom: 0.7%;"> All Time Favorites </h2> 
     </div>
       <div class="row mt-2 row-cols-1 row-cols-xl-5 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <MovieCard />
+        <MovieCard />
+        <MovieCard />
+        <MovieCard />
+        <MovieCard />
 
       </div>
 
@@ -50,7 +50,7 @@
 import axios from 'axios'
 import Nav from "../components/nav.vue"
 import Footer from "../components/footer.vue"
-import Card from "../components/movie_card.vue"
+import MovieCard from "../components/movie_card.vue"
 import ReviewCard from "../components/review_card.vue"
 
 export default {
@@ -58,7 +58,7 @@ export default {
   components: {
     Nav,
     Footer,
-    Card,
+    MovieCard,
     ReviewCard
   },
   data() {

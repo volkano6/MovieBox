@@ -29,7 +29,10 @@
                     <a class="nav-link text-light text-opacity-75" href="/profile">Profile</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link text-light text-opacity-75" href="/#">Films</a>
+                    <a class="nav-link text-light text-opacity-75" href="/films">Films</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-light text-opacity-75" href="/movie">Movie</a>
                   </li>
                   <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
