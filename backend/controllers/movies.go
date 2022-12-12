@@ -5,7 +5,6 @@ import (
 
 	"github.com/C305DatabaseProject/database-project/backend/database"
 	"github.com/gin-gonic/gin"
-	_"github.com/gin-gonic/gin"
 )
 
 func GetMovies(c *gin.Context) {

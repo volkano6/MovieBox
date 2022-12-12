@@ -4,31 +4,26 @@
       <div class="movie-header theDarkTower" :style="{ 'background-image': 'url(' + poster + ')' }"></div>
       <!--movie-header-->
       <div class="movie-content">
-        <div class="row">
-          <div class="col-8">
-            <h5>{{ title }}</h5>
-          </div>
-          <div class="col-4 mt-1">
-            <h6>{{ date }}</h6>
-          </div>
+        <div class="row">          
+          <h6>{{ title }}</h6>
+          <p>{{ date }}</p>
         </div>
         <div class="row">
           <div class="col">
-            <div class="row mt-2">
+            <div class="row">
               <p class="text-decoration-underline">{{ genre }}</p>
             </div>
           </div>
           <div class="col">
-            <div class="row mt-2">
-              <p class="text-decoration-underline">{{ length + "min" }}</p>
+            <div class="row">
+              <p class="text-decoration-underline">{{ length + " min" }}</p>
             </div>
           </div>
           <div class="col">
-            <div class="row  mt-2">
+            <div class="row">
               <p class="text-decoration-underline">{{ rating }}</p>
             </div>
           </div>
-
         </div>
         <div class="row">
           <div class="col">
@@ -112,7 +107,6 @@ export default {
 }
 
 .movie-content {
-  
   padding: 8px 12px 8px 12px;
   font-size: 10px;
 }

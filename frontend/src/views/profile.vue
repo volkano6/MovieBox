@@ -55,7 +55,7 @@
             <input type="radio" @click="pageContent('UserWatched')" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
             <label class="btn btn-light" for="btnradio1" >Watched</label>
 
-            <input type="radio" @click="pageContent('UserWatchlit')" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+            <input type="radio" @click="pageContent('UserWatchlist')" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
             <label class="btn btn-light" for="btnradio2">Watchlist</label>
 
             <input type="radio" @click="pageContent('UserComments')" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
@@ -91,7 +91,6 @@
 import axios from 'axios'
 import Nav from "../components/nav.vue"
 import Footer from "../components/footer.vue"
-import UserInfo from "../components/single_page/profile_page/user_information.vue"
 import UserWatched from "../components/single_page/profile_page/user_watched.vue"
 import UserWatchlit from "../components/single_page/profile_page/user_watchlist.vue"
 import UserComments from "../components/single_page/profile_page/user_comments.vue"

@@ -4,9 +4,9 @@
         <Nav></Nav>
         <div class="container mt-3">
             <!--search row-->
-            <div class="row">
+            <div class="row pb-3 border-bottom">
                 <!--choosing criteria-->
-                <div class="col-3 ">
+                <div class="col-3">
                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                         <div class="btn-group me-1" role="group">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
@@ -57,8 +57,8 @@
             <div class="row">
                 <div class="row mt-2 row-cols-1 row-cols-xl-5 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
                     <div v-for="movie in movies" :key="movie.id">
-                        <MovieCard :poster=movie.Poster :title=movie.Title :date="movie.ReleaseDate" genre="null"
-                            :rating="movie.Rating" length="95" number_of_likes="null" number_of_watches="null" />
+                        <MovieCard :poster=movie.Poster :title=movie.Title :date="movie.ReleaseDate" genre="genre"
+                            :rating="movie.Rating" :length=movie.Length number_of_likes="0" number_of_watches="0" />
                     </div>
                 </div>
             </div>

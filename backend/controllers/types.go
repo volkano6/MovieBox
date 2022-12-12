@@ -45,7 +45,7 @@ type Movie struct {
 	ReleaseDate string
 	Poster      string
 	Rating      float32
-	Length		string
+	Length		int
 	Genre		string
 }
 
