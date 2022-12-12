@@ -19,7 +19,7 @@ func GetMovies(c *gin.Context) {
 	var movies []Movie
 	var movie Movie
 	for rows.Next() {
-		rows.Scan(&movie.ID, &movie.Title, &movie.Description, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length)
+		rows.Scan(&movie.ID, &movie.Title, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length)
 		movies = append(movies, movie)
 	}
 	if movies == nil {
@@ -29,12 +29,10 @@ func GetMovies(c *gin.Context) {
 	c.JSON(http.StatusOK, OkMessage(movies))
 }
 
-func GetMovie(c *gin.Context) {}
-func PostMovies(c *gin.Context) {}
-func GetMovieComments(c *gin.Context) {}
+func GetMovie(c *gin.Context)          {}
+func PostMovies(c *gin.Context)        {}
+func GetMovieComments(c *gin.Context)  {}
 func PostMovieComments(c *gin.Context) {}
-func PostMovieRating(c *gin.Context) {}
+func PostMovieRating(c *gin.Context)   {}
 func PostMovieFavorite(c *gin.Context) {}
-func PostMovieCast(c *gin.Context) {}
-
-
+func PostMovieCast(c *gin.Context)     {}
