@@ -18,16 +18,14 @@ func SetupRoutes(r *gin.Engine) {
 			auth.POST("/login", controllers.Login)
 			auth.POST("/logout", controllers.Logout)
 		}
-
 		users := api.Group("/user/:id")
 		{
 			users.GET("/", controllers.GetUser)
-			users.GET("/watchlists", controllers.Watchlist)
+			users.GET("/watchlist", controllers.Watchlist)
 			users.GET("/watched", controllers.Watched)
 			users.GET("/favorites", controllers.Favorites)
 			users.GET("/comments", controllers.Comments)
 		}
-		
 		movies := api.Group("/movies")
 		{
 			//   /api/movies/...

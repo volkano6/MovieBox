@@ -91,6 +91,7 @@ export default {
     },
     async created() {
         const response = await axios.get("api/movies");
+        console.log(response)
         if (response.data.status == "error") {
             this.$router.push("/login")
         } else {

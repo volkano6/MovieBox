@@ -88,7 +88,7 @@ CREATE TABLE user_ratings (
     CONSTRAINT user_ratings_user_id_fk FOREIGN KEY user_ratings_user_id_fk (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE user_watchlists (
+CREATE TABLE user_watchlist (
     watchlist_id INT,
     user_id INT,
     PRIMARY KEY (watchlist_id, user_id),
