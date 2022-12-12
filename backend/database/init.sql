@@ -99,7 +99,7 @@ CREATE TABLE user_watchlists (
 CREATE TABLE user_watched (
     movie_id INT,
     user_id INT,
-    watched_date DATE NOT NULL,
+    watched_date TIMESTAMP NOT NULL,
     PRIMARY KEY (movie_id, user_id),
     CONSTRAINT user_watched_movie_id_fk FOREIGN KEY user_watched_movie_id_fk (movie_id) REFERENCES movies(id),
     CONSTRAINT user_watched_user_id_fk FOREIGN KEY user_watched_user_id_fk (user_id) REFERENCES users(id)
@@ -108,7 +108,7 @@ CREATE TABLE user_watched (
 CREATE TABLE user_favorites (
     movie_id INT,
     user_id INT,
-    favorited_date DATE NOT NULL,
+    favorited_date TIMESTAMP NOT NULL,
     PRIMARY KEY (movie_id, user_id),
     CONSTRAINT user_favorited_movie_id_fk FOREIGN KEY user_watched_movie_id_fk (movie_id) REFERENCES movies(id),
     CONSTRAINT user_favoriteed_user_id_fk FOREIGN KEY user_watched_user_id_fk (user_id) REFERENCES users(id)
@@ -118,7 +118,7 @@ CREATE TABLE user_comments (
     movie_id INT,
     user_id INT,
     comment VARCHAR(1000) NOT NULL,
-    comment_date DATE NOT NULL,
+    comment_date TIMESTAMP NOT NULL,
     PRIMARY KEY (movie_id, user_id),
     CONSTRAINT user_comments_movie_id_fk FOREIGN KEY user_comments_movie_id_fk (movie_id) REFERENCES movies(id),
     CONSTRAINT user_comments_user_id_fk FOREIGN KEY user_comments_user_id_fk (user_id) REFERENCES users(id)
