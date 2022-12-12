@@ -88,18 +88,19 @@ CREATE TABLE user_ratings (
     CONSTRAINT user_ratings_user_id_fk FOREIGN KEY user_ratings_user_id_fk (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE user_watchlists (
-    watchlist_id INT,
+CREATE TABLE user_watchlist (
+    movie_id INT,
     user_id INT,
-    PRIMARY KEY (watchlist_id, user_id),
-    CONSTRAINT user_watchlist_watchlist_id_fk FOREIGN KEY user_watchlist_watchlist_id_fk (watchlist_id) REFERENCES watchlists(id),
+    added_date DATETIME NOT NULL,
+    PRIMARY KEY (movie_id, user_id),
+    CONSTRAINT user_watchlist_movie_id_fk FOREIGN KEY user_watchlist_movie_id_fk (movie_id) REFERENCES movies(id),
     CONSTRAINT user_watchlist_user_id_fk FOREIGN KEY user_watchlist_user_id_fk (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE user_watched (
     movie_id INT,
     user_id INT,
-    watched_date TIMESTAMP NOT NULL,
+    watched_date DATETIME NOT NULL,
     PRIMARY KEY (movie_id, user_id),
     CONSTRAINT user_watched_movie_id_fk FOREIGN KEY user_watched_movie_id_fk (movie_id) REFERENCES movies(id),
     CONSTRAINT user_watched_user_id_fk FOREIGN KEY user_watched_user_id_fk (user_id) REFERENCES users(id)

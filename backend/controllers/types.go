@@ -10,6 +10,15 @@ type ErrorResponse struct {
 	Message string `json:"message"`
 }
 
+type HomeResponse struct {
+	Status           string    `json:"status"`
+	Logged           bool      `json:"logged"`
+	CurrentMonth     string    `json:"month"`
+	MonthlyPopular   []Movie   `json:"monthly_popular"`
+	AllTimeFavorites []Movie   `json:"all_time_favorites"`
+	LatestReviews    []Comment `json:"latest_reviews"`
+}
+
 func OkMessage(data any) OkResponse {
 	return OkResponse{
 		Status: "ok",
@@ -39,20 +48,25 @@ type User struct {
 }
 
 type Movie struct {
-	ID          int
-	Title       string
-	Description string
-	ReleaseDate string
-	Poster      string
-	Rating      float32
-	Length		int
-	Genre		string
+	ID                  int
+	Title               string
+	Description         string
+	ReleaseDate         string
+	Poster              string
+	Rating              float32
+	Length              int
+	Genre               string
+	FavoriteCount       int
+	WatchedCount        int
+	MonthlyWatchedCount any
 }
 
 type Comment struct {
 	UserID      int
 	Username    string
-	MovieID     string
+	UserAvatar  any
+	MovieID     int
+	MovieTitle  string
 	Comment     string
 	CommentDate string
 }

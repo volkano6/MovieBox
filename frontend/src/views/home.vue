@@ -67,12 +67,6 @@ export default {
     }
   },
   async created() {
-    const response = await axios.get("api/profile");
-    if (response.data.status == "error") {
-      this.$router.push("/login")
-    } else {
-      this.user = response.data.data
-    }
   }
 }
 </script>
