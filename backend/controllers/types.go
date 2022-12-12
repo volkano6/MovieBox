@@ -71,6 +71,12 @@ type Comment struct {
 	CommentDate string
 }
 
+type Favorite struct {
+	MovieID     	int
+	UserID    		int
+	FavoritedDate 	string
+}
+
 type UserRegister struct {
 	Username    string `json:"user_name" binding:"required"`
 	Password    string `json:"password" binding:"required"`
@@ -80,4 +86,14 @@ type UserRegister struct {
 type UserLogin struct {
 	Username string `json:"user_name" binding:"required"`
 	Password string `json:"password" binding:"required"`
+}
+
+type ProfileResponse struct {
+	Status 			string		`json:"status"`
+	Logged			bool		`json:"logged"`
+	User			User		`json:"user"`
+	UserWatched 	[]Movie		`json:"user_watched"`	
+	UserWatchlist 	[]Movie		`json:"user_watchlist"`
+	UserComments 	[]Comment	`json:"user_comments"`
+	UserFavorites	[]Movie	`json:"user_favorites"`
 }

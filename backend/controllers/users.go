@@ -24,16 +24,13 @@ func GetUser(c *gin.Context) {
 }
 
 func Watchlist(c *gin.Context) {
-	// TODO: Arda buraya bakicak
-}
-
-func Watched(c *gin.Context) {
 	id := c.Param("id")
-	// Check watched table with given user id
-	sql := `SELECT id, title, release_date, poster, rating
-		FROM movies LEFT JOIN user_watched
-		ON movies.id = user_watched.movie_id
-		WHERE user_watched.user_id = ?;`
+	// Check Watchlist table with given user id
+	sql := `SELECT id, title, description, release_date, poster, rating, length, genre_name
+	FROM movies LEFT JOIN user_watchlist
+	ON movies.id = user_watchlist.movie_id
+	JOIN movie_genres ON movies.id = movie_genres.movie_id
+	WHERE user_watchlist.user_id = ?;`
 	rows, err := database.DB.Query(sql, id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
@@ -43,7 +40,30 @@ func Watched(c *gin.Context) {
 	var movies []Movie
 	var movie Movie
 	for rows.Next() {
-		rows.Scan(&movie.ID, &movie.Title, &movie.ReleaseDate, &movie.Poster, &movie.Rating)
+		rows.Scan(&movie.ID, &movie.Title, &movie.Description, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length, &movie.Genre)
+		movies = append(movies, movie)
+	}
+	c.JSON(http.StatusOK, OkMessage(movies))
+}
+
+func Watched(c *gin.Context) {
+	id := c.Param("id")
+	// Check watched table with given user id
+	sql := `SELECT id, title, release_date, poster, rating, length, genre_name
+	FROM movies LEFT JOIN user_watched
+	ON movies.id = user_watched.movie_id
+	JOIN movie_genres ON movies.id = movie_genres.movie_id
+	WHERE user_watched.user_id = ?;`
+	rows, err := database.DB.Query(sql, id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
+	// Return movie details with the movie ids
+	var movies []Movie
+	var movie Movie
+	for rows.Next() {
+		rows.Scan(&movie.ID, &movie.Title, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length, &movie.Genre)
 		movies = append(movies, movie)
 	}
 	c.JSON(http.StatusOK, OkMessage(movies))
@@ -52,9 +72,10 @@ func Watched(c *gin.Context) {
 func Favorites(c *gin.Context) {
 	id := c.Param("id")
 	// Check Favorites table with given user id
-	sql := `SELECT id, title, release_date, poster, rating
-		FROM movies LEFT JOIN user_favorites
+	sql := `SELECT id, title, release_date, poster, rating, length, genre_name
+		FROM movies JOIN user_favorites
 		ON movies.id = user_favorites.movie_id
+		JOIN movie_genres ON movies.id = movie_genres.movie_id
 		WHERE user_favorites.user_id = ?;`
 	rows, err := database.DB.Query(sql, id)
 	if err != nil {
@@ -65,7 +86,7 @@ func Favorites(c *gin.Context) {
 	var movies []Movie
 	var movie Movie
 	for rows.Next() {
-		rows.Scan(&movie.ID, &movie.Title, &movie.ReleaseDate, &movie.Poster, &movie.Rating)
+		rows.Scan(&movie.ID, &movie.Title, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length, &movie.Genre)
 		movies = append(movies, movie)
 	}
 	c.JSON(http.StatusOK, OkMessage(movies))
@@ -74,9 +95,10 @@ func Favorites(c *gin.Context) {
 func Comments(c *gin.Context) {
 	id := c.Param("id")
 	// Check comments with user id
-	sql := `SELECT users.id, users.username, movie_id , comment, comment_date 
+	sql := `SELECT users.id, users.username, movie_id , comment, comment_date, title
 	FROM project.user_comments LEFT JOIN project.users
-	ON project.user_comments.user_id = project.users.id
+	ON user_comments.user_id = project.users.id
+	JOIN movies ON movie_id = movies.id
 	WHERE project.users.id = ?;`
 	rows, err := database.DB.Query(sql, id)
 	if err != nil {
@@ -87,7 +109,7 @@ func Comments(c *gin.Context) {
 	var comments []Comment
 	var comment Comment
 	for rows.Next() {
-		rows.Scan(&comment.UserID, &comment.Username, &comment.MovieID, &comment.Comment, &comment.CommentDate)
+		rows.Scan(&comment.UserID, &comment.Username, &comment.MovieID, &comment.Comment, &comment.CommentDate, &comment.Title)
 		comments = append(comments, comment)
 	}
 	if comments == nil {
