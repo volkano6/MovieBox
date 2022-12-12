@@ -33,7 +33,7 @@ CREATE TABLE movies (
     description VARCHAR(1000) NOT NULL,
     release_date VARCHAR(50) NOT NULL,
     poster VARCHAR(255) NOT NULL,
-    rating FLOAT(24),
+    rating FLOAT(24) NOT NULL DEFAULT '0',
     length INT NOT NULL
 );
 
