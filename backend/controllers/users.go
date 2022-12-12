@@ -109,7 +109,7 @@ func Comments(c *gin.Context) {
 	var comments []Comment
 	var comment Comment
 	for rows.Next() {
-		rows.Scan(&comment.UserID, &comment.Username, &comment.MovieID, &comment.Comment, &comment.CommentDate, &comment.Title)
+		rows.Scan(&comment.UserID, &comment.Username, &comment.MovieID, &comment.Comment, &comment.CommentDate, &comment.MovieTitle)
 		comments = append(comments, comment)
 	}
 	if comments == nil {

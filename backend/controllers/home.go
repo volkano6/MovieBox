@@ -6,7 +6,6 @@ import (
 
 	"github.com/C305DatabaseProject/database-project/backend/database"
 	"github.com/gin-gonic/gin"
-	"github.com/C305DatabaseProject/database-project/backend/database"
 )
 
 func Homepage(c *gin.Context) {
@@ -156,7 +155,7 @@ func Profile(c *gin.Context) {
 	var comments []Comment
 	var comment Comment
 	for rows.Next() {
-		rows.Scan(&comment.UserID, &comment.Username, &comment.MovieID, &comment.Comment, &comment.CommentDate, &comment.Title)
+		rows.Scan(&comment.UserID, &comment.Username, &comment.MovieID, &comment.Comment, &comment.CommentDate, &comment.MovieTitle)
 		comments = append(comments, comment)
 	}
 	if comments == nil {
@@ -170,7 +169,7 @@ func Profile(c *gin.Context) {
 		ON movies.id = user_favorites.movie_id
 		JOIN movie_genres ON movies.id = movie_genres.movie_id
 		WHERE user_favorites.user_id = ?;`
-	
+
 	rows, err = database.DB.Query(sql, id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
@@ -183,7 +182,7 @@ func Profile(c *gin.Context) {
 		rows.Scan(&movie_favorite.ID, &movie_favorite.Title, &movie_favorite.Description, &movie_favorite.ReleaseDate, &movie_favorite.Poster, &movie_favorite.Rating, &movie_favorite.Length, &movie_favorite.Genre)
 		movies_favorite = append(movies_favorite, movie_favorite)
 	}
-	profileResponse.UserFavorites = movies_favorite 
+	profileResponse.UserFavorites = movies_favorite
 	profileResponse.Status = "ok"
 
 	// User logged in
