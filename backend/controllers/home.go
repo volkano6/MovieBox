@@ -41,7 +41,7 @@ func Homepage(c *gin.Context) {
 		monthlyPopular = append(monthlyPopular, movie)
 	}
 	var totalWatched int
-	sql = `SELECT COUNT(movie_id) FROM user_favorites WHERE user_favorites.movie_id = ?;`
+	sql = `SELECT COUNT(movie_id) FROM user_watched WHERE user_watched.movie_id = ?;`
 	for i := 0; i < len(monthlyPopular); i++ {
 		err = database.DB.QueryRow(sql, monthlyPopular[i].ID).Scan(&totalWatched)
 		if err != nil {
