@@ -23,7 +23,6 @@ func Homepage(c *gin.Context) {
 	//userObject := user.(User)
 	// User logged in
 	// ; Show profile button
-
 	// Get watched by current month and rank based on count per every movie
 	sql := `SELECT COUNT(user_watched.movie_id) AS watched_count, (SELECT COUNT(movie_id) FROM user_favorites WHERE user_favorites.movie_id = user_watched.movie_id) AS favorite_count, user_watched.movie_id, movies.title, movies.description, movies.release_date, movies.poster, movies.length, movies.rating FROM user_watched 
 	INNER JOIN movies ON user_watched.movie_id = movies.id 
@@ -35,20 +34,35 @@ func Homepage(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
 		return
 	}
-	var movie Movie
 	for rows.Next() {
+		var movie Movie
 		rows.Scan(&movie.MonthlyWatchedCount, &movie.FavoriteCount, &movie.ID, &movie.Title, &movie.Description, &movie.ReleaseDate, &movie.Poster, &movie.Length, &movie.Rating)
 		monthlyPopular = append(monthlyPopular, movie)
 	}
-	var totalWatched int
-	sql = `SELECT COUNT(movie_id) FROM user_watched WHERE user_watched.movie_id = ?;`
 	for i := 0; i < len(monthlyPopular); i++ {
+		// Get total watched count for each movie
+		var totalWatched int
+		sql = `SELECT COUNT(movie_id) FROM user_watched WHERE user_watched.movie_id = ?;`
 		err = database.DB.QueryRow(sql, monthlyPopular[i].ID).Scan(&totalWatched)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
 			return
 		}
 		monthlyPopular[i].WatchedCount = totalWatched
+		// Get genres for each movie
+		var genres []string
+		var genre string
+		sql = `SELECT genre_name FROM movie_genres WHERE movie_id = ?;`
+		rows, err = database.DB.Query(sql, monthlyPopular[i].ID)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+			return
+		}
+		for rows.Next() {
+			rows.Scan(&genre)
+			genres = append(genres, genre)
+		}
+		monthlyPopular[i].Genres = genres
 	}
 	// Get favorites by all time and rank based on count per every movie
 	// Return movie_id, movie tite, release date, poster, length, rating, genre, watched, favorites
@@ -61,10 +75,26 @@ func Homepage(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
 		return
 	}
-	var movie2 Movie
 	for rows.Next() {
-		rows.Scan(&movie2.FavoriteCount, &movie2.WatchedCount, &movie2.ID, &movie2.Title, &movie2.Description, &movie2.ReleaseDate, &movie2.Poster, &movie2.Length, &movie2.Rating)
-		allTimeFavorites = append(allTimeFavorites, movie2)
+		var movie Movie
+		rows.Scan(&movie.FavoriteCount, &movie.WatchedCount, &movie.ID, &movie.Title, &movie.Description, &movie.ReleaseDate, &movie.Poster, &movie.Length, &movie.Rating)
+		allTimeFavorites = append(allTimeFavorites, movie)
+	}
+	for i := 0; i < len(allTimeFavorites); i++ {
+		// Get genres for each movie
+		var genres []string
+		var genre string
+		sql = `SELECT genre_name FROM movie_genres WHERE movie_id = ?;`
+		rows, err = database.DB.Query(sql, allTimeFavorites[i].ID)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+			return
+		}
+		for rows.Next() {
+			rows.Scan(&genre)
+			genres = append(genres, genre)
+		}
+		allTimeFavorites[i].Genres = genres
 	}
 	// Get 5 comments ranked by recent
 	// Return user_id, display name, user pp, comment, comment date, movie name, movie id
@@ -118,7 +148,7 @@ func Profile(c *gin.Context) {
 	var movies_watched []Movie
 	var movie_watched Movie
 	for rows.Next() {
-		rows.Scan(&movie_watched.ID, &movie_watched.Title, &movie_watched.Description, &movie_watched.ReleaseDate, &movie_watched.Poster, &movie_watched.Rating, &movie_watched.Length, &movie_watched.Genre)
+		rows.Scan(&movie_watched.ID, &movie_watched.Title, &movie_watched.Description, &movie_watched.ReleaseDate, &movie_watched.Poster, &movie_watched.Rating, &movie_watched.Length, &movie_watched.Genres)
 		movies_watched = append(movies_watched, movie_watched)
 	}
 	profileResponse.UserWatched = movies_watched
@@ -137,7 +167,7 @@ func Profile(c *gin.Context) {
 	var movies_watchlist []Movie
 	var movie_watchlist Movie
 	for rows.Next() {
-		rows.Scan(&movie_watchlist.ID, &movie_watchlist.Title, &movie_watchlist.Description, &movie_watchlist.ReleaseDate, &movie_watchlist.Poster, &movie_watchlist.Rating, &movie_watchlist.Length, &movie_watchlist.Genre)
+		rows.Scan(&movie_watchlist.ID, &movie_watchlist.Title, &movie_watchlist.Description, &movie_watchlist.ReleaseDate, &movie_watchlist.Poster, &movie_watchlist.Rating, &movie_watchlist.Length, &movie_watchlist.Genres)
 		movies_watchlist = append(movies_watchlist, movie_watchlist)
 	}
 	profileResponse.UserWatchlist = movies_watchlist
@@ -179,7 +209,7 @@ func Profile(c *gin.Context) {
 	var movies_favorite []Movie
 	var movie_favorite Movie
 	for rows.Next() {
-		rows.Scan(&movie_favorite.ID, &movie_favorite.Title, &movie_favorite.Description, &movie_favorite.ReleaseDate, &movie_favorite.Poster, &movie_favorite.Rating, &movie_favorite.Length, &movie_favorite.Genre)
+		rows.Scan(&movie_favorite.ID, &movie_favorite.Title, &movie_favorite.Description, &movie_favorite.ReleaseDate, &movie_favorite.Poster, &movie_favorite.Rating, &movie_favorite.Length, &movie_favorite.Genres)
 		movies_favorite = append(movies_favorite, movie_favorite)
 	}
 	profileResponse.UserFavorites = movies_favorite

@@ -40,7 +40,7 @@ func Watchlist(c *gin.Context) {
 	var movies []Movie
 	var movie Movie
 	for rows.Next() {
-		rows.Scan(&movie.ID, &movie.Title, &movie.Description, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length, &movie.Genre)
+		rows.Scan(&movie.ID, &movie.Title, &movie.Description, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length, &movie.Genres)
 		movies = append(movies, movie)
 	}
 	c.JSON(http.StatusOK, OkMessage(movies))
@@ -63,7 +63,7 @@ func Watched(c *gin.Context) {
 	var movies []Movie
 	var movie Movie
 	for rows.Next() {
-		rows.Scan(&movie.ID, &movie.Title, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length, &movie.Genre)
+		rows.Scan(&movie.ID, &movie.Title, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length, &movie.Genres)
 		movies = append(movies, movie)
 	}
 	c.JSON(http.StatusOK, OkMessage(movies))
@@ -86,7 +86,7 @@ func Favorites(c *gin.Context) {
 	var movies []Movie
 	var movie Movie
 	for rows.Next() {
-		rows.Scan(&movie.ID, &movie.Title, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length, &movie.Genre)
+		rows.Scan(&movie.ID, &movie.Title, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length, &movie.Genres)
 		movies = append(movies, movie)
 	}
 	c.JSON(http.StatusOK, OkMessage(movies))

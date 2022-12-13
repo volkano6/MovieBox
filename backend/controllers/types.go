@@ -55,7 +55,7 @@ type Movie struct {
 	Poster              string
 	Rating              float32
 	Length              int
-	Genre               string
+	Genres              []string
 	FavoriteCount       int
 	WatchedCount        int
 	MonthlyWatchedCount any
@@ -72,9 +72,9 @@ type Comment struct {
 }
 
 type Favorite struct {
-	MovieID     	int
-	UserID    		int
-	FavoritedDate 	string
+	MovieID       int
+	UserID        int
+	FavoritedDate string
 }
 
 type UserRegister struct {
@@ -89,11 +89,11 @@ type UserLogin struct {
 }
 
 type ProfileResponse struct {
-	Status 			string		`json:"status"`
-	Logged			bool		`json:"logged"`
-	User			User		`json:"user"`
-	UserWatched 	[]Movie		`json:"user_watched"`	
-	UserWatchlist 	[]Movie		`json:"user_watchlist"`
-	UserComments 	[]Comment	`json:"user_comments"`
-	UserFavorites	[]Movie	`json:"user_favorites"`
+	Status        string    `json:"status"`
+	Logged        bool      `json:"logged"`
+	User          User      `json:"user"`
+	UserWatched   []Movie   `json:"user_watched"`
+	UserWatchlist []Movie   `json:"user_watchlist"`
+	UserComments  []Comment `json:"user_comments"`
+	UserFavorites []Movie   `json:"user_favorites"`
 }
