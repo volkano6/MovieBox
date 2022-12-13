@@ -55,7 +55,7 @@
             <input type="radio" @click="pageContent('UserWatched')" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
             <label class="btn btn-light" for="btnradio1" >Watched</label>
 
-            <input type="radio" @click="pageContent('UserWatchlist')" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+            <input type="radio" @click="pageContent('UserWatchlit')" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
             <label class="btn btn-light" for="btnradio2">Watchlist</label>
 
             <input type="radio" @click="pageContent('UserComments')" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
@@ -102,7 +102,6 @@ export default {
   components: {
     Nav,
     Footer,
-    UserInfo,
     UserWatched,
     UserWatchlit,
     UserComments,
@@ -126,7 +125,6 @@ export default {
     } else {
       this.user = response.data.data
     }
-    this.user.Username = "Volkan"
   }
 }
 </script>

@@ -8,14 +8,14 @@
                 </div>
                 <div class="col-sm-8">
                     <h4>
-                        <a hre="#" class="username">Starla muscle</a>
-                        <label class="label label-info" style="color:cornflowerblue">&nbsp; #Film Name </label>
+                        <a hre="#" class="username">{{Username}}</a>
+                        <label class="label label-info" style="color:cornflowerblue">&nbsp; #{{MovieTitle}} </label>
                     </h4>
                     <h5> 
                     <i class="fa fa-calendar"></i>
-                    Aug 06, 12:48 
+                    {{CommentDate}}
                     </h5>
-                    <p class="description" style="color: aliceblue;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In velit lectus, efficitur eu eros vel, luctus aliquet est. Sed sit amet ligula non mauris porta dignissim....</p>    
+                    <p class="description" style="color: aliceblue;">{{Comment}}</p>    
                 </div>
                 
             </div>
@@ -24,7 +24,7 @@
 
 <script>
 export default {
-
+  props:["UserID", "Username","UserAvatar", "MovieTitle", "MovieID", "Comment", "CommentDate"] ,
 }
 </script>
 

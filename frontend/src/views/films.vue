@@ -93,10 +93,9 @@ export default {
         const response = await axios.get("api/movies");
         console.log(response)
         if (response.data.status == "error") {
-            this.$router.push("/login")
+            this.$router.push("/films")
         } else {
             this.movies = response.data.data
-
         }
     }
 };

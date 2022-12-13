@@ -1,47 +1,57 @@
 <template>
   <div class="profile1">
     <Nav></Nav>
-    <div class="container" >
+    <div class="container">
       <div class="text-center" style="padding-left:35%;padding-right:35%">
-      <h2 class="text-center" style="margin-top: 2%; color: aliceblue; border-bottom: 2px solid aliceblue; padding-bottom: 0.7%;"> Favorite of Weeks </h2> 
-    </div>
-      <div class="row mt-2 row-cols-1 row-cols-xl-5 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-
+        <h2 class="text-center"
+          style="margin-top: 2%; color: aliceblue; border-bottom: 2px solid aliceblue; padding-bottom: 0.7%;"> Most
+          Watched Movies of {{ this.movies.month }} </h2>
       </div>
+      <div class="row">
+                <div class="row mt-2 row-cols-1 row-cols-xl-5 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+                    <div v-for="movie in movies.monthly_popular" :key="movie.id">
+                        <MovieCard :poster=movie.Poster :title=movie.Title :date="movie.ReleaseDate" genre="genre"
+                            :rating="movie.Rating" :length=movie.Length :number_of_likes=movie.FavoriteCount :number_of_watches=movie.WatchedCount />
+                    </div>
+                </div>
+            </div>
+      
 
     </div>
 
-    <div class="container" >
+    <div class="container">
       <div class="text-center" style="margin-top: 3%;padding-left:35%;padding-right:35%">
-      <h2 class="text-center" style="margin-top: 2%; color: aliceblue; border-bottom: 2px solid aliceblue; padding-bottom: 0.7%;"> All Time Favorites </h2> 
-    </div>
-      <div class="row mt-2 row-cols-1 row-cols-xl-5 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-        <MovieCard />
-
+        <h2 class="text-center"
+          style="margin-top: 2%; color: aliceblue; border-bottom: 2px solid aliceblue; padding-bottom: 0.7%;"> Most
+          Favorited Movies of All Time </h2>
       </div>
+      <div class="row">
+                <div class="row mt-2 row-cols-1 row-cols-xl-5 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+                    <div v-for="movie in movies.all_time_favorites" :key="movie.id">
+                        <MovieCard :poster=movie.Poster :title=movie.Title :date="movie.ReleaseDate" genre="genre"
+                            :rating="movie.Rating" :length=movie.Length :number_of_likes=movie.FavoriteCount :number_of_watches=movie.WatchedCount />
+                    </div>
+                </div>
+            </div>
+      
 
     </div>
-      <div class="text-left" style="padding-left:7.7%;padding-right:7%">
-      <h3 class="text-left" style="margin-top: 5%; color: aliceblue; border-bottom: 2px solid aliceblue; padding-bottom: 0.7%;"> Last Reviews </h3> 
-      </div>
+    <div class="text-left" style="padding-left:7.7%;padding-right:7%">
+      <h3 class="text-left"
+        style="margin-top: 5%; color: aliceblue; border-bottom: 2px solid aliceblue; padding-bottom: 0.7%;"> Latest
+        Movie Reviews </h3>
+    </div>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container bootstrap snippets bootdey" style="margin-top: 1.5%; padding-left: 1.7%;">
-    <div class="row">
-      <ReviewCard />
-      <ReviewCard />
-      <ReviewCard />
-      <ReviewCard />
+    <div class="container bootstrap snippets bootdey" style="margin-top: 1.5%; padding-left: 1.7%;">
+      <div class="row">
+                <div class="row mt-2 row-cols-1 row-cols-xl-5 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+                    <div v-for="value in movies.latest_reviews" :key=value.UserID>
+                        <ReviewCard :Username=value.Username :MovieTitle=value.MovieTitle :Comment=value.Comment :CommentDate=value.CommentDate  />
+                    </div>
+                </div>
+                
+            </div>
     </div>
-</div>
     <Footer></Footer>
   </div>
 </template>
@@ -54,25 +64,32 @@ import MovieCard from "../components/movie_card.vue"
 import ReviewCard from "../components/review_card.vue"
 
 export default {
-  name: "profile",
+  name: "home",
+  data() {
+    return {
+      movies: []
+    }
+  },
   components: {
     Nav,
     Footer,
     MovieCard,
     ReviewCard
   },
-  data() {
-    return {
-      user: null
-    }
-  },
   async created() {
+    const response = await axios.get("api/homepage");
+    if (response.data.status == "error") {
+      this.$router.push("/home")
+    } else {
+      this.movies = response.data
+    }
+    console.log(this.movies.monthly_popular)
+
   }
 }
 </script>
   
 <style>
-
 .post-list {
   position: relative;
   padding: 5px 0;
@@ -85,8 +102,8 @@ export default {
   border-radius: 6px;
 }
 
-.post-list .label{
-    font-weight:normal;    
+.post-list .label {
+  font-weight: normal;
 }
 
 .post-list .picture {
@@ -134,9 +151,10 @@ export default {
   opacity: 0.79;
   padding: 9px 18px;
 }
+
 .btn {
   border-width: 2px;
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
   font-weight: 400;
   opacity: 0.8;
   padding: 7px 16px;

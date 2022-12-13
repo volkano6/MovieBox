@@ -2,19 +2,20 @@ package controllers
 
 import (
 	"net/http"
-
+	"fmt"
 	"github.com/C305DatabaseProject/database-project/backend/database"
 	"github.com/gin-gonic/gin"
 )
 
 func GetMovies(c *gin.Context) {
 	// Check comments with user id
-	sql := `SELECT * FROM movies;`
+	sql := `SELECT id, title, release_date, poster, rating, length FROM movies;`
 	rows, err := database.DB.Query(sql)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
 		return
 	}
+	fmt.Println(rows)
 	// Return Comments details with the User ids
 	var movies []Movie
 	var movie Movie
