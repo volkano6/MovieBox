@@ -134,6 +134,8 @@ func Profile(c *gin.Context) {
 	userObject := user.(User)
 	id := userObject.ID
 	profileResponse.User = userObject
+	
+	// movies_watched 
 	sql := `SELECT id, title, description, release_date, poster, rating, length, genre_name
 	FROM movies LEFT JOIN user_watched
 	ON movies.id = user_watched.movie_id
@@ -153,6 +155,7 @@ func Profile(c *gin.Context) {
 	}
 	profileResponse.UserWatched = movies_watched
 
+	//movies_watchlist
 	sql = `SELECT id, title, description, release_date, poster, rating, length, genre_name
 	FROM movies LEFT JOIN user_watchlist
 	ON movies.id = user_watchlist.movie_id
@@ -172,6 +175,7 @@ func Profile(c *gin.Context) {
 	}
 	profileResponse.UserWatchlist = movies_watchlist
 
+	//comments
 	sql = `SELECT users.id, users.username, movie_id , comment, comment_date, title
 	FROM project.user_comments LEFT JOIN project.users
 	ON user_comments.user_id = project.users.id
@@ -194,6 +198,7 @@ func Profile(c *gin.Context) {
 	}
 	profileResponse.UserComments = comments
 
+	//movies_favorite
 	sql = `SELECT id, title, description, release_date, poster, rating, length, genre_name
 		FROM movies JOIN user_favorites
 		ON movies.id = user_favorites.movie_id

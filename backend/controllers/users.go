@@ -26,10 +26,9 @@ func GetUser(c *gin.Context) {
 func Watchlist(c *gin.Context) {
 	id := c.Param("id")
 	// Check Watchlist table with given user id
-	sql := `SELECT id, title, description, release_date, poster, rating, length, genre_name
+	sql := `SELECT id, title, description, release_date, poster, rating, length
 	FROM movies LEFT JOIN user_watchlist
 	ON movies.id = user_watchlist.movie_id
-	JOIN movie_genres ON movies.id = movie_genres.movie_id
 	WHERE user_watchlist.user_id = ?;`
 	rows, err := database.DB.Query(sql, id)
 	if err != nil {
@@ -40,8 +39,41 @@ func Watchlist(c *gin.Context) {
 	var movies []Movie
 	var movie Movie
 	for rows.Next() {
-		rows.Scan(&movie.ID, &movie.Title, &movie.Description, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length, &movie.Genres)
+		rows.Scan(&movie.ID, &movie.Title, &movie.Description, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length)
 		movies = append(movies, movie)
+	}
+	for i:=0; i < len(movies); i++ {
+		var genres []string
+		var genre string
+		sql = `SELECT genre_name FROM movie_genres WHERE movie_id = ?;`
+		rows, err = database.DB.Query(sql, movies[i].ID)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+			return
+		}
+		for rows.Next() {
+			rows.Scan(&genre)
+			genres = append(genres, genre)
+		}
+		movies[i].Genres = genres
+
+		var totalFavorites int
+		sql = `SELECT COUNT(movie_id) FROM user_favorites WHERE movie_id = ?;`
+		err = database.DB.QueryRow(sql, movies[i].ID).Scan(&totalFavorites)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+			return
+		}
+		movies[i].FavoriteCount = totalFavorites
+
+		var totalWatched int
+		sql = `SELECT COUNT(movie_id) FROM user_watched WHERE movie_id = ?;`
+		err = database.DB.QueryRow(sql, movies[i].ID).Scan(&totalWatched)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+			return
+		}
+		movies[i].WatchedCount = totalWatched
 	}
 	c.JSON(http.StatusOK, OkMessage(movies))
 }
@@ -49,10 +81,9 @@ func Watchlist(c *gin.Context) {
 func Watched(c *gin.Context) {
 	id := c.Param("id")
 	// Check watched table with given user id
-	sql := `SELECT id, title, release_date, poster, rating, length, genre_name
+	sql := `SELECT id, title, description, release_date, poster, rating, length
 	FROM movies LEFT JOIN user_watched
 	ON movies.id = user_watched.movie_id
-	JOIN movie_genres ON movies.id = movie_genres.movie_id
 	WHERE user_watched.user_id = ?;`
 	rows, err := database.DB.Query(sql, id)
 	if err != nil {
@@ -63,8 +94,41 @@ func Watched(c *gin.Context) {
 	var movies []Movie
 	var movie Movie
 	for rows.Next() {
-		rows.Scan(&movie.ID, &movie.Title, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length, &movie.Genres)
+		rows.Scan(&movie.ID, &movie.Title, &movie.Description, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length)
 		movies = append(movies, movie)
+	}
+	for i:=0; i < len(movies); i++ {
+		var genres []string
+		var genre string
+		sql = `SELECT genre_name FROM movie_genres WHERE movie_id = ?;`
+		rows, err = database.DB.Query(sql, movies[i].ID)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+			return
+		}
+		for rows.Next() {
+			rows.Scan(&genre)
+			genres = append(genres, genre)
+		}
+		movies[i].Genres = genres
+
+		var totalFavorites int
+		sql = `SELECT COUNT(movie_id) FROM user_favorites WHERE movie_id = ?;`
+		err = database.DB.QueryRow(sql, movies[i].ID).Scan(&totalFavorites)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+			return
+		}
+		movies[i].FavoriteCount = totalFavorites
+
+		var totalWatched int
+		sql = `SELECT COUNT(movie_id) FROM user_watched WHERE movie_id = ?;`
+		err = database.DB.QueryRow(sql, movies[i].ID).Scan(&totalWatched)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+			return
+		}
+		movies[i].WatchedCount = totalWatched
 	}
 	c.JSON(http.StatusOK, OkMessage(movies))
 }
@@ -72,10 +136,9 @@ func Watched(c *gin.Context) {
 func Favorites(c *gin.Context) {
 	id := c.Param("id")
 	// Check Favorites table with given user id
-	sql := `SELECT id, title, release_date, poster, rating, length, genre_name
+	sql := `SELECT id, title, description, release_date, poster, rating, length
 		FROM movies JOIN user_favorites
 		ON movies.id = user_favorites.movie_id
-		JOIN movie_genres ON movies.id = movie_genres.movie_id
 		WHERE user_favorites.user_id = ?;`
 	rows, err := database.DB.Query(sql, id)
 	if err != nil {
@@ -86,9 +149,43 @@ func Favorites(c *gin.Context) {
 	var movies []Movie
 	var movie Movie
 	for rows.Next() {
-		rows.Scan(&movie.ID, &movie.Title, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length, &movie.Genres)
+		rows.Scan(&movie.ID, &movie.Title, &movie.Description, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length)
 		movies = append(movies, movie)
 	}
+	for i:=0; i < len(movies); i++ {
+		var genres []string
+		var genre string
+		sql = `SELECT genre_name FROM movie_genres WHERE movie_id = ?;`
+		rows, err = database.DB.Query(sql, movies[i].ID)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+			return
+		}
+		for rows.Next() {
+			rows.Scan(&genre)
+			genres = append(genres, genre)
+		}
+		movies[i].Genres = genres
+
+		var totalFavorites int
+		sql = `SELECT COUNT(movie_id) FROM user_favorites WHERE movie_id = ?;`
+		err = database.DB.QueryRow(sql, movies[i].ID).Scan(&totalFavorites)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+			return
+		}
+		movies[i].FavoriteCount = totalFavorites
+
+		var totalWatched int
+		sql = `SELECT COUNT(movie_id) FROM user_watched WHERE movie_id = ?;`
+		err = database.DB.QueryRow(sql, movies[i].ID).Scan(&totalWatched)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+			return
+		}
+		movies[i].WatchedCount = totalWatched
+	}
+
 	c.JSON(http.StatusOK, OkMessage(movies))
 }
 
