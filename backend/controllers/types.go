@@ -34,47 +34,47 @@ func ErrorMessage(message string) ErrorResponse {
 }
 
 type User struct {
-	ID          int
-	Username    string
-	Displayname string
-	Email       string
-	DateOfBirth string
-	Avatar      string
-	Bio         string
-	Location    string
-	Twitter     string
-	Instagram   string
-	Type        int
+	ID          int    `json:"id"`
+	Username    string `json:"username"`
+	Displayname string `json:"displayname"`
+	Email       string `json:"email"`
+	DateOfBirth string `json:"date_of_birth"`
+	Avatar      string `json:"avatar"`
+	Bio         string `json:"bio"`
+	Location    string `json:"location"`
+	Twitter     string `json:"twitter"`
+	Instagram   string `json:"instagram"`
+	Type        int    `json:"type"`
 }
 
 type Movie struct {
-	ID                  int
-	Title               string
-	Description         string
-	ReleaseDate         string
-	Poster              string
-	Rating              float32
-	Length              int
-	Genres              []string
-	FavoriteCount       int
-	WatchedCount        int
-	MonthlyWatchedCount any
+	ID                  int      `json:"id"`
+	Title               string   `json:"title"`
+	Description         string   `json:"description"`
+	ReleaseDate         string   `json:"release_date"`
+	Poster              string   `json:"poster"`
+	Rating              float32  `json:"rating"`
+	Length              int      `json:"length"`
+	Genres              []string `json:"genres"`
+	FavoriteCount       int      `json:"favorite_count"`
+	WatchedCount        int      `json:"watched_count"`
+	MonthlyWatchedCount any      `json:"monthly_watched_count"`
 }
 
 type Comment struct {
-	UserID      int
-	Username    string
-	UserAvatar  any
-	MovieID     int
-	MovieTitle  string
-	Comment     string
-	CommentDate string
+	UserID      int    `json:"user_id"`
+	Username    string `json:"user_name"`
+	UserAvatar  any    `json:"user_avatar"`
+	MovieID     int    `json:"movie_id"`
+	MovieTitle  string `json:"movie_title"`
+	Comment     string `json:"comment"`
+	CommentDate string `json:"comment_date"`
 }
 
 type Favorite struct {
-	MovieID       int
-	UserID        int
-	FavoritedDate string
+	MovieID       int    `json:"movie_id"`
+	UserID        int    `json:"user_id"`
+	FavoritedDate string `json:"favorited_date"`
 }
 
 type UserRegister struct {

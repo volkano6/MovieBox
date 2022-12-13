@@ -10,8 +10,8 @@
       <div class="row">
                 <div class="row mt-2 row-cols-1 row-cols-xl-5 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
                     <div v-for="movie in movies.monthly_popular" :key="movie.id">
-                        <MovieCard :poster=movie.Poster :title=movie.Title :date="movie.ReleaseDate" genre="genre"
-                            :rating="movie.Rating" :length=movie.Length :number_of_likes=movie.FavoriteCount :number_of_watches=movie.WatchedCount />
+                        <MovieCard :poster=movie.poster :title=movie.title :date="movie.release_date" :genre=movie.genres
+                            :rating="movie.rating" :length=movie.length :number_of_likes=movie.favorite_count :number_of_watches=movie.watched_count />
                     </div>
                 </div>
             </div>
@@ -28,8 +28,8 @@
       <div class="row">
                 <div class="row mt-2 row-cols-1 row-cols-xl-5 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
                     <div v-for="movie in movies.all_time_favorites" :key="movie.id">
-                        <MovieCard :poster=movie.Poster :title=movie.Title :date="movie.ReleaseDate" genre="genre"
-                            :rating="movie.Rating" :length=movie.Length :number_of_likes=movie.FavoriteCount :number_of_watches=movie.WatchedCount />
+                        <MovieCard :poster=movie.poster :title=movie.title :date="movie.release_date" :genre=movie.genres
+                            :rating="movie.rating" :length=movie.length :number_of_likes=movie.favorite_count :number_of_watches=movie.watched_count />
                     </div>
                 </div>
             </div>
@@ -45,8 +45,8 @@
     <div class="container bootstrap snippets bootdey" style="margin-top: 1.5%; padding-left: 1.7%;">
       <div class="row">
                 <div class="row mt-2 row-cols-1 row-cols-xl-5 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
-                    <div v-for="value in movies.latest_reviews" :key=value.UserID>
-                        <ReviewCard :Username=value.Username :MovieTitle=value.MovieTitle :Comment=value.Comment :CommentDate=value.CommentDate  />
+                    <div v-for="value in movies.latest_reviews" :key=value.user_id>
+                        <ReviewCard :Username=value.user_name :MovieTitle=value.movie_title :Comment=value.comment :CommentDate=value.comment_date  />
                     </div>
                 </div>
                 
