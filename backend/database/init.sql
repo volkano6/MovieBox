@@ -1,16 +1,14 @@
 DROP TABLE IF EXISTS actor_filmography;
 DROP TABLE IF EXISTS movie_genres;
 DROP TABLE IF EXISTS user_ratings;
-DROP TABLE IF EXISTS user_watchlists;
+DROP TABLE IF EXISTS user_watchlist;
 DROP TABLE IF EXISTS user_watched;
 DROP TABLE IF EXISTS user_comments;
 DROP TABLE IF EXISTS user_favorites;
-DROP TABLE IF EXISTS watchlist_movies;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS genres;
 DROP TABLE IF EXISTS actors;
-DROP TABLE IF EXISTS watchlists;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -50,7 +48,7 @@ CREATE TABLE actors (
     `location` VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE watchlists (
+/*CREATE TABLE watchlists (
     id INT AUTO_INCREMENT PRIMARY KEY,
     watchlist_name VARCHAR(255) NOT NULL
 );
@@ -61,7 +59,7 @@ CREATE TABLE watchlist_movies (
     PRIMARY KEY (watchlist_id, movie_id),
     CONSTRAINT watchlist_movies_watchlist_id_fk FOREIGN KEY watchlist_movies_watchlist_id_fk (watchlist_id) REFERENCES watchlists(id),
     CONSTRAINT watchlist_movies_movie_id_fk FOREIGN KEY watchlist_movies_movie_id_fk (movie_id) REFERENCES movies(id)
-);
+);*/
 
 CREATE TABLE movie_genres (
     movie_id INT,
