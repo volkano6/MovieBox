@@ -84,8 +84,6 @@ export default {
     } else {
       this.movies = response.data
     }
-    console.log(this.movies.monthly_popular)
-
   }
 }
 </script>
