@@ -1,32 +1,32 @@
 <template>
     <div class="row mt-2 row-cols-1 row-cols-xl-5 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
-        <MovieCard :poster="poster" :title="title" :date="date" :rating="rating" :genre="genre" :length="length" :number_of_likes="number_of_likes" :number_of_watches="number_of_watches" />
+      <div v-for="movie in watched" :key="movie.id">
+        <MovieCard :poster=movie.poster :title=movie.title :date="movie.release_date" :genre=movie.genres
+          :rating="movie.rating" :length=movie.length :number_of_likes=movie.favorite_count
+          :number_of_watches=movie.watched_count />
+      </div>
     </div>
-</template>
-
-<script>
-import MovieCard from "../../movie_card.vue"
-
-export default {
-    data() {
-        return {
-
-            poster: "https://cdn.shopify.com/s/files/1/0057/3728/3618/products/avatar-the-way-of-water_sncuhzap_480x.progressive.jpg?v=1669382994",
-            title: "Avatar",
-            date: "2010",
-            rating: "4.8",
-            genre: "science fiction",
-            length: "90" + "min.",
-            number_of_watches: "110k",
-            number_of_likes: "200k",
-        }
-    },
+  </template>
+  
+  <script>
+  import MovieCard from "../../movie_card.vue"
+  
+  export default {
+    name: "userWatched",
+    props: ["watched"],
     components: {
-        MovieCard,
+      MovieCard
     },
-}
-</script>
-
-<style>
-
-</style>
+    data() {
+  
+    },
+    created() {
+  
+    }
+  
+  }
+  </script>
+  
+  <style>
+  
+  </style>
