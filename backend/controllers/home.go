@@ -129,7 +129,7 @@ func Profile(c *gin.Context) {
 	profileResponse.Logged = true
 	if !exists {
 		// User not logged in
-		c.JSON(http.StatusUnauthorized, ErrorMessage("User not logged in."))
+		c.JSON(http.StatusOK, ErrorMessage("User not logged in."))
 		return
 	}
 	userObject := user.(User)

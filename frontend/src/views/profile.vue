@@ -14,13 +14,13 @@
                 </div>
               </div>
               <div class="text-center">
-                <h4 class="m-3 text-light text-opacity-75">{{ data.user.username }}</h4>
+                <h4 class="m-3 text-light text-opacity-75" v-if="this.data.length != 0">{{ data.user.username }}</h4>
               </div>
             </div>
           </div>
         </div>
         <div class="col-8 mt-5">
-          <div class="row justify-content-start">
+          <div class="row justify-content-start" v-if="this.data.length != 0">
             <div class="col-2">
               <div class="row text-center">
                 <h4 class="text-light text-opacity-75">{{ data.user_watched.length }}</h4>
