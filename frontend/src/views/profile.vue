@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <Nav></Nav>
+    <Nav :logged=this.data.logged></Nav>
 
     <div class="container-sm">
       <div class="row">
@@ -131,7 +131,7 @@ export default {
       this.$router.push("/login")
     } else {
       this.data = response.data
-
+      console.log(this.data.logged)
     }
   }
 }

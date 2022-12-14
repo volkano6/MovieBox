@@ -26,23 +26,38 @@
                     <a class="nav-link active text-light text-opacity-75" aria-current="page" href="/home">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link text-light text-opacity-75" href="/profile">Profile</a>
-                  </li>
-                  <li class="nav-item">
                     <a class="nav-link text-light text-opacity-75" href="/films">Films</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link text-light text-opacity-75" href="/movie">Movie</a>
                   </li>
-                  <ul class="navbar-nav ms-auto">
+                  <ul class="navbar-nav ms-auto" v-if="!logged">
                     <li class="nav-item">
-                      <a class="nav-link d-flex align-items-center text-light text-opacity-75" href="/login">Sign In</a>
+                      <a class="nav-link d-flex align-items-center text-light text-opacity-75" href="/login">
+                        <button type="button" class="btn btn-sm btn-outline-light me-2">Login</button>
+                      </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link d-flex align-items-center text-light text-opacity-75" href="/login"> Log
-                        Out</a>
+                      <a class="nav-link d-flex align-items-center text-light text-opacity-75" href="/register">
+                        <button type="button" class="btn btn-sm btn-warning">Sign-up</button>
+                      </a>
                     </li>
-
+                  </ul>
+                  <ul class="navbar-nav ms-auto" v-else>
+                    <div class="dropdown text-end">
+                      <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                      </a>
+                      <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                        <li>
+                          <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="/login">Sign out</a></li>
+                      </ul>
+                    </div>
                   </ul>
                 </ul>
               </div>
@@ -60,12 +75,12 @@
 
 <script>
 export default {
-
+  props: ['logged']
 }
 </script>
 
 <style>
 .navColor {
- background-image: #484848;
+  background-image: #484848;
 }
 </style>

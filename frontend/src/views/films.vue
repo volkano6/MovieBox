@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <Nav></Nav>
+        <Nav :logged="this.movies.logged"></Nav>
         <div class="container mt-3">
             <!--search row-->
             <div class="row pb-3 border-bottom">

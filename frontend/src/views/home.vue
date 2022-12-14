@@ -1,7 +1,7 @@
 
 <template>
   <div class="profile1">
-    <Nav></Nav>
+    <Nav :logged=this.movies.logged></Nav>
     <div class="container">
       <div class="text-center" style="padding-left:35%;padding-right:35%">
         <h2 class="text-center"
@@ -139,23 +139,4 @@ export default {
   margin-top: 45px;
 }
 
-.btn-info {
-  color: #1084FF;
-  border-color: #269abc;
-}
-
-.btn-round {
-  border-width: 1px;
-  border-radius: 30px !important;
-  opacity: 0.79;
-  padding: 9px 18px;
-}
-
-.btn {
-  border-width: 2px;
-  background-color: rgba(0, 0, 0, 0);
-  font-weight: 400;
-  opacity: 0.8;
-  padding: 7px 16px;
-}
 </style>
