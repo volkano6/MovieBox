@@ -129,13 +129,14 @@ func Profile(c *gin.Context) {
 	profileResponse.Logged = true
 	if !exists {
 		// User not logged in
-		profileResponse.Logged = false
+		c.JSON(http.StatusUnauthorized, ErrorMessage("User not logged in."))
+		return
 	}
 	userObject := user.(User)
 	id := userObject.ID
 	profileResponse.User = userObject
-	
-	// movies_watched 
+
+	// movies_watched
 	sql := `SELECT id, title, description, release_date, poster, rating, length
 	FROM movies LEFT JOIN user_watched
 	ON movies.id = user_watched.movie_id
@@ -152,7 +153,7 @@ func Profile(c *gin.Context) {
 		rows.Scan(&movie_watched.ID, &movie_watched.Title, &movie_watched.Description, &movie_watched.ReleaseDate, &movie_watched.Poster, &movie_watched.Rating, &movie_watched.Length)
 		movies_watched = append(movies_watched, movie_watched)
 	}
-	for i:=0; i < len(movies_watched); i++ {
+	for i := 0; i < len(movies_watched); i++ {
 		var genres []string
 		var genre string
 		sql = `SELECT genre_name FROM movie_genres WHERE movie_id = ?;`
@@ -204,7 +205,7 @@ func Profile(c *gin.Context) {
 		rows.Scan(&movie_watchlist.ID, &movie_watchlist.Title, &movie_watchlist.Description, &movie_watchlist.ReleaseDate, &movie_watchlist.Poster, &movie_watchlist.Rating, &movie_watchlist.Length)
 		movies_watchlist = append(movies_watchlist, movie_watchlist)
 	}
-	for i:=0; i < len(movies_watchlist); i++ {
+	for i := 0; i < len(movies_watchlist); i++ {
 		var genres []string
 		var genre string
 		sql = `SELECT genre_name FROM movie_genres WHERE movie_id = ?;`
@@ -279,7 +280,7 @@ func Profile(c *gin.Context) {
 		rows.Scan(&movie_favorite.ID, &movie_favorite.Title, &movie_favorite.Description, &movie_favorite.ReleaseDate, &movie_favorite.Poster, &movie_favorite.Rating, &movie_favorite.Length)
 		movies_favorite = append(movies_favorite, movie_favorite)
 	}
-	for i:=0; i < len(movies_favorite); i++ {
+	for i := 0; i < len(movies_favorite); i++ {
 		var genres []string
 		var genre string
 		sql = `SELECT genre_name FROM movie_genres WHERE movie_id = ?;`
