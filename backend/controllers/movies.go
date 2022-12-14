@@ -19,14 +19,15 @@ func GetMovies(c *gin.Context) {
 		return
 	}
 	var movies []Movie
-	var movie Movie
-	var genre string
 	for rows.Next() {
+		var movie Movie
+		var genre string
 		rows.Scan(&movie.ID, &movie.Title, &movie.Description, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length, &genre, &movie.FavoriteCount, &movie.WatchedCount)
 		if len(movies) != 0 && movies[len(movies)-1].ID == movie.ID {
 			movies[len(movies)-1].Genres = append(movies[len(movies)-1].Genres, genre)
 			continue
 		}
+		movie.Genres = append(movie.Genres, genre)
 		movies = append(movies, movie)
 	}
 	if movies == nil {
