@@ -9,7 +9,7 @@
                         <div class="col-6">
                             <div class="row mt-1">
                                 <div class="col">
-                                    <div style="position:relative; left:50px; top:2px;">
+                                    <div style="position:relative; left:50px; top:2px; color:white;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
                                             fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
                                             <path
@@ -18,14 +18,14 @@
                                     </div>
                                 </div>
                                 <div class="col" style="position:relative; top:4px;">
-                                    <p>345</p>
+                                    <p style="color:white;">345</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="row mt-1">
                                 <div class="col">
-                                    <div style="position:relative; left:35px;">
+                                    <div style="position:relative; left:35px; color:white;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31"
                                             fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                                             <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
@@ -35,7 +35,7 @@
                                     </div>
                                 </div>
                                 <div class="col" style="position:relative; right:10px; top:4px;">
-                                    <p>345</p>
+                                    <p style="color:white;">345</p>
                                 </div>
                             </div>
 
@@ -45,23 +45,23 @@
                 <div class="col-9">
                     <div class="row justify-content-start">
                         <div class="col-1">
-                            <h3 class="fw-bold">Title</h3>
+                            <h3 class="fw-bold" style="color:white;">Title</h3>
                         </div>
                         <div class="col-1">
-                            <h4 class="fw-light">date</h4>
+                            <h4 class="fw-light" style="color:white;">date</h4>
                         </div>
                         <div class="col-1">
-                            <h4 class="fw-light">director</h4>
+                            <h4 class="fw-light" style="color:white;">director</h4>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-9 ">
                             <div class="row ">
-                                <h3>Des</h3>
+                                <h3 style="color:white;">Des</h3>
                             </div>
                             <div class="row ">
-                                <h3>Genre</h3>
-                                <p>
+                                <h3 style="color:white;">Genre</h3>
+                                <p style="color:white;">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                     Mollitia, incidunt consectetur! Alias perspiciatis repellendus
                                     esse porro quae, voluptate sapiente accusantium perferendis,
@@ -73,8 +73,8 @@
                                 </p>
                             </div>
                             <div class="row ">
-                                <h3>Cast</h3>
-                                <p>
+                                <h3 style="color:white;">Cast</h3>
+                                <p style="color:white;">
                                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                                     Nulla incidunt porro cum odit dolor tenetur beatae eos magnam
                                     provident dolorem fugiat, odio quod quas aspernatur
@@ -86,10 +86,10 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="col bg-danger">
+                        <div class="col">
                             <div class="row">
 
-                                <div class="d-grid gap-2" style="margin:5px; right:5px;">
+                                <div class="d-grid gap-2" style="margin:5px; right:5px; color:white;">
                                     <button class="btn btn-primary active" data-bs-toggle="button" aria-pressed="true">
                                         <div style="position:relative; ">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31"
@@ -105,7 +105,7 @@
                             <div class="row">
 
                                 <div class="d-grid gap-2" style="margin-left:93px;">
-                                    <p style="left:240px;">Watch</p>
+                                    <p style="left:240px; color:white;">Watch</p>
                                 </div>
 
                             </div>
@@ -126,7 +126,7 @@
                             <div class="row">
 
                                 <div class="d-grid gap-2" style="margin-left:99px;">
-                                    <p style="left:240px;">likes</p>
+                                    <p style="left:240px; color:white;">likes</p>
                                 </div>
                             </div>
 
@@ -145,7 +145,7 @@
                             <!-- watchlist row -->
                             <div class="row">
                                 <div class="d-grid gap-2" style="margin-left:80px;">
-                                    <p style="left:240px;">Watchlist</p>
+                                    <p style="left:240px; color:white;">Watchlist</p>
                                 </div>
                             </div>
                             <div class="row" style="margin-right:27px">
@@ -176,7 +176,7 @@
                             </div>
                             <div class="row">
                                 <div class="d-grid gap-2" style="margin-left:88px;">
-                                    <p style="left:240px;">Ratings</p>
+                                    <p style="left:240px; color:white;">Ratings</p>
                                 </div>
                             </div>
                         </div>

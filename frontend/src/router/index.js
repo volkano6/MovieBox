@@ -43,6 +43,11 @@ const router = createRouter({
       name: "films",
       component: () => import("../views/films.vue"),
     },
+    {
+      path: "/admin",
+      name: "admin",
+      component: () => import("../views/admin.vue"),
+    },
     // If no path matches, return 404 component
     {
       path: "/:pathMatch(.*)*",
