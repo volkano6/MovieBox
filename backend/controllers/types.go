@@ -23,6 +23,7 @@ type HomeResponse struct {
 type ProfileResponse struct {
 	Status        string    `json:"status"`
 	Logged        bool      `json:"logged"`
+	LoggedID      int       `json:"logged_id"`
 	User          User      `json:"user"`
 	UserWatched   []Movie   `json:"user_watched"`
 	UserWatchlist []Movie   `json:"user_watchlist"`

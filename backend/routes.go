@@ -11,6 +11,7 @@ func SetupRoutes(r *gin.Engine) {
 	{
 		api.GET("/homepage", middleware.CheckAuth, controllers.Homepage)
 		api.GET("/profile", middleware.CheckAuth, controllers.Profile)
+		api.GET("/dashboard", middleware.CheckAuth, controllers.Dashboard)
 
 		auth := api.Group("/auth")
 		{

@@ -21,11 +21,13 @@ func GetUser(c *gin.Context) {
 		return
 	}
 	// Check if user exists
-	_, exists := c.Get("user")
+	localUser, exists := c.Get("user")
 	profileResponse.Logged = true
 	if !exists {
 		// User not logged in
 		profileResponse.Logged = false
+	} else {
+		profileResponse.LoggedID = localUser.(User).ID
 	}
 	profileResponse.User = user
 	// movies_watched
