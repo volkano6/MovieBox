@@ -7,10 +7,13 @@
             <div class="row">
                 <div class="col">
                     <h3 class="fw-bold" style="color:white;">My DashBoard</h3>
+                    <h3></h3>
                     <!-- <p style="color:white;">My Dashboard</p> -->
                 </div>
             </div>
-
+            <div class="row">
+                <h3 class="fw-bold" style="color:white;">Films</h3>
+            </div>
             <div class="row mt-3">
                 <div class="col-1 border ">
                     <h5 class="fw-bold" style="color:white;">Id</h5>
@@ -74,6 +77,81 @@
                 </div>
 
             </div>
+            <div class="row mt-3">
+                <h3 style="color:white;">Users</h3>
+            </div>
+            <div class="row">
+                <div class="col-1 border ">
+                    <h6 class="fw-bold mt-3" style="color:white;">User ID</h6>
+                </div>
+                <div class="col-1 border ">
+                    <h6 class="fw-bold mt-3" style="color:white;">userName</h6>
+                </div>
+                <div class="col-1 border">
+                    <h6 class="fw-bold mt-3" style="color:white;">disName</h6>
+                </div>
+                <div class="col-2 border">
+                    <h6 class="fw-bold mt-3" style="color:white;">email</h6>
+                </div>
+                <div class="col-1 border">
+                    <h6 class="fw-bold mt-3" style="color:white;">dateOfBirth</h6>
+                </div>
+                <div class="col-1 border">
+                    <!-- <p style="color:white;">Poster</p> -->
+                    <h6 class="fw-bold mt-3" style="color:white;">bio</h6>
+                </div>
+                <div class="col-1 border">
+                    <h6 class="fw-bold mt-3" style="color:white;">location</h6>
+                </div>
+                <div class="col-1 border">
+                    <h6 class="fw-bold mt-3" style="color:white;">twitter</h6>
+                </div>
+                <div class="col-1 border">
+                    <h6 class="fw-bold mt-3" style="color:white;">instagram</h6>
+                </div>
+                <div class="col-2 border">
+                    <h6 class="fw-bold mt-3" style="color:white;">type</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1 border ">
+                    <h6 class="fw-bold mt-3" style="color:white;">1</h6>
+                </div>
+                <div class="col-1 border ">
+                    <h6 class="fw-bold mt-3" style="color:white;">batuhan</h6>
+                </div>
+                <div class="col-1 border">
+                    <h6 class="fw-bold mt-3" style="color:white;">bulu</h6>
+                </div>
+                <div class="col-2 border">
+                    <h6 class="fw-bold mt-3" style="color:white;">bulu@gmail.com</h6>
+                </div>
+                <div class="col-1 border">
+                    <h6 class="fw-bold mt-3" style="color:white;">03.04.2000</h6>
+                </div>
+                <div class="col-1 border">
+                    <!-- <p style="color:white;">Poster</p> -->
+                    <h6 class="fw-bold mt-3" style="color:white;">hello</h6>
+                </div>
+                <div class="col-1 border">
+                    <h6 class="fw-bold mt-3" style="color:white;">istanbul</h6>
+                </div>
+                <div class="col-1 border">
+                    <h6 class="fw-bold mt-3" style="color:white;">bulu</h6>
+                </div>
+                <div class="col-1 border">
+                    <h6 class="fw-bold mt-3" style="color:white;">bulu</h6>
+                </div>
+                <div class="col-1 border">
+                    <h6 class="fw-bold mt-3" style="color:white;">male</h6>
+                </div>
+                <div class="col-1 border">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square mt-2" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
+                    </svg>
+                </div>
+            </div>
 
         </div>
 
@@ -96,5 +174,9 @@ export default {
 </script>
 
 <style>
+svg {
+  fill: white;
+}
+
 
 </style>
