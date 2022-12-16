@@ -1,5 +1,6 @@
 <template>
   <div class="post-list">
+          
             <div class="row pt-3 rounded" style="background: #000;">
                 <div class="col-sm-1">
                     <div class="picture">
@@ -8,8 +9,11 @@
                 </div>
                 <div class="col-sm-8">
                     <h4>
-                        <a hre="#" class="username">{{Username}}</a>
-                        <label class="label label-info" style="color:cornflowerblue">&nbsp; #{{MovieTitle}} </label>
+                        <a :href="'user/' + UserID" class="username">{{Username}}</a>
+                        <a :href="'movie/' + MovieID" class="filmname">
+                          <label class="label label-info" style="color:cornflowerblue">&nbsp; #{{MovieTitle}} </label>
+                        </a>
+                        
                     </h4>
                     <h5> 
                     <i class="fa fa-calendar"></i>
@@ -17,7 +21,6 @@
                     </h5>
                     <p class="description" style="color: aliceblue;">{{Comment}}</p>    
                 </div>
-                
             </div>
         </div>
 </template>
