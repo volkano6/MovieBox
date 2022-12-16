@@ -19,6 +19,23 @@ type HomeResponse struct {
 	LatestReviews    []Comment `json:"latest_reviews"`
 }
 
+type ProfileResponse struct {
+	Status        string    `json:"status"`
+	Logged        bool      `json:"logged"`
+	User          User      `json:"user"`
+	UserWatched   []Movie   `json:"user_watched"`
+	UserWatchlist []Movie   `json:"user_watchlist"`
+	UserComments  []Comment `json:"user_comments"`
+	UserFavorites []Movie   `json:"user_favorites"`
+}
+
+type MovieResponse struct {
+	Status   string    `json:"status"`
+	Logged   bool      `json:"logged"`
+	Movie    Movie     `json:"movie"`
+	Comments []Comment `json:"comments"`
+}
+
 func OkMessage(data any) OkResponse {
 	return OkResponse{
 		Status: "ok",
@@ -86,14 +103,4 @@ type UserRegister struct {
 type UserLogin struct {
 	Username string `json:"user_name" binding:"required"`
 	Password string `json:"password" binding:"required"`
-}
-
-type ProfileResponse struct {
-	Status        string    `json:"status"`
-	Logged        bool      `json:"logged"`
-	User          User      `json:"user"`
-	UserWatched   []Movie   `json:"user_watched"`
-	UserWatchlist []Movie   `json:"user_watchlist"`
-	UserComments  []Comment `json:"user_comments"`
-	UserFavorites []Movie   `json:"user_favorites"`
 }
