@@ -16,33 +16,22 @@ func SetupRoutes(r *gin.Engine) {
 		{
 			auth.POST("/register", controllers.Register)
 			auth.POST("/login", controllers.Login)
-			auth.POST("/logout", controllers.Logout)
 		}
-		users := api.Group("/user/:id")
-		{
-			users.GET("/", middleware.CheckAuth, controllers.GetUser)
-			users.GET("/watchlist", controllers.Watchlist)
-			users.GET("/watched", controllers.Watched)
-			users.GET("/favorites", controllers.Favorites)
-			users.GET("/comments", controllers.Comments)
-		}
+		api.GET("/user/:id", middleware.CheckAuth, controllers.GetUser)
 		movies := api.Group("/movies")
 		{
 			//   /api/movies/...
 			movies.GET("/", middleware.CheckAuth, controllers.GetMovies)
-			movies.POST("/", controllers.PostMovies)
 			id := movies.Group("/:id")
 			{
 				//   /api/movies/:id/...
 				id.GET("/", middleware.CheckAuth, controllers.GetMovie)
-				id.GET("/comments", controllers.GetMovieComments)
-				id.POST("/comments", controllers.PostMovieComments)
-				id.POST("/ratings", controllers.PostMovieRating)
-				id.POST("/favorite", controllers.PostMovieFavorite)
-				id.POST("/cast", controllers.PostMovieCast)
-
+				id.POST("/watched", middleware.CheckAuth, controllers.PostMovieWatched)
+				id.POST("/watchlist", middleware.CheckAuth, controllers.PostMovieWatchlist)
+				id.POST("/favorite", middleware.CheckAuth, controllers.PostMovieFavorite)
+				id.POST("/rating", middleware.CheckAuth, controllers.PostMovieRating)
+				id.POST("/comment", middleware.CheckAuth, controllers.PostMovieComment)
 			}
-
 		}
 		api.GET("/search/", middleware.CheckAuth, controllers.Search)
 	}

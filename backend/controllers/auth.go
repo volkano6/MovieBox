@@ -12,7 +12,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-
 func Register(c *gin.Context) {
 	var userRegisterObj UserRegister
 	err := c.ShouldBindJSON(&userRegisterObj)
@@ -71,10 +70,6 @@ func Login(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, OkMessage(token))
-}
-
-func Logout(c *gin.Context) {
-	//Change JWT as ""(nil)
 }
 
 func createTokenJWT(id string) (string, error) {

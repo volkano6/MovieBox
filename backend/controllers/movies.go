@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/C305DatabaseProject/database-project/backend/database"
 	"github.com/gin-gonic/gin"
@@ -91,9 +93,105 @@ func GetMovie(c *gin.Context) {
 	})
 }
 
-func PostMovies(c *gin.Context)        {}
-func GetMovieComments(c *gin.Context)  {}
-func PostMovieComments(c *gin.Context) {}
-func PostMovieRating(c *gin.Context)   {}
-func PostMovieFavorite(c *gin.Context) {}
-func PostMovieCast(c *gin.Context)     {}
+func PostMovieWatched(c *gin.Context) {
+	id := c.Param("id")
+	user, exists := c.Get("user")
+	if !exists {
+		// Don't allow post
+		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		return
+	}
+	sql := `INSERT INTO user_watched (movie_id, user_id, watched_date) VALUES (?, ?, ?);`
+	_, err := database.DB.Exec(sql, id, user.(User).ID, time.Now().UTC())
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, OkMessage("Successfully added to watched."))
+}
+
+func PostMovieWatchlist(c *gin.Context) {
+	id := c.Param("id")
+	user, exists := c.Get("user")
+	if !exists {
+		// Don't allow post
+		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		return
+	}
+	sql := `INSERT INTO user_watchlist (movie_id, user_id, added_date) VALUES (?, ?, ?);`
+	_, err := database.DB.Exec(sql, id, user.(User).ID, time.Now().UTC())
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, OkMessage("Successfully added to watchlist."))
+}
+
+func PostMovieFavorite(c *gin.Context) {
+	id := c.Param("id")
+	user, exists := c.Get("user")
+	if !exists {
+		// Don't allow post
+		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		return
+	}
+	sql := `INSERT INTO user_favorites (movie_id, user_id, favorited_date) VALUES (?, ?, ?);`
+	_, err := database.DB.Exec(sql, id, user.(User).ID, time.Now().UTC())
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, OkMessage("Successfully added to favorites."))
+}
+
+func PostMovieRating(c *gin.Context) {
+	id := c.Param("id")
+	rating := c.Query("star")
+	fmt.Println(rating)
+	user, exists := c.Get("user")
+	if rating == "" {
+		c.JSON(http.StatusOK, ErrorMessage("Invalid rating."))
+		return
+	}
+	if !exists {
+		// Don't allow post
+		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		return
+	}
+	sql := `INSERT INTO user_ratings (movie_id, user_id, rating) VALUES (?, ?, ?);`
+	_, err := database.DB.Exec(sql, id, user.(User).ID, rating)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
+	sql = `UPDATE movies SET rating = (SELECT AVG(rating) FROM user_ratings WHERE movie_id = id) WHERE id = ?;`
+	_, err = database.DB.Exec(sql, id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, OkMessage("Successfully added rating."))
+}
+
+func PostMovieComment(c *gin.Context) {
+	id := c.Param("id")
+	user, exists := c.Get("user")
+	var comment CommentPost
+	err := c.BindJSON(&comment)
+	if err != nil {
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
+		return
+	}
+	if !exists {
+		// Don't allow post
+		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		return
+	}
+	sql := `INSERT INTO user_comments (movie_id, user_id, comment, comment_date) VALUES (?, ?, ?, ?);`
+	_, err = database.DB.Exec(sql, id, user.(User).ID, comment.Comment, time.Now().UTC())
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, OkMessage("Successfully added comment."))
+}
