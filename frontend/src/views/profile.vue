@@ -123,7 +123,8 @@ export default {
   methods: {
     pageContent(a) {
       this.content = a
-    }
+    },
+    
   },
   async created() {
     const response = await axios.get("api/profile");
