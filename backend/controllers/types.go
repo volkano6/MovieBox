@@ -37,6 +37,13 @@ type MovieResponse struct {
 	Comments []Comment `json:"comments"`
 }
 
+type SearchResponse struct {
+	Status string  `json:"status"`
+	Logged bool    `json:"logged"`
+	Movies []Movie `json:"movies"`
+	Users  []User  `json:"users"`
+}
+
 func OkMessage(data any) OkResponse {
 	return OkResponse{
 		Status: "ok",

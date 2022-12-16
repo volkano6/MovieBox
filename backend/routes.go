@@ -44,6 +44,7 @@ func SetupRoutes(r *gin.Engine) {
 			}
 
 		}
+		api.GET("/search/", middleware.CheckAuth, controllers.Search)
 	}
 }
 
