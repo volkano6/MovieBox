@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <Nav :logged="this.movies.logged"></Nav>
+        <Nav :logged=response.logged></Nav>
         <div class="container mt-3">
             <!--search row-->
             <div class="row pb-3 border-bottom">
@@ -81,6 +81,7 @@ export default {
     name: "films",
     data() {
         return {
+            response: [],
             movies: []
         }
     },
@@ -91,11 +92,12 @@ export default {
     },
     async created() {
         const response = await axios.get("api/movies");
-        console.log(response)
         if (response.data.status == "error") {
             this.$router.push("/films")
         } else {
             this.movies = response.data.data
+            this.response = response.data
+            console.log(response.data.logged)
         }
     }
 };

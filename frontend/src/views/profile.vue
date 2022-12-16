@@ -132,7 +132,6 @@ export default {
       this.$router.push("/login")
     } else {
       this.data = response.data
-      console.log(this.data.logged)
     }
   }
 }

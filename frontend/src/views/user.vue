@@ -109,7 +109,7 @@ import UserFavorites from "../components/single_page/profile_page/user_favorites
 
 
 export default {
-    name: "profile",
+    name: "user",
     components: {
         Nav,
         Footer,
@@ -131,18 +131,12 @@ export default {
 
     },
     async created() {
-        
         const id = this.$route.params.id
-
         const response = await axios.get(`api/user/${id}`);
         this.data = response.data
-        if (id == this.data.user.id) {
-            console.log("aynı kişi")
-        } else {
-            console.log("farklı kişi")
+        if (id == this.data.logged_id) {
+            this.$router.push("/profile")
         }
-       
-   
     }
 }
 </script>
