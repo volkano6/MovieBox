@@ -48,7 +48,7 @@
     <div class="container bootstrap snippets bootdey" style="margin-top: 1.5%; padding-left: 1.7%;">
       <div class="row">
         <div v-for="value in movies.latest_reviews" :key=value.user_id>
-          <ReviewCard :Username=value.user_name :MovieTitle=value.movie_title :Comment=value.comment
+          <ReviewCard :UserID="value.user_id" :Username=value.user_name :MovieID=value.movie_id :MovieTitle=value.movie_title :Comment=value.comment
             :CommentDate=value.comment_date />
         </div>
       </div>
