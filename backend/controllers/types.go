@@ -2,6 +2,7 @@ package controllers
 
 type OkResponse struct {
 	Status string `json:"status"`
+	Logged bool   `json:"logged"`
 	Data   any    `json:"data"`
 }
 
@@ -17,6 +18,30 @@ type HomeResponse struct {
 	MonthlyPopular   []Movie   `json:"monthly_popular"`
 	AllTimeFavorites []Movie   `json:"all_time_favorites"`
 	LatestReviews    []Comment `json:"latest_reviews"`
+}
+
+type ProfileResponse struct {
+	Status        string    `json:"status"`
+	Logged        bool      `json:"logged"`
+	User          User      `json:"user"`
+	UserWatched   []Movie   `json:"user_watched"`
+	UserWatchlist []Movie   `json:"user_watchlist"`
+	UserComments  []Comment `json:"user_comments"`
+	UserFavorites []Movie   `json:"user_favorites"`
+}
+
+type MovieResponse struct {
+	Status   string    `json:"status"`
+	Logged   bool      `json:"logged"`
+	Movie    Movie     `json:"movie"`
+	Comments []Comment `json:"comments"`
+}
+
+type SearchResponse struct {
+	Status string  `json:"status"`
+	Logged bool    `json:"logged"`
+	Movies []Movie `json:"movies"`
+	Users  []User  `json:"users"`
 }
 
 func OkMessage(data any) OkResponse {
@@ -86,14 +111,4 @@ type UserRegister struct {
 type UserLogin struct {
 	Username string `json:"user_name" binding:"required"`
 	Password string `json:"password" binding:"required"`
-}
-
-type ProfileResponse struct {
-	Status        string    `json:"status"`
-	Logged        bool      `json:"logged"`
-	User          User      `json:"user"`
-	UserWatched   []Movie   `json:"user_watched"`
-	UserWatchlist []Movie   `json:"user_watchlist"`
-	UserComments  []Comment `json:"user_comments"`
-	UserFavorites []Movie   `json:"user_favorites"`
 }

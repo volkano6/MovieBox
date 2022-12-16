@@ -20,7 +20,7 @@ func SetupRoutes(r *gin.Engine) {
 		}
 		users := api.Group("/user/:id")
 		{
-			users.GET("/", controllers.GetUser)
+			users.GET("/", middleware.CheckAuth, controllers.GetUser)
 			users.GET("/watchlist", controllers.Watchlist)
 			users.GET("/watched", controllers.Watched)
 			users.GET("/favorites", controllers.Favorites)
@@ -29,23 +29,22 @@ func SetupRoutes(r *gin.Engine) {
 		movies := api.Group("/movies")
 		{
 			//   /api/movies/...
-			movies.GET("/", controllers.GetMovies)
+			movies.GET("/", middleware.CheckAuth, controllers.GetMovies)
 			movies.POST("/", controllers.PostMovies)
-			id := api.Group("/:id") 
+			id := movies.Group("/:id")
 			{
 				//   /api/movies/:id/...
-				id.GET("/", controllers.GetMovie)
+				id.GET("/", middleware.CheckAuth, controllers.GetMovie)
 				id.GET("/comments", controllers.GetMovieComments)
 				id.POST("/comments", controllers.PostMovieComments)
 				id.POST("/ratings", controllers.PostMovieRating)
 				id.POST("/favorite", controllers.PostMovieFavorite)
 				id.POST("/cast", controllers.PostMovieCast)
-				
-			}
-			
 
-			
+			}
+
 		}
+		api.GET("/search/", middleware.CheckAuth, controllers.Search)
 	}
 }
 

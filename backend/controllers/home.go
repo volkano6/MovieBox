@@ -205,10 +205,6 @@ func Profile(c *gin.Context) {
 		rows.Scan(&comment.UserID, &comment.Username, &comment.MovieID, &comment.Comment, &comment.CommentDate, &comment.MovieTitle)
 		comments = append(comments, comment)
 	}
-	if comments == nil {
-		c.JSON(http.StatusNotFound, ErrorMessage("User not have any comment."))
-		return
-	}
 	profileResponse.UserComments = comments
 	//movies_favorite
 	sql = `SELECT id, title, description, release_date, poster, rating, LENGTH, movie_genres.genre_name,
