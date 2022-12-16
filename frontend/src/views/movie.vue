@@ -203,6 +203,9 @@ export default {
         Footer,
         ReviewCard
     },
+    methods() {
+        
+    }
 };
 </script>
   
