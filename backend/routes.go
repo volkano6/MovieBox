@@ -29,7 +29,7 @@ func SetupRoutes(r *gin.Engine) {
 		movies := api.Group("/movies")
 		{
 			//   /api/movies/...
-			movies.GET("/", controllers.GetMovies)
+			movies.GET("/", middleware.CheckAuth, controllers.GetMovies)
 			movies.POST("/", controllers.PostMovies)
 			id := movies.Group("/:id")
 			{

@@ -8,6 +8,12 @@ import (
 )
 
 func GetMovies(c *gin.Context) {
+	logged := true
+	// Check if user exists
+	_, exists := c.Get("user")
+	if !exists {
+		logged = false
+	}
 	// Get all movie data from the database with genres, favorite and watched count
 	sql := `SELECT id, title, description, release_date, poster, rating, length, movie_genres.genre_name,
 	(SELECT COUNT(movie_id) FROM user_favorites WHERE user_favorites.movie_id = movies.id) AS favorite_count, 
@@ -30,7 +36,11 @@ func GetMovies(c *gin.Context) {
 		movie.Genres = append(movie.Genres, genre)
 		movies = append(movies, movie)
 	}
-	c.JSON(http.StatusOK, OkMessage(movies))
+	c.JSON(http.StatusOK, OkResponse{
+		Status: "ok",
+		Logged: logged,
+		Data:   movies,
+	})
 }
 
 func GetMovie(c *gin.Context) {
