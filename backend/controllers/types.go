@@ -96,6 +96,10 @@ type Comment struct {
 	CommentDate string `json:"comment_date"`
 }
 
+type CommentPost struct {
+	Comment string `json:"comment" binding:"required"`
+}
+
 type Favorite struct {
 	MovieID       int    `json:"movie_id"`
 	UserID        int    `json:"user_id"`

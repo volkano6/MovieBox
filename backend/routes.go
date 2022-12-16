@@ -30,6 +30,7 @@ func SetupRoutes(r *gin.Engine) {
 				id.POST("/watchlist", middleware.CheckAuth, controllers.PostMovieWatchlist)
 				id.POST("/favorite", middleware.CheckAuth, controllers.PostMovieFavorite)
 				id.POST("/rating", middleware.CheckAuth, controllers.PostMovieRating)
+				id.POST("/comment", middleware.CheckAuth, controllers.PostMovieComment)
 			}
 		}
 		api.GET("/search/", middleware.CheckAuth, controllers.Search)
