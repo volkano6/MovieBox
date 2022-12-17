@@ -48,6 +48,9 @@
           </div>
         </div>
       </div>
+      <div class="row m-2" style="background-color:#6c757d">
+        c
+      </div>
       <div class="row">
 
         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">

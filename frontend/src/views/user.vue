@@ -134,7 +134,9 @@ export default {
         const id = this.$route.params.id
         const response = await axios.get(`api/user/${id}`);
         this.data = response.data
-        if (id == this.data.logged_id) {
+        if (this.data.status == "error") {
+            this.$router.push("/home")
+        } else if (id == this.data.logged_id) {
             this.$router.push("/profile")
         }
     }
