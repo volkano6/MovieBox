@@ -14,7 +14,7 @@
                 </div>
               </div>
               <div class="text-center">
-                <h4 class="m-3 text-light text-opacity-75" v-if="this.data.length != 0">{{ data.user.username }}</h4>
+                <h4 class="m-3 text-light text-opacity-75" v-if="Object.keys(this.data).length != 0">{{ this.data.user.username }}</h4>
               </div>
             </div>
           </div>
@@ -23,25 +23,29 @@
           <div class="row justify-content-start" v-if="this.data.length != 0">
             <div class="col-2">
               <div class="row text-center">
-                <h4 class="text-light text-opacity-75">{{ data.user_watched.length }}</h4>
+                <h4 class="text-light text-opacity-75" v-if="data.user_watched != null">{{ this.data.user_watched.length }}</h4>
+                  <h4 class="text-light text-opacity-75" v-else>{{ 0 }}</h4>
                 <p class="text-light text-opacity-75">Watched</p>
               </div>
             </div>
             <div class="col-2">
               <div class="row text-center">
-                <h4 class="text-light text-opacity-75">{{ data.user_watchlist.length }}</h4>
+                <h4 class="text-light text-opacity-75" v-if="data.user_watchlist != null">{{ this.data.user_watchlist.length  }}</h4>
+                                <h4 class="text-light text-opacity-75" v-else>{{ 0 }}</h4>
                 <p class="text-light text-opacity-75">Watchlist</p>
               </div>
             </div>
             <div class="col-2">
               <div class="row text-center">
-                <h4 class="text-light text-opacity-75">{{ data.user_comments.length }}</h4>
+                <h4 class="text-light text-opacity-75" v-if="data.user_comments != null">{{ this.data.user_comments.length  }}</h4>
+                                <h4 class="text-light text-opacity-75" v-else>{{ 0 }}</h4>
                 <p class="text-light text-opacity-75">Comments</p>
               </div>
             </div>
             <div class="col-2">
               <div class="row text-center">
-                <h4 class="text-light text-opacity-75">{{ data.user_favorites.length }}</h4>
+                <h4 class="text-light text-opacity-75" v-if="data.user_favorites != null">{{ this.data.user_favorites.length  }}</h4>
+                                <h4 class="text-light text-opacity-75" v-else>{{ 0 }}</h4>
                 <p class="text-light text-opacity-75">Favorites</p>
               </div>
             </div>
