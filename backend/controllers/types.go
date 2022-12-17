@@ -45,6 +45,13 @@ type SearchResponse struct {
 	Users  []User  `json:"users"`
 }
 
+type DashboardResponse struct {
+	Status string  `json:"status"`
+	Logged bool    `json:"logged"`
+	Movies []Movie `json:"movies"`
+	Users  []User  `json:"users"`
+}
+
 func OkMessage(data any) OkResponse {
 	return OkResponse{
 		Status: "ok",
