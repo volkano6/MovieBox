@@ -70,7 +70,6 @@ type User struct {
 	Location    string `json:"location"`
 	Twitter     string `json:"twitter"`
 	Instagram   string `json:"instagram"`
-	Type        int    `json:"type"`
 }
 
 type Movie struct {

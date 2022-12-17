@@ -37,11 +37,11 @@ func CheckAuth(c *gin.Context) {
 		}
 		// Get user from DB
 		var user controllers.User
-		sql := `SELECT id, username, displayname, email, dateofbirth, avatar, bio, location, social_twitter, social_instagram, type
+		sql := `SELECT id, username, displayname, email, dateofbirth, avatar, bio, location, social_twitter, social_instagram
 			FROM users WHERE id = ?;`
 		database.DB.QueryRow(sql, claims["sub"]).Scan(
 			&user.ID, &user.Username, &user.Displayname, &user.Email, &user.DateOfBirth, &user.Avatar,
-			&user.Bio, &user.Location, &user.Twitter, &user.Instagram, &user.Type)
+			&user.Bio, &user.Location, &user.Twitter, &user.Instagram)
 		if user.ID == 0 {
 			c.Next()
 			return

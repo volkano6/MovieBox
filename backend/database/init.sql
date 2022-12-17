@@ -21,8 +21,7 @@ CREATE TABLE users (
     bio VARCHAR(1000),
     location VARCHAR(255),
     social_twitter VARCHAR(64),
-    social_instagram VARCHAR(64),
-    type TINYINT DEFAULT 0
+    social_instagram VARCHAR(64)
 );
 
 CREATE TABLE movies (

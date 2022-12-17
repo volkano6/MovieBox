@@ -43,7 +43,7 @@ func Search(c *gin.Context) {
 		movies = append(movies, movie)
 	}
 	var users []User
-	sql = `SELECT id, username, displayname, email, dateofbirth, avatar, bio, location, social_twitter, social_instagram, type
+	sql = `SELECT id, username, displayname, email, dateofbirth, avatar, bio, location, social_twitter, social_instagram
 		FROM users WHERE username = ? OR displayname = ?;`
 	rows, err = database.DB.Query(sql, search, search)
 	if err != nil {
@@ -52,7 +52,7 @@ func Search(c *gin.Context) {
 	}
 	for rows.Next() {
 		var user User
-		rows.Scan(&user.ID, &user.Username, &user.Displayname, &user.Email, &user.DateOfBirth, &user.Avatar, &user.Bio, &user.Location, &user.Twitter, &user.Instagram, &user.Type)
+		rows.Scan(&user.ID, &user.Username, &user.Displayname, &user.Email, &user.DateOfBirth, &user.Avatar, &user.Bio, &user.Location, &user.Twitter, &user.Instagram)
 		users = append(users, user)
 	}
 	c.JSON(http.StatusOK, SearchResponse{

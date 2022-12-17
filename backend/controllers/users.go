@@ -12,9 +12,9 @@ func GetUser(c *gin.Context) {
 	var user User
 	var profileResponse ProfileResponse
 	// Check if user with given id exists
-	sql := `SELECT id, username, displayname, email, dateofbirth, avatar, bio, location, social_twitter, social_instagram, type
+	sql := `SELECT id, username, displayname, email, dateofbirth, avatar, bio, location, social_twitter, social_instagram
 		FROM users WHERE id = ?`
-	database.DB.QueryRow(sql, id).Scan(&user.ID, &user.Username, &user.Displayname, &user.Email, &user.DateOfBirth, &user.Avatar, &user.Bio, &user.Location, &user.Twitter, &user.Instagram, &user.Type)
+	database.DB.QueryRow(sql, id).Scan(&user.ID, &user.Username, &user.Displayname, &user.Email, &user.DateOfBirth, &user.Avatar, &user.Bio, &user.Location, &user.Twitter, &user.Instagram)
 	if user.ID == 0 {
 		// User not found
 		c.JSON(http.StatusOK, ErrorMessage("User not found."))
