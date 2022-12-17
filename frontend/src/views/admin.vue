@@ -94,7 +94,7 @@
                 <div class="col-1 border ">
                     <h6 class="fw-bold mt-3" style="color:white;">userName</h6>
                 </div>
-                <div class="col-1 border">
+                <div class="col-2 border">
                     <h6 class="fw-bold mt-3" style="color:white;">disName</h6>
                 </div>
                 <div class="col-2 border">
@@ -116,9 +116,7 @@
                 <div class="col-1 border">
                     <h6 class="fw-bold mt-3" style="color:white;">instagram</h6>
                 </div>
-                <div class="col-1 border">
-                    <h6 class="fw-bold mt-3" style="color:white;">type</h6>
-                </div>
+               
                 <div class="col-1"></div>
             </div>
             <div class="row">
@@ -128,7 +126,7 @@
                 <div class="col-1 border ">
                     <h6 class="fw-bold mt-3" style="color:white;">batuhan</h6>
                 </div>
-                <div class="col-1 border">
+                <div class="col-2 border">
                     <h6 class="fw-bold mt-3" style="color:white;">bulu</h6>
                 </div>
                 <div class="col-2 border">
@@ -150,9 +148,7 @@
                 <div class="col-1 border">
                     <h6 class="fw-bold mt-3" style="color:white;">bulu</h6>
                 </div>
-                <div class="col-1 border">
-                    <h6 class="fw-bold mt-3" style="color:white;">male</h6>
-                </div>
+            
                 <div class="col-1 border">
                     <div style="position:relative; top:5px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square mt-2" viewBox="0 0 16 16">
