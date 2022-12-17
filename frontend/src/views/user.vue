@@ -52,6 +52,21 @@
                     </div>
                 </div>
             </div>
+            <div class="row m-1 pt-2 rounded" style="background-color:#bdbdc6">
+        <div class="row">
+          <div class="col" v-if="this.data.user.username != ''"><p style="color:black">User Name: {{this.data.user.username}}</p></div>
+          <div class="col" v-if="this.data.user.email != ''"><p style="color:black">Email: {{this.data.user.email}}</p></div>
+          <div class="col" v-if="this.data.user.date_of_birth != ''"><p style="color:black">Date Of Birth: {{this.data.user.date_of_birth}}</p></div>
+        </div>
+        <div class="row">
+          <div class="col" v-if="this.data.user.instagram != ''"><p style="color:black">Instagram: {{this.data.user.instagram}}</p></div>
+          <div class="col" v-if="this.data.user.twitter != ''"><p style="color:black">Twitter: {{this.data.user.twitter}}</p></div>
+          <div class="col" v-if="this.data.user.location != ''"><p style="color:black">Location: {{this.data.user.location}}</p></div>
+        </div>
+        <div class="row">
+          <div class="col" v-if="this.data.user.bio != ''"><p style="color:black">Bio: {{this.data.user.bio}}</p></div>
+        </div>
+      </div>
             <div class="row">
 
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
