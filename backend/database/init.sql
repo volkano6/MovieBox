@@ -121,3 +121,9 @@ CREATE TABLE user_comments (
     CONSTRAINT user_comments_movie_id_fk FOREIGN KEY user_comments_movie_id_fk (movie_id) REFERENCES movies(id),
     CONSTRAINT user_comments_user_id_fk FOREIGN KEY user_comments_user_id_fk (user_id) REFERENCES users(id)
 );
+
+CREATE TABLE user_admins (
+    user_id INT PRIMARY KEY,
+    permission VARCHAR(64),
+    CONSTRAINT user_admins_user_id_fk FOREIGN KEY user_admins_user_id_fk (user_id) REFERENCES users(id)
+);
