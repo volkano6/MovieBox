@@ -3,7 +3,10 @@ package controllers
 import (
 	"fmt"
 	"net/http"
+	"net/mail"
 	"os"
+	"regexp"
+	"strings"
 	"time"
 
 	"github.com/C305DatabaseProject/database-project/backend/database"
@@ -26,8 +29,35 @@ func Register(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, ErrorMessage(fmt.Sprintf("Error on hashing password: %s", err)))
 		return
 	}
+	// Validation check
+	// Username
+	if !regexp.MustCompile(`\s`).MatchString(userRegisterObj.Username) {
+		c.JSON(http.StatusInternalServerError, ErrorMessage("Username should not contain a space."))
+		return
+	}
+	// Email
+	_, err = mail.ParseAddress(userRegisterObj.Email)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage("Invalid email."))
+		return
+	}
+	// Password
+	if len(userRegisterObj.Password) < 6 {
+		c.JSON(http.StatusInternalServerError, ErrorMessage("Password cannot be shorter than 6 characters."))
+		return
+	}
+	if len(userRegisterObj.Password) > 32 {
+		c.JSON(http.StatusInternalServerError, ErrorMessage("Password cannot be longer than 32 characters."))
+		return
+	}
+	// Date of birth
+	_, err = time.Parse("2006-01-02", userRegisterObj.DateOfBirth)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage("Invalid date of birth format. Use YYYY/MM/DD."))
+		return
+	}
 	sql := `INSERT INTO users (username, password, displayname, email, dateofbirth) VALUES (?, ?, ?, ?, ?);`
-	_, err = database.DB.Exec(sql, userRegisterObj.Username, string(hashedPassword), userRegisterObj.Username, userRegisterObj.Email, userRegisterObj.DateOfBirth)
+	_, err = database.DB.Exec(sql, userRegisterObj.Username, string(hashedPassword), strings.ToLower(userRegisterObj.Username), userRegisterObj.Email, userRegisterObj.DateOfBirth)
 	// Error on SQL
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
