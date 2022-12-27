@@ -1,10 +1,10 @@
 <template>
     <div>
-        <Nav></Nav>
+        <Nav :logged=this.data.logged></Nav>
         <div class="container mt-3">
-            <div class="row">
+            <div class="row" v-if="Object.keys(this.data).length != 0">
                 <div class="col-3">
-                    <img src="https://picsum.photos/300/400" alt="" />
+                    <img :src="data.movie.poster" alt="" width="320" />
                     <div class="row">
                         <div class="col-6">
                             <div class="row mt-1">
@@ -18,7 +18,7 @@
                                     </div>
                                 </div>
                                 <div class="col" style="position:relative; top:4px;">
-                                    <p style="color:white;">345</p>
+                                    <p style="color:white;">{{ data.movie.favorite_count }}</p>
                                 </div>
                             </div>
                         </div>
@@ -35,7 +35,7 @@
                                     </div>
                                 </div>
                                 <div class="col" style="position:relative; right:10px; top:4px;">
-                                    <p style="color:white;">345</p>
+                                    <p style="color:white;">{{ data.movie.watched_count }}</p>
                                 </div>
                             </div>
 
@@ -44,46 +44,26 @@
                 </div>
                 <div class="col-9">
                     <div class="row justify-content-start">
-                        <div class="col-1">
-                            <h3 class="fw-bold" style="color:white;">Title</h3>
+                        <div class="col">
+                            <h3 class="fw-bold" style="color:white;">{{ data.movie.title }} </h3>
                         </div>
-                        <div class="col-1">
-                            <h4 class="fw-light" style="color:white;">date</h4>
-                        </div>
-                        <div class="col-1">
-                            <h4 class="fw-light" style="color:white;">director</h4>
+                        <div class="col">
+                            <h4 class="fw-light" style="color:white;">{{ data.movie.release_date }}</h4>
                         </div>
                     </div>
+                    <br>
                     <div class="row">
                         <div class="col-9 ">
                             <div class="row ">
-                                <h3 style="color:white;">Des</h3>
+                                <h3 style="color:white;">Description: </h3>
+                                <h5 style="color:white;">{{ data.movie.description }}</h5>
                             </div>
                             <div class="row ">
-                                <h3 style="color:white;">Genre</h3>
-                                <p style="color:white;">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Mollitia, incidunt consectetur! Alias perspiciatis repellendus
-                                    esse porro quae, voluptate sapiente accusantium perferendis,
-                                    fugit delectus reiciendis iusto quibusdam? Placeat consequatur
-                                    natus quaerat Lorem ipsum dolor sit amet consectetur,
-                                    adipisicing elit. Quas incidunt nulla sequi ipsum obcaecati,
-                                    aut quos id. Repellendus dolor, quia consequuntur, saepe magni
-                                    voluptatibus ea ad doloribus nesciunt aspernatur sit?
-                                </p>
+                                <h3 style="color:white;">Genres: {{ data.movie.genres }}</h3>
                             </div>
                             <div class="row ">
                                 <h3 style="color:white;">Cast</h3>
-                                <p style="color:white;">
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                    Nulla incidunt porro cum odit dolor tenetur beatae eos magnam
-                                    provident dolorem fugiat, odio quod quas aspernatur
-                                    reprehenderit, ipsa quidem, quisquam saepe. Nihil quo commodi
-                                    aliquam iste soluta earum est consectetur? Quia deleniti
-                                    tempora accusantium! Fugit provident, doloribus quidem omnis
-                                    et, distinctio tempore laudantium incidunt vero iusto ipsa
-                                    numquam nesciunt quis illo!
-                                </p>
+
                             </div>
                         </div>
                         <div class="col">
@@ -150,7 +130,7 @@
                             </div>
                             <div class="row" style="margin-right:27px">
 
-                                <fieldset class="rating" >
+                                <fieldset class="rating">
                                     <input type="radio" id="star5" name="rating" value="5" /><label class="full"
                                         for="star5" title="Awesome - 5 stars"></label>
                                     <input type="radio" id="star4half" name="rating" value="4 and a half" /><label
@@ -181,8 +161,19 @@
                             </div>
                         </div>
                     </div>
+                    <div v-if="data.comments == null">
+                        no command
+                    </div>
+                    <div v-else>
+                        <div class="row">
+                            <div v-for="value in data.comments" :key=value.user_id>
+                                <ReviewCard :UserID="value.user_id" :Username=value.user_name :MovieID=value.movie_id
+                                    :MovieTitle=value.movie_title :Comment=value.comment
+                                    :CommentDate=value.comment_date />
+                            </div>
+                        </div>
+                    </div>
 
-                    <ReviewCard />
 
                 </div>
             </div>
@@ -192,19 +183,39 @@
 </template>
   
 <script>
+import axios from 'axios'
 import Nav from "../components/nav.vue";
 import Footer from "../components/footer.vue";
 import ReviewCard from "../components/review_card.vue"
 
 export default {
     name: "films",
+    data() {
+        return {
+            data: [],
+        }
+
+    },
     components: {
         Nav,
         Footer,
         ReviewCard
     },
-    methods() {
-        
+    async created() {
+        if (Object.keys(this.data).length == 0) {
+            console.log("boş")
+        } else console.log("dolu")
+
+        const id = this.$route.params.id
+        const response = await axios.get(`api/movies/${id}`);
+        this.data = response.data
+        if (this.data.status == "error") {
+            this.$router.push("/home")
+        }
+        if (Object.keys(this.data).length == 0) {
+            console.log("boş")
+        } else console.log("dolu")
+
     }
 };
 </script>
@@ -212,42 +223,62 @@ export default {
 <style>
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
-fieldset, label { margin: 0; padding: 0;  }
+fieldset,
+label {
+    margin: 0;
+    padding: 0;
+}
 
-h1 { font-size: 1.5em; margin: 10px; }
+h1 {
+    font-size: 1.5em;
+    margin: 10px;
+}
 
 /****** Style Star Rating Widget *****/
 
-.rating { 
-  border: none;
-  float: left;
+.rating {
+    border: none;
+    float: left;
 }
 
-.rating > input { display: none; } 
-.rating > label:before { 
-  margin: 5px;
-  font-size: 1.25em;
-  font-family: FontAwesome;
-  display: inline-block;
-  content: "\f005";
+.rating>input {
+    display: none;
 }
 
-.rating > .half:before { 
-  content: "\f089";
-  position: absolute;
+.rating>label:before {
+    margin: 5px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
 }
 
-.rating > label { 
-  color: #ddd; 
- float: right; 
+.rating>.half:before {
+    content: "\f089";
+    position: absolute;
 }
 
-.rating > input:checked ~ label, /* show gold star when clicked */
-.rating:not(:checked) > label:hover, /* hover current star */
-.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+.rating>label {
+    color: #ddd;
+    float: right;
+}
 
-.rating > input:checked + label:hover, /* hover current star when changing rating */
-.rating > input:checked ~ label:hover,
-.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+.rating>input:checked~label,
+/* show gold star when clicked */
+.rating:not(:checked)>label:hover,
+/* hover current star */
+.rating:not(:checked)>label:hover~label {
+    color: #FFD700;
+}
+
+/* hover previous stars in list */
+
+.rating>input:checked+label:hover,
+/* hover current star when changing rating */
+.rating>input:checked~label:hover,
+.rating>label:hover~input:checked~label,
+/* lighten current selection */
+.rating>input:checked~label:hover~label {
+    color: #FFED85;
+}
 </style>
