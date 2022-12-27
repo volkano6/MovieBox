@@ -123,3 +123,16 @@ type UserLogin struct {
 	Username string `json:"user_name" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
+
+type UserUpdate struct {
+	// ID          int    `json:"id"`
+	// Username    string `json:"username"`
+	Displayname string `json:"displayname"`
+	Email       string `json:"email"`
+	DateOfBirth string `json:"date_of_birth"`
+	Avatar      string `json:"avatar"`
+	Bio         string `json:"bio"`
+	Location    string `json:"location"`
+	Twitter     string `json:"twitter"`
+	Instagram   string `json:"instagram"`
+}

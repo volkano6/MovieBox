@@ -17,11 +17,11 @@ CREATE TABLE users (
     displayname VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     dateofbirth DATE NOT NULL,
-    avatar VARCHAR(255),
-    bio VARCHAR(1000),
-    location VARCHAR(255),
-    social_twitter VARCHAR(64),
-    social_instagram VARCHAR(64)
+    avatar VARCHAR(255) NOT NULL DEFAULT '',
+    bio VARCHAR(1000) NOT NULL DEFAULT '',
+    location VARCHAR(255) NOT NULL DEFAULT '',
+    social_twitter VARCHAR(64) NOT NULL DEFAULT '',
+    social_instagram VARCHAR(64) NOT NULL DEFAULT ''
 );
 
 CREATE TABLE movies (

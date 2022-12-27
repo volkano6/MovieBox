@@ -130,195 +130,29 @@ func GetUser(c *gin.Context) {
 	c.JSON(http.StatusOK, profileResponse)
 }
 
-func Watchlist(c *gin.Context) {
-	id := c.Param("id")
-	// Check Watchlist table with given user id
-	sql := `SELECT id, title, description, release_date, poster, rating, length
-	FROM movies LEFT JOIN user_watchlist
-	ON movies.id = user_watchlist.movie_id
-	WHERE user_watchlist.user_id = ?;`
-	rows, err := database.DB.Query(sql, id)
+func UpdateProfile(c *gin.Context) {
+	user, exists := c.Get("user")
+	var updatedUser UserUpdate
+	err := c.BindJSON(&updatedUser)
+	if err != nil {
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
+		return
+	}
+	if !exists {
+		// Don't allow update
+		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		return
+	}
+	sql := `UPDATE users SET displayname = ?, email = ?, dateofbirth = ?, avatar = ?, bio = ?, location = ?, social_twitter = ?, social_instagram = ?
+	WHERE id = ?;`
+	_, err = database.DB.Exec(sql, updatedUser.Displayname, updatedUser.Email, updatedUser.DateOfBirth, updatedUser.Avatar, updatedUser.Bio, updatedUser.Location, updatedUser.Twitter, updatedUser.Instagram, user.(User).ID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
 		return
 	}
-	// Return movie details with the movie ids
-	var movies []Movie
-	var movie Movie
-	for rows.Next() {
-		rows.Scan(&movie.ID, &movie.Title, &movie.Description, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length)
-		movies = append(movies, movie)
-	}
-	for i := 0; i < len(movies); i++ {
-		var genres []string
-		var genre string
-		sql = `SELECT genre_name FROM movie_genres WHERE movie_id = ?;`
-		rows, err = database.DB.Query(sql, movies[i].ID)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
-			return
-		}
-		for rows.Next() {
-			rows.Scan(&genre)
-			genres = append(genres, genre)
-		}
-		movies[i].Genres = genres
-
-		var totalFavorites int
-		sql = `SELECT COUNT(movie_id) FROM user_favorites WHERE movie_id = ?;`
-		err = database.DB.QueryRow(sql, movies[i].ID).Scan(&totalFavorites)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
-			return
-		}
-		movies[i].FavoriteCount = totalFavorites
-
-		var totalWatched int
-		sql = `SELECT COUNT(movie_id) FROM user_watched WHERE movie_id = ?;`
-		err = database.DB.QueryRow(sql, movies[i].ID).Scan(&totalWatched)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
-			return
-		}
-		movies[i].WatchedCount = totalWatched
-	}
-	c.JSON(http.StatusOK, OkMessage(movies))
-}
-
-func Watched(c *gin.Context) {
-	id := c.Param("id")
-	// Check watched table with given user id
-	sql := `SELECT id, title, description, release_date, poster, rating, length
-	FROM movies LEFT JOIN user_watched
-	ON movies.id = user_watched.movie_id
-	WHERE user_watched.user_id = ?;`
-	rows, err := database.DB.Query(sql, id)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
-		return
-	}
-	// Return movie details with the movie ids
-	var movies []Movie
-	var movie Movie
-	for rows.Next() {
-		rows.Scan(&movie.ID, &movie.Title, &movie.Description, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length)
-		movies = append(movies, movie)
-	}
-	for i := 0; i < len(movies); i++ {
-		var genres []string
-		var genre string
-		sql = `SELECT genre_name FROM movie_genres WHERE movie_id = ?;`
-		rows, err = database.DB.Query(sql, movies[i].ID)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
-			return
-		}
-		for rows.Next() {
-			rows.Scan(&genre)
-			genres = append(genres, genre)
-		}
-		movies[i].Genres = genres
-
-		var totalFavorites int
-		sql = `SELECT COUNT(movie_id) FROM user_favorites WHERE movie_id = ?;`
-		err = database.DB.QueryRow(sql, movies[i].ID).Scan(&totalFavorites)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
-			return
-		}
-		movies[i].FavoriteCount = totalFavorites
-
-		var totalWatched int
-		sql = `SELECT COUNT(movie_id) FROM user_watched WHERE movie_id = ?;`
-		err = database.DB.QueryRow(sql, movies[i].ID).Scan(&totalWatched)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
-			return
-		}
-		movies[i].WatchedCount = totalWatched
-	}
-	c.JSON(http.StatusOK, OkMessage(movies))
-}
-
-func Favorites(c *gin.Context) {
-	id := c.Param("id")
-	// Check Favorites table with given user id
-	sql := `SELECT id, title, description, release_date, poster, rating, length
-		FROM movies JOIN user_favorites
-		ON movies.id = user_favorites.movie_id
-		WHERE user_favorites.user_id = ?;`
-	rows, err := database.DB.Query(sql, id)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
-		return
-	}
-	// Return movie details with the movie ids
-	var movies []Movie
-	var movie Movie
-	for rows.Next() {
-		rows.Scan(&movie.ID, &movie.Title, &movie.Description, &movie.ReleaseDate, &movie.Poster, &movie.Rating, &movie.Length)
-		movies = append(movies, movie)
-	}
-	for i := 0; i < len(movies); i++ {
-		var genres []string
-		var genre string
-		sql = `SELECT genre_name FROM movie_genres WHERE movie_id = ?;`
-		rows, err = database.DB.Query(sql, movies[i].ID)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
-			return
-		}
-		for rows.Next() {
-			rows.Scan(&genre)
-			genres = append(genres, genre)
-		}
-		movies[i].Genres = genres
-
-		var totalFavorites int
-		sql = `SELECT COUNT(movie_id) FROM user_favorites WHERE movie_id = ?;`
-		err = database.DB.QueryRow(sql, movies[i].ID).Scan(&totalFavorites)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
-			return
-		}
-		movies[i].FavoriteCount = totalFavorites
-
-		var totalWatched int
-		sql = `SELECT COUNT(movie_id) FROM user_watched WHERE movie_id = ?;`
-		err = database.DB.QueryRow(sql, movies[i].ID).Scan(&totalWatched)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
-			return
-		}
-		movies[i].WatchedCount = totalWatched
-	}
-
-	c.JSON(http.StatusOK, OkMessage(movies))
-}
-
-func Comments(c *gin.Context) {
-	id := c.Param("id")
-	// Check comments with user id
-	sql := `SELECT users.id, users.username, movie_id , comment, comment_date, title
-	FROM project.user_comments LEFT JOIN project.users
-	ON user_comments.user_id = project.users.id
-	JOIN movies ON movie_id = movies.id
-	WHERE project.users.id = ?;`
-	rows, err := database.DB.Query(sql, id)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
-		return
-	}
-	// Return Comments details with the User ids
-	var comments []Comment
-	var comment Comment
-	for rows.Next() {
-		rows.Scan(&comment.UserID, &comment.Username, &comment.MovieID, &comment.Comment, &comment.CommentDate, &comment.MovieTitle)
-		comments = append(comments, comment)
-	}
-	if comments == nil {
-		c.JSON(http.StatusNotFound, ErrorMessage("User not have any comment."))
-		return
-	}
-	c.JSON(http.StatusOK, OkMessage(comments))
+	c.JSON(http.StatusOK, OkResponse{
+		Status: "ok",
+		Logged: true,
+		Data:   "Successfully updated user.",
+	})
 }
