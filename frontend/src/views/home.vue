@@ -84,6 +84,7 @@ export default {
     } else {
       this.movies = response.data
     }
+    
   }
 }
 </script>
