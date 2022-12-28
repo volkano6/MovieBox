@@ -3,20 +3,86 @@
 
     <Nav :logged=this.data.logged></Nav>
 
-    <div class="container-sm">
+    <div class="container-sm" v-if="Object.keys(this.data).length != 0">
       <div class="row">
         <div class="col-4">
-          <div>
-            <div class="">
-              <div class="user text-center">
-                <div class="profile mt-3">
-                  <img src="https://picsum.photos/200" class="rounded-circle" width="90">
-                </div>
+          <div class="">
+            <div class="user text-center">
+              <div class="profile mt-3">
+                <img src="https://picsum.photos/200" class="rounded-circle" width="90">
               </div>
+            </div>
+            <div class="text-center">
+              <h4 class="m-3 text-light text-opacity-75" v-if="Object.keys(this.data).length != 0">
+                @{{ this.data.user.displayname }}</h4>
+            </div>
+            <div class="row">
               <div class="text-center">
-                <h4 class="m-3 text-light text-opacity-75" v-if="Object.keys(this.data).length != 0"> @{{
-                    this.data.user.displayname
-                }}</h4>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Update Profile
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Update Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form @submit.prevent="userUpdate">
+                          <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Display Name</label>
+                            <input v-model=displayname type="displayname" class="form-control"
+                              id="exampleFormControlInput1" :placeholder="this.data.user.displayname">
+                          </div>
+                          <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                            <input v-model="email" type="email" class="form-control" id="exampleFormControlInput1"
+                              :placeholder="this.data.user.email">
+                          </div>
+                          <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Avatar</label>
+                            <input v-model="avatar" type="avatar" class="form-control" id="exampleFormControlInput1"
+                              :placeholder="this.data.user.avatar">
+                          </div>
+                          <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Date of Birth</label>
+                            <input v-model="date_of_birth" type="date_of_birth" class="form-control"
+                              id="exampleFormControlInput1" :placeholder="this.data.user.date_of_birth">
+                          </div>
+                          <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Location</label>
+                            <input v-model="location" type="location" class="form-control" id="exampleFormControlInput1"
+                              :placeholder="this.data.user.location">
+                          </div>
+                          <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Twitter</label>
+                            <input v-model="twitter" type="twitter" class="form-control" id="exampleFormControlInput1"
+                              :placeholder="this.data.user.twitter">
+                          </div>
+                          <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Instagram</label>
+                            <input v-model="instagram" type="instagram" class="form-control"
+                              id="exampleFormControlInput1" :placeholder="this.data.user.instagram">
+                          </div>
+                          <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Bio</label>
+                            <textarea v-model="bio" class="form-control" id="exampleFormControlTextarea1" rows="3"
+                              :placeholder="this.data.user.bio"></textarea>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -25,28 +91,32 @@
           <div class="row justify-content-start" v-if="this.data.length != 0">
             <div class="col-2">
               <div class="row text-center">
-                <h4 class="text-light text-opacity-75" v-if="data.user_watched != null">{{ this.data.user_watched.length}}</h4>
+                <h4 class="text-light text-opacity-75" v-if="data.user_watched != null">
+                  {{ this.data.user_watched.length }}</h4>
                 <h4 class="text-light text-opacity-75" v-else>{{ 0 }}</h4>
                 <p class="text-light text-opacity-75">Watched</p>
               </div>
             </div>
             <div class="col-2">
               <div class="row text-center">
-                <h4 class="text-light text-opacity-75" v-if="data.user_watchlist != null">{{this.data.user_watchlist.length}}</h4>
+                <h4 class="text-light text-opacity-75" v-if="data.user_watchlist != null">
+                  {{ this.data.user_watchlist.length }}</h4>
                 <h4 class="text-light text-opacity-75" v-else>{{ 0 }}</h4>
                 <p class="text-light text-opacity-75">Watchlist</p>
               </div>
             </div>
             <div class="col-2">
               <div class="row text-center">
-                <h4 class="text-light text-opacity-75" v-if="data.user_comments != null">{{this.data.user_comments.length}}</h4>
+                <h4 class="text-light text-opacity-75" v-if="data.user_comments != null">
+                  {{ this.data.user_comments.length }}</h4>
                 <h4 class="text-light text-opacity-75" v-else>{{ 0 }}</h4>
                 <p class="text-light text-opacity-75">Comments</p>
               </div>
             </div>
             <div class="col-2">
               <div class="row text-center">
-                <h4 class="text-light text-opacity-75" v-if="data.user_favorites != null">{{this.data.user_favorites.length}}</h4>
+                <h4 class="text-light text-opacity-75" v-if="data.user_favorites != null">
+                  {{ this.data.user_favorites.length }}</h4>
                 <h4 class="text-light text-opacity-75" v-else>{{ 0 }}</h4>
                 <p class="text-light text-opacity-75">Favorites</p>
               </div>
@@ -56,17 +126,31 @@
       </div>
       <div class="row m-1 pt-2 rounded" style="background-color:#bdbdc6">
         <div class="row">
-          <div class="col" v-if="this.data.user.username != ''"><p style="color:black">User Name: {{this.data.user.username}}</p></div>
-          <div class="col" v-if="this.data.user.email != ''"><p style="color:black">Email: {{this.data.user.email}}</p></div>
-          <div class="col" v-if="this.data.user.date_of_birth != ''"><p style="color:black">Date Of Birth: {{this.data.user.date_of_birth}}</p></div>
+          <div class="col" v-if="this.data.user.username != ''">
+            <p style="color:black">User Name: {{ this.data.user.username }}</p>
+          </div>
+          <div class="col" v-if="this.email != ''">
+            <p style="color:black">Email: {{ this.email }}</p>
+          </div>
+          <div class="col" v-if="this.date_of_birth != ''">
+            <p style="color:black">Date Of Birth: {{ this.date_of_birth }}</p>
+          </div>
         </div>
         <div class="row">
-          <div class="col" v-if="this.data.user.instagram != ''"><p style="color:black">Instagram: {{this.data.user.instagram}}</p></div>
-          <div class="col" v-if="this.data.user.twitter != ''"><p style="color:black">Twitter: {{this.data.user.twitter}}</p></div>
-          <div class="col" v-if="this.data.user.location != ''"><p style="color:black">Location: {{this.data.user.location}}</p></div>
+          <div class="col" v-if="this.instagram != ''">
+            <p style="color:black">Instagram: {{ this.instagram }}</p>
+          </div>
+          <div class="col" v-if="this.twitter != ''">
+            <p style="color:black">Twitter: {{ this.twitter }}</p>
+          </div>
+          <div class="col" v-if="this.location != ''">
+            <p style="color:black">Location: {{ this.location }}</p>
+          </div>
         </div>
         <div class="row">
-          <div class="col" v-if="this.data.user.bio != ''"><p style="color:black">Bio: {{this.data.user.bio}}</p></div>
+          <div class="col" v-if="this.bio != ''">
+            <p style="color:black">Bio: {{ this.bio  }}</p>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -139,12 +223,39 @@ export default {
     return {
       data: [],
       content: "UserWatched",
+      displayname: '',
+      email: '',
+      avatar: '',
+      date_of_birth: '',
+      location: '',
+      twitter: '',
+      instagram: '',
+      bio: '',
+
     }
   },
   methods: {
     pageContent(a) {
       this.content = a
     },
+    userUpdate() {
+      axios.put('api/profile', {
+        displayname: this.displayname,
+        email: this.email,
+        date_of_birth: this.date_of_birth,
+        avatar: this.avatar,
+        bio: this.bio,
+        location: this.location,
+        twitter: this.twitter,
+        instagram: this.instagram
+      })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
 
   },
   async created() {
@@ -153,6 +264,14 @@ export default {
       this.$router.push("/login")
     } else {
       this.data = response.data
+      this.displayname = this.data.user.displayname
+      this.email = this.data.user.email
+      this.avatar = this.data.user.avatar
+      this.date_of_birth = this.data.user.date_of_birth
+      this.location = this.data.user.location
+      this.twitter = this.data.user.twitter
+      this.instagram = this.data.user.instagram
+      this.bio = this.data.user.bio
     }
   }
 }
