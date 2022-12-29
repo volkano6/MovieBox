@@ -30,9 +30,6 @@
                   <li class="nav-item">
                     <a class="nav-link text-light text-opacity-75" href="/films">Films</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link text-light text-opacity-75" href="/movie">Movie</a>
-                  </li>
                   <ul class="navbar-nav ms-auto" v-if="!logged">
                     <li class="nav-item">
                       <a class="nav-link d-flex align-items-center text-light text-opacity-75" href="/login">
@@ -62,7 +59,7 @@
                         <li>
                           <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="/login">Sign out</a></li>
+                        <li><a class="dropdown-item" href="/login" @click="deleteCookie">Sign out</a></li>
                       </ul>
                     </div>
                   </ul>
@@ -79,7 +76,13 @@
 
 <script>
 export default {
-  props: ['logged', 'avatar']
+  name: "navbar",
+  props: ['logged', 'avatar'],
+  methods: {
+    deleteCookie(){
+      document.cookie = "token=" + "" + ";" + "" + ";path=/";
+    }
+  }
 }
 </script>
 

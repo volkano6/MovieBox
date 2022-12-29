@@ -9,8 +9,8 @@
                 </div>
                 <div class="col-sm-8">
                     <h4>
-                        <a :href="'user/' + UserID" class="username">{{Username}}</a>
-                        <a :href="'movie/' + MovieID" class="filmname">
+                        <a :href="'/user/' + UserID" class="username">{{Username}}</a>
+                        <a :href="'/movie/' + MovieID" class="filmname">
                           <label class="label label-info" style="color:cornflowerblue">&nbsp; #{{MovieTitle}} </label>
                         </a>
                         

@@ -1,8 +1,9 @@
 <template>
   <div class="col">
       <div class="movie-card">
-        <a :href="'movie/' + id">
-        <div class="movie-header theDarkTower" :style="{ 'background-image': 'url(' + poster + ')' }"></div>
+        <a :href="`/movie/${id}`">
+        <div class="movie-header theDarkTower" :style="{ 'background-image': 'url(' + poster + ')' }" ></div>
+        </a>
         <!--movie-header-->
         <div class="movie-content">
           <div class="row">
@@ -55,7 +56,7 @@
             </div>
           </div>
         </div>
-      </a>
+      
         <!--movie-content-->
       </div>
     
