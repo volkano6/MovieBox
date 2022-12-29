@@ -3,8 +3,10 @@
     <div class="container-sm border-bottom-dark">
       <nav class="navbar navbar-expand-lg bg-gray">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#"><img id="logo" src="https://a.ltrbxd.com/logos/letterboxd-mac-icon.png"
-              alt="MDB Logo" draggable="false" height="40" /></a>
+          <a class="navbar-brand" href="#">
+            <img id="logo" src="https://a.ltrbxd.com/logos/letterboxd-mac-icon.png" alt="MDB Logo" draggable="false"
+              height="40" />
+          </a>
           <a class="navbar-brand text-light" href="#">MovieBoxd</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -47,10 +49,15 @@
                     <div class="dropdown text-end">
                       <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://avatars.githubusercontent.com/u/1669855?v=4" alt="mdo" width="32" height="32" class="rounded-circle">
+                        
+                        <div v-if="!avatar">
+                          <img src="https://avatars.githubusercontent.com/u/1669855?v=4" alt="mdo" width="32" height="32" class="rounded-circle">
+                        </div>
+                        <div v-else>
+                          <img :src="avatar" alt="mdo" width="32" height="32" class="rounded-circle">
+                        </div>
                       </a>
                       <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
                         <li><a class="dropdown-item" href="/profile">Profile</a></li>
                         <li>
                           <hr class="dropdown-divider">
@@ -72,7 +79,7 @@
 
 <script>
 export default {
-  props: ['logged']
+  props: ['logged', 'avatar']
 }
 </script>
 

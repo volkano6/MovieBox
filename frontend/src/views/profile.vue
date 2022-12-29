@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <Nav :logged=this.data.logged></Nav>
+    <Nav :logged=this.data.logged :avatar=this.avatar></Nav>
 
     <div class="container-sm" v-if="Object.keys(this.data).length != 0">
       <div class="row">
@@ -9,12 +9,17 @@
           <div class="">
             <div class="user text-center">
               <div class="profile mt-3">
-                <img src="https://picsum.photos/200" class="rounded-circle" width="90">
+                <div v-if="this.avatar == ''">
+                  <img src="https://picsum.photos/200" class="rounded-circle" width="90">
+                </div>
+                <div v-else>
+                  <img :src="this.avatar" class="rounded-circle" width="90">
+                </div>
               </div>
             </div>
             <div class="text-center">
-              <h4 class="m-3 text-light text-opacity-75" v-if="Object.keys(this.data).length != 0">
-                @{{ this.data.user.displayname }}</h4>
+              <h4 class="m-3 text-light text-opacity-75">
+                @{{ this.displayname }}</h4>
             </div>
             <div class="row">
               <div class="text-center">
@@ -42,32 +47,32 @@
                           <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Email address</label>
                             <input v-model="email" type="email" class="form-control" id="exampleFormControlInput1"
-                              :placeholder="this.data.user.email">
+                              :placeholder="this.email">
                           </div>
                           <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Avatar</label>
                             <input v-model="avatar" type="avatar" class="form-control" id="exampleFormControlInput1"
-                              :placeholder="this.data.user.avatar">
+                              :placeholder="this.avatar">
                           </div>
                           <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Date of Birth</label>
                             <input v-model="date_of_birth" type="date_of_birth" class="form-control"
-                              id="exampleFormControlInput1" :placeholder="this.data.user.date_of_birth">
+                              id="exampleFormControlInput1" :placeholder="this.date_of_birth">
                           </div>
                           <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Location</label>
                             <input v-model="location" type="location" class="form-control" id="exampleFormControlInput1"
-                              :placeholder="this.data.user.location">
+                              :placeholder="this.location">
                           </div>
                           <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Twitter</label>
                             <input v-model="twitter" type="twitter" class="form-control" id="exampleFormControlInput1"
-                              :placeholder="this.data.user.twitter">
+                              :placeholder="this.twitter">
                           </div>
                           <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Instagram</label>
                             <input v-model="instagram" type="instagram" class="form-control"
-                              id="exampleFormControlInput1" :placeholder="this.data.user.instagram">
+                              id="exampleFormControlInput1" :placeholder="this.instagram">
                           </div>
                           <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">Bio</label>
@@ -76,7 +81,7 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary"  data-bs-dismiss="modal">Save changes</button>
                           </div>
                         </form>
                       </div>
