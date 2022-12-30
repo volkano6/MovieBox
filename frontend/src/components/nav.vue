@@ -80,7 +80,7 @@ export default {
   props: ['logged', 'avatar'],
   methods: {
     deleteCookie(){
-      document.cookie = "token=" + "" + ";" + "" + ";path=/";
+      document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 GMT"
     }
   }
 }
