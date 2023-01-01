@@ -48,13 +48,10 @@ func GetMovies(c *gin.Context) {
 func GetMovie(c *gin.Context) {
 	id := c.Param("id")
 	logged := true
-	loggedid := 0
 	// Check if user exists
-	user, exists := c.Get("user")
+	_, exists := c.Get("user")
 	if !exists {
 		logged = false
-	} else {
-		loggedid = user.(User).ID
 	}
 	// Movie Info
 	sql := `SELECT id, title, description, release_date, poster, rating, length, movie_genres.genre_name,
@@ -91,7 +88,6 @@ func GetMovie(c *gin.Context) {
 	c.JSON(http.StatusOK, MovieResponse{
 		Status:   "ok",
 		Logged:   logged,
-		LoggedID: loggedid,
 		Movie:    movie,
 		Comments: comments,
 	})
@@ -114,6 +110,23 @@ func PostMovieWatched(c *gin.Context) {
 	c.JSON(http.StatusOK, OkMessage("Successfully added to watched."))
 }
 
+func DeleteMovieWatched(c *gin.Context) {
+	id := c.Param("id")
+	user, exists := c.Get("user")
+	if !exists {
+		// Don't allow post
+		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		return
+	}
+	sql := `DELETE FROM user_watched WHERE movie_id = ? AND user_id = ?;`
+	_, err := database.DB.Exec(sql, id, user.(User).ID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, OkMessage("Successfully removed from watched."))
+}
+
 func PostMovieWatchlist(c *gin.Context) {
 	id := c.Param("id")
 	user, exists := c.Get("user")
@@ -131,6 +144,23 @@ func PostMovieWatchlist(c *gin.Context) {
 	c.JSON(http.StatusOK, OkMessage("Successfully added to watchlist."))
 }
 
+func DeleteMovieWatchlist(c *gin.Context) {
+	id := c.Param("id")
+	user, exists := c.Get("user")
+	if !exists {
+		// Don't allow post
+		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		return
+	}
+	sql := `DELETE FROM user_watchlist WHERE movie_id = ? AND user_id = ?;`
+	_, err := database.DB.Exec(sql, id, user.(User).ID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, OkMessage("Successfully removed from watchlist."))
+}
+
 func PostMovieFavorite(c *gin.Context) {
 	id := c.Param("id")
 	user, exists := c.Get("user")
@@ -146,6 +176,23 @@ func PostMovieFavorite(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, OkMessage("Successfully added to favorites."))
+}
+
+func DeleteMovieFavorite(c *gin.Context) {
+	id := c.Param("id")
+	user, exists := c.Get("user")
+	if !exists {
+		// Don't allow post
+		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		return
+	}
+	sql := `DELETE FROM user_favorites WHERE movie_id = ? AND user_id = ?;`
+	_, err := database.DB.Exec(sql, id, user.(User).ID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, OkMessage("Successfully removed from favorites."))
 }
 
 func PostMovieRating(c *gin.Context) {
