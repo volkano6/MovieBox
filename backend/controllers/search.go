@@ -15,10 +15,17 @@ func Search(c *gin.Context) {
 		return
 	}
 	logged := true
+	perm := "Default"
 	// Check if user exists
-	_, exists := c.Get("user")
+	user, exists := c.Get("user")
 	if !exists {
 		logged = false
+	} else {
+		sql := `SELECT permission FROM user_admins WHERE user_id = ?;`
+		err := database.DB.QueryRow(sql, user.(User).ID).Scan(&perm)
+		if err != nil {
+			perm = "Default"
+		}
 	}
 	sql := `SELECT id, title, description, release_date, poster, rating, length, movie_genres.genre_name,
 	(SELECT COUNT(movie_id) FROM user_favorites WHERE user_favorites.movie_id = movies.id) AS favorite_count, 
@@ -58,6 +65,7 @@ func Search(c *gin.Context) {
 	c.JSON(http.StatusOK, SearchResponse{
 		Status: "ok",
 		Logged: logged,
+		Perm:   perm,
 		Movies: movies,
 		Users:  users,
 	})

@@ -3,6 +3,7 @@ package controllers
 type OkResponse struct {
 	Status string `json:"status"`
 	Logged bool   `json:"logged"`
+	Perm   string `json:"perm"`
 	Data   any    `json:"data"`
 }
 
@@ -14,6 +15,7 @@ type ErrorResponse struct {
 type HomeResponse struct {
 	Status           string    `json:"status"`
 	Logged           bool      `json:"logged"`
+	Perm             string    `json:"perm"`
 	CurrentMonth     string    `json:"month"`
 	MonthlyPopular   []Movie   `json:"monthly_popular"`
 	AllTimeFavorites []Movie   `json:"all_time_favorites"`
@@ -24,6 +26,7 @@ type ProfileResponse struct {
 	Status        string    `json:"status"`
 	Logged        bool      `json:"logged"`
 	LoggedID      int       `json:"logged_id"`
+	Perm          string    `json:"perm"`
 	User          User      `json:"user"`
 	UserWatched   []Movie   `json:"user_watched"`
 	UserWatchlist []Movie   `json:"user_watchlist"`
@@ -34,7 +37,7 @@ type ProfileResponse struct {
 type MovieResponse struct {
 	Status   string    `json:"status"`
 	Logged   bool      `json:"logged"`
-	LoggedID int       `json:"logged_id"`
+	Perm     string    `json:"perm"`
 	Movie    Movie     `json:"movie"`
 	Comments []Comment `json:"comments"`
 }
@@ -42,6 +45,7 @@ type MovieResponse struct {
 type SearchResponse struct {
 	Status string  `json:"status"`
 	Logged bool    `json:"logged"`
+	Perm   string  `json:"perm"`
 	Movies []Movie `json:"movies"`
 	Users  []User  `json:"users"`
 }
@@ -49,6 +53,7 @@ type SearchResponse struct {
 type DashboardResponse struct {
 	Status string  `json:"status"`
 	Logged bool    `json:"logged"`
+	Perm   string  `json:"perm"`
 	Movies []Movie `json:"movies"`
 	Users  []User  `json:"users"`
 }

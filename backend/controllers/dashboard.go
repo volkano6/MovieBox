@@ -8,11 +8,18 @@ import (
 )
 
 func Dashboard(c *gin.Context) {
+	perm := "Default"
 	user, exists := c.Get("user")
 	if !exists {
 		// Don't allow post
 		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
 		return
+	} else {
+		sql := `SELECT permission FROM user_admins WHERE user_id = ?;`
+		err := database.DB.QueryRow(sql, user.(User).ID).Scan(&perm)
+		if err != nil {
+			perm = "Default"
+		}
 	}
 	var id int
 	var permission string
@@ -61,6 +68,7 @@ func Dashboard(c *gin.Context) {
 	c.JSON(http.StatusOK, DashboardResponse{
 		Status: "ok",
 		Logged: true,
+		Perm:   perm,
 		Movies: movies,
 		Users:  users,
 	})

@@ -10,12 +10,19 @@ import (
 
 func Homepage(c *gin.Context) {
 	// Check if user exists
-	_, exists := c.Get("user")
+	user, exists := c.Get("user")
 	logged := true
+	perm := "Default"
 	if !exists {
 		// User not logged in
 		// ; Show login/register button
 		logged = false
+	} else {
+		sql := `SELECT permission FROM user_admins WHERE user_id = ?;`
+		err := database.DB.QueryRow(sql, user.(User).ID).Scan(&perm)
+		if err != nil {
+			perm = "Default"
+		}
 	}
 	var monthlyPopular []Movie
 	var allTimeFavorites []Movie
@@ -115,6 +122,7 @@ func Homepage(c *gin.Context) {
 	c.JSON(http.StatusOK, HomeResponse{
 		Status:           "ok",
 		Logged:           logged,
+		Perm:             perm,
 		CurrentMonth:     time.Now().Month().String(),
 		MonthlyPopular:   monthlyPopular,
 		AllTimeFavorites: allTimeFavorites,
@@ -125,6 +133,7 @@ func Homepage(c *gin.Context) {
 func Profile(c *gin.Context) {
 	var profileResponse ProfileResponse
 	// Check if user exists
+	perm := "Default"
 	user, exists := c.Get("user")
 	profileResponse.Logged = true
 	if !exists {
@@ -132,6 +141,12 @@ func Profile(c *gin.Context) {
 		c.JSON(http.StatusOK, ErrorMessage("User not logged in."))
 		profileResponse.Logged = false
 		return
+	} else {
+		sql := `SELECT permission FROM user_admins WHERE user_id = ?;`
+		err := database.DB.QueryRow(sql, user.(User).ID).Scan(&perm)
+		if err != nil {
+			perm = "Default"
+		}
 	}
 	userObject := user.(User)
 	id := userObject.ID
@@ -233,7 +248,7 @@ func Profile(c *gin.Context) {
 	}
 	profileResponse.UserFavorites = movies_favorite
 	profileResponse.Status = "ok"
-
+	profileResponse.Perm = perm
 	// User logged in
 	c.JSON(http.StatusOK, profileResponse)
 }
