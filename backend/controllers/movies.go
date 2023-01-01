@@ -48,10 +48,13 @@ func GetMovies(c *gin.Context) {
 func GetMovie(c *gin.Context) {
 	id := c.Param("id")
 	logged := true
+	loggedid := 0
 	// Check if user exists
-	_, exists := c.Get("user")
+	user, exists := c.Get("user")
 	if !exists {
 		logged = false
+	} else {
+		loggedid = user.(User).ID
 	}
 	// Movie Info
 	sql := `SELECT id, title, description, release_date, poster, rating, length, movie_genres.genre_name,
@@ -88,6 +91,7 @@ func GetMovie(c *gin.Context) {
 	c.JSON(http.StatusOK, MovieResponse{
 		Status:   "ok",
 		Logged:   logged,
+		LoggedID: loggedid,
 		Movie:    movie,
 		Comments: comments,
 	})

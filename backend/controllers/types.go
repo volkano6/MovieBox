@@ -34,6 +34,7 @@ type ProfileResponse struct {
 type MovieResponse struct {
 	Status   string    `json:"status"`
 	Logged   bool      `json:"logged"`
+	LoggedID int       `json:"logged_id"`
 	Movie    Movie     `json:"movie"`
 	Comments []Comment `json:"comments"`
 }
