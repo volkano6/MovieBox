@@ -23,11 +23,17 @@ func GetUser(c *gin.Context) {
 	// Check if user exists
 	localUser, exists := c.Get("user")
 	profileResponse.Logged = true
+	perm := "Default"
 	if !exists {
 		// User not logged in
 		profileResponse.Logged = false
 	} else {
 		profileResponse.LoggedID = localUser.(User).ID
+		sql := `SELECT permission FROM user_admins WHERE user_id = ?;`
+		err := database.DB.QueryRow(sql, localUser.(User).ID).Scan(&perm)
+		if err != nil {
+			perm = "Default"
+		}
 	}
 	profileResponse.User = user
 	// movies_watched
@@ -127,6 +133,7 @@ func GetUser(c *gin.Context) {
 	}
 	profileResponse.UserFavorites = movies_favorite
 	profileResponse.Status = "ok"
+	profileResponse.Perm = perm
 	c.JSON(http.StatusOK, profileResponse)
 }
 

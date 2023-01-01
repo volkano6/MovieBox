@@ -11,10 +11,17 @@ import (
 
 func GetMovies(c *gin.Context) {
 	logged := true
+	perm := "Default"
 	// Check if user exists
-	_, exists := c.Get("user")
+	user, exists := c.Get("user")
 	if !exists {
 		logged = false
+	} else {
+		sql := `SELECT permission FROM user_admins WHERE user_id = ?;`
+		err := database.DB.QueryRow(sql, user.(User).ID).Scan(&perm)
+		if err != nil {
+			perm = "Default"
+		}
 	}
 	// Get all movie data from the database with genres, favorite and watched count
 	sql := `SELECT id, title, description, release_date, poster, rating, length, movie_genres.genre_name,
@@ -41,6 +48,7 @@ func GetMovies(c *gin.Context) {
 	c.JSON(http.StatusOK, OkResponse{
 		Status: "ok",
 		Logged: logged,
+		Perm:   perm,
 		Data:   movies,
 	})
 }
@@ -48,10 +56,17 @@ func GetMovies(c *gin.Context) {
 func GetMovie(c *gin.Context) {
 	id := c.Param("id")
 	logged := true
+	perm := "Default"
 	// Check if user exists
-	_, exists := c.Get("user")
+	user, exists := c.Get("user")
 	if !exists {
 		logged = false
+	} else {
+		sql := `SELECT permission FROM user_admins WHERE user_id = ?;`
+		err := database.DB.QueryRow(sql, user.(User).ID).Scan(&perm)
+		if err != nil {
+			perm = "Default"
+		}
 	}
 	// Movie Info
 	sql := `SELECT id, title, description, release_date, poster, rating, length, movie_genres.genre_name,
@@ -88,6 +103,7 @@ func GetMovie(c *gin.Context) {
 	c.JSON(http.StatusOK, MovieResponse{
 		Status:   "ok",
 		Logged:   logged,
+		Perm:     perm,
 		Movie:    movie,
 		Comments: comments,
 	})
