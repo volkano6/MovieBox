@@ -67,10 +67,12 @@
                             </div>
                         </div>
                         <div class="col">
-                            <div class="row">
 
+                            <!-- watch or remove from watch -->
+                            <div class="row">
                                 <div class="d-grid gap-2" style="margin:5px; right:5px; color:white;">
-                                    <button class="btn btn-primary active" data-bs-toggle="button" aria-pressed="true">
+                                    <button @click="watched" class="btn btn-primary active" data-bs-toggle="button"
+                                        aria-pressed="true">
                                         <div style="position:relative; ">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31"
                                                 fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
@@ -78,21 +80,28 @@
                                                 <path
                                                     d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
                                             </svg>
+
                                         </div>
                                     </button>
                                 </div>
-                            </div>
-                            <div class="row">
+                                <div class="row">
+                                    <div v-if="in_watch">
+                                        <div class="d-grid gap-2" style="margin-left:27px;">
+                                            <p style="color:white;">Remove from Watched</p>
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                        <div class="d-grid gap-2" style="margin-left:53px;">
+                                            <p style="left:240px; color:white;">Add to Watched</p>
+                                        </div>
+                                    </div>
 
-                                <div class="d-grid gap-2" style="margin-left:93px;">
-                                    <p style="left:240px; color:white;">Watch</p>
                                 </div>
-
                             </div>
-                            <!-- list row -->
+                            <!-- add or remove favorites -->
                             <div class="row">
                                 <div class="d-grid gap-2" style="margin:5px; right:5px;">
-                                    <button class="btn btn-primary active" data-bs-toggle="button" aria-pressed="true">
+                                    <button @click="favorite" class="btn btn-primary active" data-bs-toggle="button">
                                         <div style="position:relative; ">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
                                                 fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
@@ -102,32 +111,43 @@
                                         </div>
                                     </button>
                                 </div>
-                            </div>
-                            <div class="row">
-
-                                <div class="d-grid gap-2" style="margin-left:99px;">
-                                    <p style="left:240px; color:white;">likes</p>
+                                <div class="row">
+                                    <div v-if="in_favorite">
+                                        <div class="d-grid gap-2" style="margin-left:27px;">
+                                            <p style="left:240px; color:white;">Remove from Favorites</p>
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                        <div class="d-grid gap-2" style="margin-left:53px;">
+                                            <p style="left:240px; color:white;">Add to Favorites</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
+                            <!-- watchlist row -->
                             <div class="row">
-                                <div class="d-grid gap-2" style="margin:5px; right:5px;">
-                                    <button class="btn btn-primary active" data-bs-toggle="button" aria-pressed="true">
+                                <div @click="watchlist" class="d-grid gap-2" style="margin:5px; right:5px;">
+                                    <button class="btn btn-primary active" data-bs-toggle="button" >
                                         <div style="position:relative; ">
-                                            <a href="#" class="action ajax-click-action"><span>Add this film to your
-                                                </span>Watchlist</a>
+                                            <div v-if="in_watchlist">
+                                                <div class="d-grid gap-2" style="margin-left:15px;">
+                                                    <p style="left:240px; color:white;">Remove from Watchlist</p>
+                                                </div>
+                                            </div>
+                                            <div v-else>
+                                                <div class="d-grid gap-2" style="margin-left:5px;">
+                                                    <p style="left:240px; color:white;">Add to Watchlist</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </button>
                                 </div>
                             </div>
 
 
-                            <!-- watchlist row -->
-                            <div class="row">
-                                <div class="d-grid gap-2" style="margin-left:80px;">
-                                    <p style="left:240px; color:white;">Watchlist</p>
-                                </div>
-                            </div>
+                            <!-- rating row -->
+
                             <div class="row" style="margin-right:27px">
 
                                 <fieldset class="rating">
@@ -193,6 +213,9 @@ export default {
     data() {
         return {
             data: [],
+            in_watch: false,
+            in_watchlist: false,
+            in_favorite: false,
         }
 
     },
@@ -216,6 +239,17 @@ export default {
             console.log("boş")
         } else console.log("dolu")
 
+    },
+    methods: {
+        watched() {
+            this.in_watch = !this.in_watch
+        },
+        watchlist() {
+            this.in_watchlist = !this.in_watchlist
+        },
+        favorite() {
+            this.in_favorite = !this.in_favorite
+        },
     }
 };
 </script>
