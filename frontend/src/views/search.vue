@@ -29,11 +29,9 @@
         </div>
         <div class="row">
           <div class="row mt-2 row-cols-1 row-cols-xl-5 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
-            <div v-for="movie in movies.all_time_favorites" :key="movie.id">
-              <MovieCard :id=movie.id :poster=movie.poster :title=movie.title :date="movie.release_date" :genre=movie.genres
-                :rating="movie.rating" :length=movie.length :number_of_favorites=movie.favorite_count
-                :number_of_watches=movie.watched_count />
-            </div>
+            <ProfileCard/>
+            <ProfileCard/>
+            <ProfileCard/>
           </div>
         </div>
   
@@ -49,6 +47,8 @@
   import Footer from "../components/footer.vue"
   import MovieCard from "../components/movie_card.vue"
   import ReviewCard from "../components/review_card.vue"
+  import ProfileCard from "../components/profile_card.vue"
+
   
   export default {
     name: "search",
@@ -61,6 +61,7 @@
       Nav,
       Footer,
       MovieCard,
+      ProfileCard,
       ReviewCard
     },
  
