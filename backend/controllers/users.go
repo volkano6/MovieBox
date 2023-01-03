@@ -137,6 +137,73 @@ func GetUser(c *gin.Context) {
 	c.JSON(http.StatusOK, profileResponse)
 }
 
+func UpdateUser(c *gin.Context) {
+	id := c.Param("id")
+	user, exists := c.Get("user")
+	var updatedUser UserUpdate
+	err := c.BindJSON(&updatedUser)
+	if err != nil {
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
+		return
+	}
+	if !exists {
+		// Don't allow update
+		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		return
+	}
+	var adminID int
+	var permission string
+	sql := `SELECT user_id, permission FROM user_admins
+	WHERE user_id = ?;`
+	err = database.DB.QueryRow(sql, user.(User).ID).Scan(&adminID, &permission)
+	if err != nil || adminID == 0 || permission != "Admin" {
+		c.JSON(http.StatusForbidden, ErrorMessage("Insufficient permissions."))
+		return
+	}
+	sql = `UPDATE users SET displayname = ?, email = ?, dateofbirth = ?, avatar = ?, bio = ?, location = ?, social_twitter = ?, social_instagram = ?
+	WHERE id = ?;`
+	_, err = database.DB.Exec(sql, updatedUser.Displayname, updatedUser.Email, updatedUser.DateOfBirth, updatedUser.Avatar, updatedUser.Bio, updatedUser.Location, updatedUser.Twitter, updatedUser.Instagram, id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, OkResponse{
+		Status: "ok",
+		Logged: true,
+		Data:   "Successfully updated user.",
+	})
+}
+
+func DeleteUser(c *gin.Context) {
+	id := c.Param("id")
+	user, exists := c.Get("user")
+	if !exists {
+		// Don't allow update
+		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		return
+	}
+	var adminID int
+	var permission string
+	sql := `SELECT user_id, permission FROM user_admins
+	WHERE user_id = ?;`
+	err := database.DB.QueryRow(sql, user.(User).ID).Scan(&adminID, &permission)
+	if err != nil || adminID == 0 || permission != "Admin" {
+		c.JSON(http.StatusForbidden, ErrorMessage("Insufficient permissions."))
+		return
+	}
+	sql = `DELETE FROM users WHERE id = ?;`
+	_, err = database.DB.Exec(sql, id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, OkResponse{
+		Status: "ok",
+		Logged: true,
+		Data:   "Successfully deleted user.",
+	})
+}
+
 func UpdateProfile(c *gin.Context) {
 	user, exists := c.Get("user")
 	var updatedUser UserUpdate
