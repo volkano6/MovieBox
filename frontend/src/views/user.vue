@@ -10,7 +10,8 @@
                         <div class="">
                             <div class="user text-center">
                                 <div class="profile mt-3">
-                                    <img src="https://picsum.photos/200" class="rounded-circle" width="90">
+                                    <img src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg
+" class="rounded-circle" width="90">
                                 </div>
                             </div>
                             <div class="text-center">

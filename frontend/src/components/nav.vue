@@ -48,7 +48,8 @@
                         data-bs-toggle="dropdown" aria-expanded="false">
 
                         <div v-if="!avatar">
-                          <img src="https://avatars.githubusercontent.com/u/1669855?v=4" alt="mdo" width="32"
+                          <img src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg
+" alt="mdo" width="32"
                             height="32" class="rounded-circle">
                         </div>
                         <div v-else>

@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <Nav :logged=this.data.logged></Nav>
+    <Nav :logged=this.data.logged ></Nav>
     <div class="container">
       <div class="row">
         <div class="col"></div>
@@ -70,7 +70,9 @@ export default {
     }
   },
   async created() {
-    
+    const response = await axios.get(`api/search/?search=xxxxxxxxxxxxxxxxxxxxxx`);
+      this.data = response.data
+      console.log(this.data)
   },
   components: {
     Nav,
