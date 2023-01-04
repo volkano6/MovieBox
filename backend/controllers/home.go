@@ -76,6 +76,7 @@ func Homepage(c *gin.Context) {
 	sql = `SELECT COUNT(movie_id) AS favorite_count, (SELECT COUNT(movie_id) FROM user_watched WHERE user_watched.movie_id = user_favorites.movie_id) AS watched_count, movie_id, movies.title, movies.description, movies.release_date, movies.poster, movies.length, movies.rating FROM user_favorites 
 	INNER JOIN movies ON movie_id = movies.id 
 	GROUP BY movie_id, movies.title, movies.description, movies.release_date, movies.poster, movies.length, movies.rating
+	ORDER BY favorite_count DESC
 	LIMIT 5;`
 	rows, err = database.DB.Query(sql)
 	if err != nil {
