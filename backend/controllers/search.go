@@ -51,8 +51,8 @@ func Search(c *gin.Context) {
 	}
 	var users []User
 	sql = `SELECT id, username, displayname, email, dateofbirth, avatar, bio, location, social_twitter, social_instagram
-		FROM users WHERE username = ? OR displayname = ?;`
-	rows, err = database.DB.Query(sql, search, search)
+		FROM users WHERE username LIKE ? OR displayname LIKE ?;`
+	rows, err = database.DB.Query(sql, fmt.Sprint("%"+search+"%"), fmt.Sprint("%"+search+"%"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
 		return
