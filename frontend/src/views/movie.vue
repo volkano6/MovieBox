@@ -148,32 +148,7 @@
 
                             <!-- rating row -->
 
-                            <div class="row" style="margin-right:27px">
 
-                                <fieldset class="rating">
-                                    <input type="radio" id="star5" name="rating" value="5" /><label class="full"
-                                        for="star5" title="Awesome - 5 stars"></label>
-                                    <input type="radio" id="star4half" name="rating" value="4 and a half" /><label
-                                        class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                                    <input type="radio" id="star4" name="rating" value="4" /><label class="full"
-                                        for="star4" title="Pretty good - 4 stars"></label>
-                                    <input type="radio" id="star3half" name="rating" value="3 and a half" /><label
-                                        class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                                    <input type="radio" id="star3" name="rating" value="3" /><label class="full"
-                                        for="star3" title="Meh - 3 stars"></label>
-                                    <input type="radio" id="star2half" name="rating" value="2 and a half" /><label
-                                        class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                                    <input type="radio" id="star2" name="rating" value="2" /><label class="full"
-                                        for="star2" title="Kinda bad - 2 stars"></label>
-                                    <input type="radio" id="star1half" name="rating" value="1 and a half" /><label
-                                        class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                                    <input type="radio" id="star1" name="rating" value="1" /><label class="full"
-                                        for="star1" title="Sucks big time - 1 star"></label>
-                                    <input type="radio" id="starhalf" name="rating" value="half" /><label class="half"
-                                        for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                                </fieldset>
-
-                            </div>
                             <div class="row">
                                 <div class="d-grid gap-2" style="margin-left:88px;">
                                     <p style="left:240px; color:white;">Ratings</p>
@@ -182,15 +157,58 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="exampleFormControlInput1"
-                                placeholder="name@example.com">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
+                        <form @submit.prevent="comment_and_rating">
+                            <h4 style="color:white;">Write comment:</h4>
+                            <div class="mb-3 bg-light ">
+
+                                <div class="row m-2">
+
+                                    <div class="col">
+                                        <h5> Rate: </h5>
+                                        <fieldset class="rating">
+                                            <input v-model="rating" type="radio" id="star5" name="rating"
+                                                value="5" /><label class="full" for="star5"
+                                                title="Awesome - 5 stars"></label>
+                                            <input v-model="rating" type="radio" id="star4half" name="rating"
+                                                value="4 and a half" /><label class="half" for="star4half"
+                                                title="Pretty good - 4.5 stars"></label>
+                                            <input v-model="rating" type="radio" id="star4" name="rating"
+                                                value="4" /><label class="full" for="star4"
+                                                title="Pretty good - 4 stars"></label>
+                                            <input v-model="rating" type="radio" id="star3half" name="rating"
+                                                value="3 and a half" /><label class="half" for="star3half"
+                                                title="Meh - 3.5 stars"></label>
+                                            <input v-model="rating" type="radio" id="star3" name="rating"
+                                                value="3" /><label class="full" for="star3"
+                                                title="Meh - 3 stars"></label>
+                                            <input v-model="rating" type="radio" id="star2half" name="rating"
+                                                value="2 and a half" /><label class="half" for="star2half"
+                                                title="Kinda bad - 2.5 stars"></label>
+                                            <input v-model="rating" type="radio" id="star2" name="rating"
+                                                value="2" /><label class="full" for="star2"
+                                                title="Kinda bad - 2 stars"></label>
+                                            <input v-model="rating" type="radio" id="star1half" name="rating"
+                                                value="1 and a half" /><label class="half" for="star1half"
+                                                title="Meh - 1.5 stars"></label>
+                                            <input v-model="rating" type="radio" id="star1" name="rating"
+                                                value="1" /><label class="full" for="star1"
+                                                title="Sucks big time - 1 star"></label>
+                                            <input v-model="rating" type="radio" id="starhalf" name="rating"
+                                                value="half" /><label class="half" for="starhalf"
+                                                title="Sucks big time - 0.5 stars"></label>
+                                        </fieldset>
+
+
+                                    </div>
+                                    <textarea v-model="comment" class="form-control mb-2"
+                                        id="exampleFormControlTextarea1" rows="3"></textarea>
+
+                                </div>
+                                <button type="submit" class="btn btn-primary mb-2 ms-2">Submit</button>
+
+                            </div>
+                        </form>
+
                     </div>
                     <div v-if="data.comments == null">
                         no command
@@ -318,6 +336,65 @@ export default {
                     console.log(error);
                 });
         },
+        async comment_and_rating() {
+            if (this.rating != undefined) {
+                switch (this.rating) {
+                    case "half":
+                        this.rating = 0.5;
+                        break;
+                    case "1":
+                        this.rating = 1;
+                        break;
+                    case "1 and a half":
+                        this.rating = 1.5;
+                        break;
+                    case "2":
+                        this.rating = 2;
+                        break;
+                    case "2 and a half":
+                        this.rating = 2.5;
+                        break;
+                    case "3":
+                        this.rating = 3;
+                        break;
+                    case "3 and a half":
+                        this.rating = 3.5;
+                        break;
+                    case "4":
+                        this.rating = 4;
+                        break;
+                    case "4 and a half":
+                        this.rating = 4.5;
+                        break;
+                    case "5":
+                        this.rating = 5;
+                        break;
+                }
+                alert(typeof this.rating)
+                await axios.post(`api/movies/${this.movie_id}/rating`, {
+                    rating: this.rating,
+                })
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+
+            }
+            if (this.comment != undefined) {
+                
+                await axios.post(`api/movies/${this.movie_id}/comment`, {
+                    comment: this.comment,
+                })
+                    .then(function (response) {
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+        }
     }
 };
 </script>

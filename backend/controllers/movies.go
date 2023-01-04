@@ -289,19 +289,19 @@ func PostMovieRating(c *gin.Context) {
 	}
 	if !exists {
 		// Don't allow post
-		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		c.JSON(http.StatusOK, ErrorMessage("User not logged in."))
 		return
 	}
 	sql := `INSERT INTO user_ratings (movie_id, user_id, rating) VALUES (?, ?, ?);`
 	_, err := database.DB.Exec(sql, id, user.(User).ID, rating)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
 		return
 	}
 	sql = `UPDATE movies SET rating = (SELECT AVG(rating) FROM user_ratings WHERE movie_id = id) WHERE id = ?;`
 	_, err = database.DB.Exec(sql, id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
 		return
 	}
 	c.JSON(http.StatusOK, OkMessage("Successfully added rating."))
@@ -318,13 +318,13 @@ func PostMovieComment(c *gin.Context) {
 	}
 	if !exists {
 		// Don't allow post
-		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		c.JSON(http.StatusOK, ErrorMessage("User not logged in."))
 		return
 	}
 	sql := `INSERT INTO user_comments (movie_id, user_id, comment, comment_date) VALUES (?, ?, ?, ?);`
 	_, err = database.DB.Exec(sql, id, user.(User).ID, comment.Comment, time.Now().UTC())
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
 		return
 	}
 	c.JSON(http.StatusOK, OkMessage("Successfully added comment."))
