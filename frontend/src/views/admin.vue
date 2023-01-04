@@ -350,7 +350,13 @@ export default {
     name: "admin",
     data() {
         return {
-            data: []
+            data: [],
+            title: "",
+            description: "",
+            release_date: "",
+            poster: "",
+            length: "",
+
         }
     },
     components: {
@@ -369,11 +375,31 @@ export default {
         deleteFilm(movie_id = 9) {
             alert("delete:", movie_id)
         },
-        updateFilm: function (movie_id) {
-            alert("update:", movie_id)
+        updateFilm() {
+            
+            alert(this.title)
+
+            
         },
-        deleteUser(user_id) { },
-        updateUser(user_id) { },
+        deleteUser(user_id) {
+
+         },
+        async updateUser(user_id) {
+            await axios.put(`api/movies/${ass}`, {
+                title: "",
+                description: "",
+                release_date: "",
+                poster: "",
+                length: "",
+
+            })
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+         },
     }
 }
 </script>
@@ -383,33 +409,39 @@ svg {
     fill: white;
 }
 
-.col-1{
-display: flex;
-align-items: center;
-overflow: scroll;
+.col-1 {
+    display: flex;
+    align-items: center;
+    overflow: scroll;
 }
-.col-2{
-display: flex;
-align-items: center;
-overflow: scroll;
+
+.col-2 {
+    display: flex;
+    align-items: center;
+    overflow: scroll;
 }
-.col-3{
-display: flex;
-align-items: center;
-overflow: scroll;
+
+.col-3 {
+    display: flex;
+    align-items: center;
+    overflow: scroll;
 }
-.col-4{
-width: 5%;
-padding: 11px;
-overflow: visible
+
+.col-4 {
+    width: 5%;
+    padding: 11px;
+    overflow: visible
 }
-.col-1::-webkit-scrollbar{
-display: none;
+
+.col-1::-webkit-scrollbar {
+    display: none;
 }
-.col-2::-webkit-scrollbar{
-display: none;
+
+.col-2::-webkit-scrollbar {
+    display: none;
 }
-.col-3::-webkit-scrollbar{
-display: none;
+
+.col-3::-webkit-scrollbar {
+    display: none;
 }
 </style>

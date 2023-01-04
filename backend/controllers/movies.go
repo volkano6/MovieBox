@@ -129,14 +129,14 @@ func UpdateMovie(c *gin.Context) {
 	WHERE user_id = ?;`
 	err = database.DB.QueryRow(sql, user.(User).ID).Scan(&adminID, &permission)
 	if err != nil || adminID == 0 || permission != "Admin" {
-		c.JSON(http.StatusForbidden, ErrorMessage("Insufficient permissions."))
+		c.JSON(http.StatusOK, ErrorMessage("Insufficient permissions."))
 		return
 	}
 	sql = `UPDATE movies SET title = ?, description = ?, release_date = ?, poster = ?, length = ?
 	WHERE id = ?;`
 	_, err = database.DB.Exec(sql, updatedMovie.Title, updatedMovie.Description, updatedMovie.ReleaseDate, updatedMovie.Poster, updatedMovie.Length, id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
 		return
 	}
 	c.JSON(http.StatusOK, OkResponse{

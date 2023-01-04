@@ -3,11 +3,11 @@
     <div class="container-sm border-bottom-dark">
       <nav class="navbar navbar-expand-lg bg-gray">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="home">
             <img id="logo" src="https://a.ltrbxd.com/logos/letterboxd-mac-icon.png" alt="MDB Logo" draggable="false"
               height="40" />
           </a>
-          <a class="navbar-brand text-light" href="#">MovieBoxd</a>
+          <a class="navbar-brand text-light" href="/home">MovieBoxd</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
             aria-label="Toggle navigation">
