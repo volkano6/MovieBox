@@ -68,9 +68,9 @@
                         <p class="mt-2" style="color:white;">{{ movie.length }}</p>
 
                     </div>
-                    <div class="col-1 border">
+                    <div class="col-1 ">
                         <div class="row">
-                            <div class="col-1">
+                            <div class="col-4">
                                 <div style="position:relative; top:5px;">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         :data-bs-target="`#update${movie.id}`">
@@ -153,7 +153,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-1">
+                            <div class="col-4">
                                 <div style="position:relative; left:30px; top: 5px;">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         :data-bs-target="`#deleteMovie${movie.id}`">
@@ -255,9 +255,9 @@
                         <h6 class="fw-bold mt-3" style="color:white;">{{ user.instagram }}</h6>
                     </div>
 
-                    <div class="col-1 border">
+                    <div class="col-1">
                         <div class="row">
-                            <div class="col-1">
+                            <div class="col-4">
                                 <div style="position:relative; top:5px;">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         :data-bs-target="`#updateUser${user.id}`">
@@ -298,7 +298,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-1">
+                            <div class="col-4">
                                 <div style="position:relative; left:30px; top: 5px;">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         :data-bs-target="`#deleteUser${user.id}`">
@@ -397,5 +397,19 @@ overflow: scroll;
 display: flex;
 align-items: center;
 overflow: scroll;
+}
+.col-4{
+width: 5%;
+padding: 11px;
+overflow: visible
+}
+.col-1::-webkit-scrollbar{
+display: none;
+}
+.col-2::-webkit-scrollbar{
+display: none;
+}
+.col-3::-webkit-scrollbar{
+display: none;
 }
 </style>
