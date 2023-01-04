@@ -70,7 +70,7 @@
                     </div>
                     <div class="col-1 ">
                         <div class="row">
-                            <div class="col-5">
+                            <div class="col-4">
                                 <div style="position:relative; top:5px;">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         :data-bs-target="`#update${movie.id}`">
@@ -153,7 +153,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-5">
+                            <div class="col-4">
                                 <div style="position:relative; left:30px; top: 5px;">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         :data-bs-target="`#deleteMovie${movie.id}`">
@@ -257,7 +257,7 @@
 
                     <div class="col-1">
                         <div class="row">
-                            <div class="col-5">
+                            <div class="col-4">
                                 <div style="position:relative; top:5px;">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         :data-bs-target="`#updateUser${user.id}`">
@@ -298,7 +298,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-5">
+                            <div class="col-4">
                                 <div style="position:relative; left:30px; top: 5px;">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         :data-bs-target="`#deleteUser${user.id}`">
@@ -370,6 +370,9 @@ export default {
         } else {
             this.data = response.data
         }
+        if (response.data.perm != "Admin") {
+            this.$router.push("/home")
+        }
     },
     methods: {
         deleteFilm(movie_id = 9) {
@@ -427,7 +430,7 @@ svg {
     overflow: scroll;
 }
 
-.col-5 {
+.col-4 {
     width: 5%;
     padding: 11px;
     overflow: visible

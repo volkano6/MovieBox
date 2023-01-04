@@ -62,7 +62,7 @@
                                 <h3 style="color:white;">Genres: {{ data.movie.genres }}</h3>
                             </div>
                             <div class="row ">
-                                <h3 style="color:white;">Cast</h3>
+                                <h3 style="color:white;">Length: {{data.movie.length}} min.</h3>
 
                             </div>
                         </div>

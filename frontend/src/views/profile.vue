@@ -278,6 +278,9 @@ export default {
       this.instagram = this.data.user.instagram
       this.bio = this.data.user.bio
     }
+    if (this.data.perm == "Admin") {
+      this.$router.push("/admin")
+    }
   }
 }
 </script>
