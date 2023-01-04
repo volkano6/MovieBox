@@ -151,7 +151,7 @@ func DeleteMovie(c *gin.Context) {
 	user, exists := c.Get("user")
 	if !exists {
 		// Don't allow update
-		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		c.JSON(http.StatusOK, ErrorMessage("User not logged in."))
 		return
 	}
 	var adminID int
@@ -160,13 +160,13 @@ func DeleteMovie(c *gin.Context) {
 	WHERE user_id = ?;`
 	err := database.DB.QueryRow(sql, user.(User).ID).Scan(&adminID, &permission)
 	if err != nil || adminID == 0 || permission != "Admin" {
-		c.JSON(http.StatusForbidden, ErrorMessage("Insufficient permissions."))
+		c.JSON(http.StatusOK, ErrorMessage("Insufficient permissions."))
 		return
 	}
 	sql = `DELETE FROM movies WHERE id = ?;`
 	_, err = database.DB.Exec(sql, id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
 		return
 	}
 	c.JSON(http.StatusOK, OkResponse{
@@ -181,7 +181,7 @@ func PostMovieWatched(c *gin.Context) {
 	user, exists := c.Get("user")
 	if !exists {
 		// Don't allow post
-		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		c.JSON(http.StatusOK, ErrorMessage("User not logged in."))
 		return
 	}
 	sql := `INSERT INTO user_watched (movie_id, user_id, watched_date) VALUES (?, ?, ?);`
@@ -198,7 +198,7 @@ func DeleteMovieWatched(c *gin.Context) {
 	user, exists := c.Get("user")
 	if !exists {
 		// Don't allow post
-		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		c.JSON(http.StatusOK, ErrorMessage("User not logged in."))
 		return
 	}
 	sql := `DELETE FROM user_watched WHERE movie_id = ? AND user_id = ?;`
@@ -215,13 +215,13 @@ func PostMovieWatchlist(c *gin.Context) {
 	user, exists := c.Get("user")
 	if !exists {
 		// Don't allow post
-		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		c.JSON(http.StatusOK, ErrorMessage("User not logged in."))
 		return
 	}
 	sql := `INSERT INTO user_watchlist (movie_id, user_id, added_date) VALUES (?, ?, ?);`
 	_, err := database.DB.Exec(sql, id, user.(User).ID, time.Now().UTC())
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
 		return
 	}
 	c.JSON(http.StatusOK, OkMessage("Successfully added to watchlist."))
@@ -232,13 +232,13 @@ func DeleteMovieWatchlist(c *gin.Context) {
 	user, exists := c.Get("user")
 	if !exists {
 		// Don't allow post
-		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		c.JSON(http.StatusOK, ErrorMessage("User not logged in."))
 		return
 	}
 	sql := `DELETE FROM user_watchlist WHERE movie_id = ? AND user_id = ?;`
 	_, err := database.DB.Exec(sql, id, user.(User).ID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
 		return
 	}
 	c.JSON(http.StatusOK, OkMessage("Successfully removed from watchlist."))
@@ -249,13 +249,13 @@ func PostMovieFavorite(c *gin.Context) {
 	user, exists := c.Get("user")
 	if !exists {
 		// Don't allow post
-		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		c.JSON(http.StatusOK, ErrorMessage("User not logged in."))
 		return
 	}
 	sql := `INSERT INTO user_favorites (movie_id, user_id, favorited_date) VALUES (?, ?, ?);`
 	_, err := database.DB.Exec(sql, id, user.(User).ID, time.Now().UTC())
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
 		return
 	}
 	c.JSON(http.StatusOK, OkMessage("Successfully added to favorites."))
@@ -266,13 +266,13 @@ func DeleteMovieFavorite(c *gin.Context) {
 	user, exists := c.Get("user")
 	if !exists {
 		// Don't allow post
-		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		c.JSON(http.StatusOK, ErrorMessage("User not logged in."))
 		return
 	}
 	sql := `DELETE FROM user_favorites WHERE movie_id = ? AND user_id = ?;`
 	_, err := database.DB.Exec(sql, id, user.(User).ID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
 		return
 	}
 	c.JSON(http.StatusOK, OkMessage("Successfully removed from favorites."))

@@ -92,7 +92,7 @@
                                     </div>
                                     <div v-else>
                                         <div class="d-grid gap-2" style="margin-left:53px;">
-                                            <p style="left:240px; color:white;">Add or Remove to Watched</p>
+                                            <p style="left:240px; color:white;">Watched</p>
                                         </div>
                                     </div>
 
@@ -114,12 +114,12 @@
                                 <div class="row">
                                     <div v-if="in_favorite">
                                         <div class="d-grid gap-2" style="margin-left:27px;">
-                                            <p style="left:240px; color:white;">Remove from Favorites</p>
+                                            <p style="left:240px; color:white;">Favorites</p>
                                         </div>
                                     </div>
                                     <div v-else>
                                         <div class="d-grid gap-2" style="margin-left:53px;">
-                                            <p style="left:240px; color:white;">Add or Remove to Favorites</p>
+                                            <p style="left:240px; color:white;">Favorites</p>
                                         </div>
                                     </div>
                                 </div>
@@ -137,21 +137,11 @@
                                             </div>
                                             <div v-else>
                                                 <div class="d-grid gap-2" style="margin-left:5px;">
-                                                    <p style="left:240px; color:white;">Add or Remove to Watchlist</p>
+                                                    <p style="left:240px; color:white;">Watchlist</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </button>
-                                </div>
-                            </div>
-
-
-                            <!-- rating row -->
-
-
-                            <div class="row">
-                                <div class="d-grid gap-2" style="margin-left:88px;">
-                                    <p style="left:240px; color:white;">Ratings</p>
                                 </div>
                             </div>
                         </div>
@@ -273,18 +263,19 @@ export default {
             const id = this.$route.params.id
             await axios.post(`api/movies/${this.movie_id}/watched`)
                 .then(async function (response) {
-                    console.log(response);
-                    console.log(Object.keys(response.data).length);
 
                     if (Object.keys(response.data).length == 2) {
-                        console.log("delete", id)
+                        
                         await axios.delete(`api/movies/${id}/watched`)
                             .then(function (response) {
-                                console.log(response);
+                                alert(`This movie removed from your watched.`)
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
+                            
+                    }else {
+                        alert(`This movie added to your watched.`)
                     }
                 })
                 .catch(function (error) {
@@ -296,18 +287,18 @@ export default {
             const id = this.$route.params.id
             await axios.post(`api/movies/${this.movie_id}/watchlist`)
                 .then(async function (response) {
-                    console.log(response);
-                    console.log(Object.keys(response.data).length);
 
                     if (Object.keys(response.data).length == 2) {
-                        console.log("delete", id)
+                        
                         await axios.delete(`api/movies/${id}/watchlist`)
                             .then(function (response) {
-                                console.log(response);
+                                alert(`This movie removed from your watchlist.`)
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
+                    }else {
+                        alert(`This movie added to your watchlist.`)
                     }
                 })
                 .catch(function (error) {
@@ -318,18 +309,18 @@ export default {
             const id = this.$route.params.id
             await axios.post(`api/movies/${this.movie_id}/favorite`)
                 .then(async function (response) {
-                    console.log(response);
-                    console.log(Object.keys(response.data).length);
 
                     if (Object.keys(response.data).length == 2) {
-                        console.log("delete", id)
+                        
                         await axios.delete(`api/movies/${id}/favorite`)
                             .then(function (response) {
-                                console.log(response);
+                                alert(`This movie removed from your favorites.`)
                             })
                             .catch(function (error) {
                                 console.log(error);
                             });
+                    }else {
+                        alert(`This movie added to your favorites.`)
                     }
                 })
                 .catch(function (error) {
@@ -367,13 +358,11 @@ export default {
                         this.rating = 4.5;
                         break;
                     case "5":
-                        this.rating = 5;
+                        this.rating = "5";
                         break;
                 }
-                alert(typeof this.rating)
-                await axios.post(`api/movies/${this.movie_id}/rating`, {
-                    rating: this.rating,
-                })
+                
+                await axios.post(`api/movies/${this.movie_id}/rating?star=${this.rating}`)
                     .then(function (response) {
                         console.log(response);
                     })
