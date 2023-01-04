@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Nav :logged=this.data.logged></Nav>
+        <Nav :logged=this.data.logged :perm=this.data.perm></Nav>
         <div class="container mt-3">
             <div class="row" v-if="Object.keys(this.data).length != 0">
                 <div class="col-3">

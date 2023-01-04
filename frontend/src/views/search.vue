@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <Nav :logged=this.data.logged ></Nav>
+    <Nav :logged=this.data.logged :perm=data.perm ></Nav>
     <div class="container">
       <div class="row">
         <div class="col"></div>

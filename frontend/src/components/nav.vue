@@ -30,6 +30,11 @@
                   <li class="nav-item">
                     <a class="nav-link text-light text-opacity-75" href="/search">Search</a>
                   </li>
+                  <div v-if="perm == 'Admin'">
+                    <li class="nav-item">
+                    <a class="nav-link text-light text-opacity-75" href="/admin">Dashboard</a>
+                  </li>
+                  </div>
                   <ul class="navbar-nav ms-auto" v-if="!logged">
                     <li class="nav-item">
                       <a class="nav-link d-flex align-items-center text-light text-opacity-75" href="/login">
@@ -84,7 +89,7 @@ export default {
       
     }
   },
-  props: ['logged', 'avatar'],
+  props: ['logged', 'avatar', 'perm'],
   methods: {
     deleteCookie() {
       document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 GMT"

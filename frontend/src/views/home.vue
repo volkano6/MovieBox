@@ -1,7 +1,7 @@
 
 <template>
   <div class="profile1">
-    <Nav :logged=this.movies.logged></Nav>
+    <Nav :logged=this.movies.logged :perm=this.movies.perm ></Nav>
     <div class="container">
       <div class="text-center" style="padding-left:35%;padding-right:35%">
         <h2 class="text-center"

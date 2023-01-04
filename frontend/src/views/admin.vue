@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Nav :logged=data.logged></Nav>
+        <Nav :logged=data.logged :perm=data.perm ></Nav>
 
 
         <div class="container mt-3">
@@ -369,9 +369,6 @@ export default {
             this.$router.push("/home")
         } else {
             this.data = response.data
-        }
-        if (response.data.perm != "Admin") {
-            this.$router.push("/home")
         }
     },
     methods: {

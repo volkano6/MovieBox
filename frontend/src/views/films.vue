@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <Nav :logged=response.logged></Nav>
+        <Nav :logged=response.logged :perm=response.perm></Nav>
         <div class="container mt-3">
             <!--search row-->
             <div class="row pb-3 border-bottom">
