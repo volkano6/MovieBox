@@ -16,9 +16,6 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="col-4">
               <div class="col-md-5">
-                <form class="d-flex input-group w-auto my-auto mb-3 mb-md-0">
-                  <input autocomplete="off" type="search" class="form-control rounded" placeholder="Search" />
-                </form>
               </div>
             </div>
             <div class="col-8">
@@ -29,6 +26,9 @@
                   </li>
                   <li class="nav-item">
                     <a class="nav-link text-light text-opacity-75" href="/films">Films</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-light text-opacity-75" href="/search">Search</a>
                   </li>
                   <ul class="navbar-nav ms-auto" v-if="!logged">
                     <li class="nav-item">
@@ -46,9 +46,10 @@
                     <div class="dropdown text-end">
                       <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        
+
                         <div v-if="!avatar">
-                          <img src="https://avatars.githubusercontent.com/u/1669855?v=4" alt="mdo" width="32" height="32" class="rounded-circle">
+                          <img src="https://avatars.githubusercontent.com/u/1669855?v=4" alt="mdo" width="32"
+                            height="32" class="rounded-circle">
                         </div>
                         <div v-else>
                           <img :src="avatar" alt="mdo" width="32" height="32" class="rounded-circle">
@@ -77,11 +78,17 @@
 <script>
 export default {
   name: "navbar",
+  data() {
+    return {
+      
+    }
+  },
   props: ['logged', 'avatar'],
   methods: {
-    deleteCookie(){
+    deleteCookie() {
       document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 GMT"
-    }
+    },
+
   }
 }
 </script>

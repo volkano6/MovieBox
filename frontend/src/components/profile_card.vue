@@ -3,12 +3,22 @@
     <div class="profile-card" style="width: 18rem;">
   <img src="http://t2.gstatic.com/licensed-image?q=tbn:ANd9GcSOHWqZSguO9dbh43FNj-D3NMraUkU7NsQrldgpFG2wlM_fC_t9ICrMHJmouO9fLjskzYqoqbxSHdteBPg" class="card-img-top">
   <div class="profile-content">
-    <p class="text-center">Fatih TERIM</p>
+    <p class="text-center">{{username}}</p>
   </div>
 </div>
     
   </div>
 </template>
+
+<script>
+export default {
+  name: "user",
+  props: ['id', 'username', 'displayname', 'email', 'date_of_birth', 'avatar', 'bio', 'location', 'twitter', 'instagram'],
+
+}
+
+</script>
+
 
 <style scoped>
 * {
