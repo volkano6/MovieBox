@@ -142,3 +142,13 @@ type UserUpdate struct {
 	Twitter     string `json:"twitter"`
 	Instagram   string `json:"instagram"`
 }
+
+type MovieUpdate struct {
+	// ID                  int      `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	ReleaseDate string `json:"release_date"`
+	Poster      string `json:"poster"`
+	Length      int    `json:"length"`
+	// Genres              []string `json:"genres"`
+}

@@ -109,6 +109,73 @@ func GetMovie(c *gin.Context) {
 	})
 }
 
+func UpdateMovie(c *gin.Context) {
+	id := c.Param("id")
+	user, exists := c.Get("user")
+	var updatedMovie MovieUpdate
+	err := c.BindJSON(&updatedMovie)
+	if err != nil {
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
+		return
+	}
+	if !exists {
+		// Don't allow update
+		c.JSON(http.StatusOK, ErrorMessage("User not logged in."))
+		return
+	}
+	var adminID int
+	var permission string
+	sql := `SELECT user_id, permission FROM user_admins
+	WHERE user_id = ?;`
+	err = database.DB.QueryRow(sql, user.(User).ID).Scan(&adminID, &permission)
+	if err != nil || adminID == 0 || permission != "Admin" {
+		c.JSON(http.StatusForbidden, ErrorMessage("Insufficient permissions."))
+		return
+	}
+	sql = `UPDATE movies SET title = ?, description = ?, release_date = ?, poster = ?, length = ?
+	WHERE id = ?;`
+	_, err = database.DB.Exec(sql, updatedMovie.Title, updatedMovie.Description, updatedMovie.ReleaseDate, updatedMovie.Poster, updatedMovie.Length, id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, OkResponse{
+		Status: "ok",
+		Logged: true,
+		Data:   "Successfully updated movie.",
+	})
+}
+
+func DeleteMovie(c *gin.Context) {
+	id := c.Param("id")
+	user, exists := c.Get("user")
+	if !exists {
+		// Don't allow update
+		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		return
+	}
+	var adminID int
+	var permission string
+	sql := `SELECT user_id, permission FROM user_admins
+	WHERE user_id = ?;`
+	err := database.DB.QueryRow(sql, user.(User).ID).Scan(&adminID, &permission)
+	if err != nil || adminID == 0 || permission != "Admin" {
+		c.JSON(http.StatusForbidden, ErrorMessage("Insufficient permissions."))
+		return
+	}
+	sql = `DELETE FROM movies WHERE id = ?;`
+	_, err = database.DB.Exec(sql, id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, OkResponse{
+		Status: "ok",
+		Logged: true,
+		Data:   "Successfully deleted movie.",
+	})
+}
+
 func PostMovieWatched(c *gin.Context) {
 	id := c.Param("id")
 	user, exists := c.Get("user")

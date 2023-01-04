@@ -20,6 +20,8 @@ func SetupRoutes(r *gin.Engine) {
 			auth.POST("/login", controllers.Login)
 		}
 		api.GET("/user/:id", middleware.CheckAuth, controllers.GetUser)
+		api.PUT("/user/:id", middleware.CheckAuth, controllers.UpdateUser)
+		api.DELETE("/user/:id", middleware.CheckAuth, controllers.DeleteUser)
 		movies := api.Group("/movies")
 		{
 			//   /api/movies/...
@@ -28,6 +30,8 @@ func SetupRoutes(r *gin.Engine) {
 			{
 				//   /api/movies/:id/...
 				id.GET("/", middleware.CheckAuth, controllers.GetMovie)
+				id.PUT("/", middleware.CheckAuth, controllers.UpdateMovie)
+				id.DELETE("/", middleware.CheckAuth, controllers.DeleteMovie)
 				id.POST("/watched", middleware.CheckAuth, controllers.PostMovieWatched)
 				id.POST("/watchlist", middleware.CheckAuth, controllers.PostMovieWatchlist)
 				id.POST("/favorite", middleware.CheckAuth, controllers.PostMovieFavorite)
