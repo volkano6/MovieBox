@@ -25,13 +25,13 @@
       </form>
       <div class="m-2">
          <p class="text-center">
-            <a href="/register" class="">Create an account!!</a>
+            <a href="/register" class="text-dark text-decoration-underline">Create an account!!</a>
          </p>
       </div>
-      <div v-if="true">
+      <div v-if="error">
          <div class="row border border-danger border-3 rounded">
             <div class="row mt-2">
-               <p class="text-center text-danger">Username or password is not correct.</p>
+               <p class="text-center text-danger">{{ err_message }}</p>
             </div>
             <div class="row text-center">
                <p class="text-decoration-underline text-danger">Try Again!!!</p>
@@ -51,7 +51,10 @@ export default {
    data() {
       return {
          user_name: '',
-         password: ''
+         password: '',
+         error: false,
+         err_message: '',
+         
       }
    },
    methods: {
@@ -59,6 +62,7 @@ export default {
          const response = await axios.post('api/auth/login', {
             user_name: this.user_name,
             password: this.password
+
          }).then((response) => {
             if (response.data.status == "ok") {
                // Set cookie for JWT
@@ -71,9 +75,11 @@ export default {
             } else if (response.data.status == "error") {
                // Invalid credentials.
                // Display user to try again.
-               console.log("err")
+               this.error = true
+               this.err_message = response.data.message
             }
          })
+         
 
       }
    }

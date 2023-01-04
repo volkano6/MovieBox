@@ -57,7 +57,7 @@
                         <p class="mt-2" style="color:white;">{{ movie.release_date }}</p>
                     </div>
                     <div class="col-2 border">
-                        <p class="mt-2" style="color:white;">{{ }}</p>
+                        <p class="mt-2" style="color:white;">{{ movie.poster }}</p>
 
                     </div>
                     <div class="col-1 border">
@@ -381,5 +381,21 @@ export default {
 <style>
 svg {
     fill: white;
+}
+
+.col-1{
+display: flex;
+align-items: center;
+overflow: scroll;
+}
+.col-2{
+display: flex;
+align-items: center;
+overflow: scroll;
+}
+.col-3{
+display: flex;
+align-items: center;
+overflow: scroll;
 }
 </style>

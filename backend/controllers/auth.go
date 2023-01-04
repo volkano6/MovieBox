@@ -20,47 +20,47 @@ func Register(c *gin.Context) {
 	err := c.ShouldBindJSON(&userRegisterObj)
 	// Error on Invalid JSON
 	if err != nil {
-		c.JSON(http.StatusBadRequest, ErrorMessage(fmt.Sprintf("Invalid JSON body. %s", err)))
+		c.JSON(http.StatusOK, ErrorMessage(fmt.Sprintf("Invalid JSON body. %s", err)))
 		return
 	}
 	// Generate hashed password
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(userRegisterObj.Password), 14)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(fmt.Sprintf("Error on hashing password: %s", err)))
+		c.JSON(http.StatusOK, ErrorMessage(fmt.Sprintf("Error on hashing password: %s", err)))
 		return
 	}
 	// Validation check
 	// Username
 	if !regexp.MustCompile(`\s`).MatchString(userRegisterObj.Username) {
-		c.JSON(http.StatusInternalServerError, ErrorMessage("Username should not contain a space."))
+		c.JSON(http.StatusOK, ErrorMessage("Username should not contain a space."))
 		return
 	}
 	// Email
 	_, err = mail.ParseAddress(userRegisterObj.Email)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage("Invalid email."))
+		c.JSON(http.StatusOK, ErrorMessage("Invalid email."))
 		return
 	}
 	// Password
 	if len(userRegisterObj.Password) < 6 {
-		c.JSON(http.StatusInternalServerError, ErrorMessage("Password cannot be shorter than 6 characters."))
+		c.JSON(http.StatusOK, ErrorMessage("Password cannot be shorter than 6 characters."))
 		return
 	}
 	if len(userRegisterObj.Password) > 32 {
-		c.JSON(http.StatusInternalServerError, ErrorMessage("Password cannot be longer than 32 characters."))
+		c.JSON(http.StatusOK, ErrorMessage("Password cannot be longer than 32 characters."))
 		return
 	}
 	// Date of birth
 	_, err = time.Parse("2006-01-02", userRegisterObj.DateOfBirth)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage("Invalid date of birth format. Use YYYY/MM/DD."))
+		c.JSON(http.StatusOK, ErrorMessage("Invalid date of birth format. Use YYYY/MM/DD."))
 		return
 	}
 	sql := `INSERT INTO users (username, password, displayname, email, dateofbirth) VALUES (?, ?, ?, ?, ?);`
 	_, err = database.DB.Exec(sql, userRegisterObj.Username, string(hashedPassword), strings.ToLower(userRegisterObj.Username), userRegisterObj.Email, userRegisterObj.DateOfBirth)
 	// Error on SQL
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
 		return
 	}
 	// Everything is ok
@@ -83,14 +83,14 @@ func Login(c *gin.Context) {
 	database.DB.QueryRow(sql, userLoginObj.Username).Scan(&id, &username, &password)
 	if username == "" {
 		// User not found
-		c.JSON(http.StatusNotFound, ErrorMessage("Invalid credentials."))
+		c.JSON(http.StatusOK, ErrorMessage("Invalid credentials."))
 		return
 	}
 	// If it exists, check password
 	err = bcrypt.CompareHashAndPassword([]byte(password), []byte(userLoginObj.Password))
 	if err != nil {
 		// Password incorrect
-		c.JSON(http.StatusNotFound, ErrorMessage("Invalid credentials."))
+		c.JSON(http.StatusOK, ErrorMessage("Invalid credentials."))
 		return
 	}
 	// If password is correct, generate and return JWT token

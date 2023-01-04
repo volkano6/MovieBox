@@ -35,7 +35,7 @@
     </form>
     <div class="m-2">
       <p class="text-center">
-        <a href="/login" class="">Already have an account!!</a>
+        <a href="/login" class="text-dark text-decoration-underline">Already have an account!!</a>
       </p>
     </div>
   </div>
