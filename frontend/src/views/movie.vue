@@ -92,7 +92,7 @@
                                     </div>
                                     <div v-else>
                                         <div class="d-grid gap-2" style="margin-left:53px;">
-                                            <p style="left:240px; color:white;">Add to Watched</p>
+                                            <p style="left:240px; color:white;">Add or Remove to Watched</p>
                                         </div>
                                     </div>
 
@@ -119,7 +119,7 @@
                                     </div>
                                     <div v-else>
                                         <div class="d-grid gap-2" style="margin-left:53px;">
-                                            <p style="left:240px; color:white;">Add to Favorites</p>
+                                            <p style="left:240px; color:white;">Add or Remove to Favorites</p>
                                         </div>
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@
                             <!-- watchlist row -->
                             <div class="row">
                                 <div @click="watchlist" class="d-grid gap-2" style="margin:5px; right:5px;">
-                                    <button class="btn btn-primary active" data-bs-toggle="button" >
+                                    <button class="btn btn-primary active" data-bs-toggle="button">
                                         <div style="position:relative; ">
                                             <div v-if="in_watchlist">
                                                 <div class="d-grid gap-2" style="margin-left:15px;">
@@ -137,7 +137,7 @@
                                             </div>
                                             <div v-else>
                                                 <div class="d-grid gap-2" style="margin-left:5px;">
-                                                    <p style="left:240px; color:white;">Add to Watchlist</p>
+                                                    <p style="left:240px; color:white;">Add or Remove to Watchlist</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -181,6 +181,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="exampleFormControlInput1"
+                                placeholder="name@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                    </div>
                     <div v-if="data.comments == null">
                         no command
                     </div>
@@ -193,8 +204,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -213,6 +222,7 @@ export default {
     data() {
         return {
             data: [],
+            movie_id: this.$route.params.id,
             in_watch: false,
             in_watchlist: false,
             in_favorite: false,
@@ -229,8 +239,8 @@ export default {
             console.log("boş")
         } else console.log("dolu")
 
-        const id = this.$route.params.id
-        const response = await axios.get(`api/movies/${id}`);
+
+        const response = await axios.get(`api/movies/${this.movie_id}`);
         this.data = response.data
         if (this.data.status == "error") {
             this.$router.push("/home")
@@ -241,14 +251,72 @@ export default {
 
     },
     methods: {
-        watched() {
-            this.in_watch = !this.in_watch
+        async watched() {
+            const id = this.$route.params.id
+            await axios.post(`api/movies/${this.movie_id}/watched`)
+                .then(async function (response) {
+                    console.log(response);
+                    console.log(Object.keys(response.data).length);
+
+                    if (Object.keys(response.data).length == 2) {
+                        console.log("delete", id)
+                        await axios.delete(`api/movies/${id}/watched`)
+                            .then(function (response) {
+                                console.log(response);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
         },
-        watchlist() {
-            this.in_watchlist = !this.in_watchlist
+        async watchlist() {
+            const id = this.$route.params.id
+            await axios.post(`api/movies/${this.movie_id}/watchlist`)
+                .then(async function (response) {
+                    console.log(response);
+                    console.log(Object.keys(response.data).length);
+
+                    if (Object.keys(response.data).length == 2) {
+                        console.log("delete", id)
+                        await axios.delete(`api/movies/${id}/watchlist`)
+                            .then(function (response) {
+                                console.log(response);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         },
-        favorite() {
-            this.in_favorite = !this.in_favorite
+        async favorite() {
+            const id = this.$route.params.id
+            await axios.post(`api/movies/${this.movie_id}/favorite`)
+                .then(async function (response) {
+                    console.log(response);
+                    console.log(Object.keys(response.data).length);
+
+                    if (Object.keys(response.data).length == 2) {
+                        console.log("delete", id)
+                        await axios.delete(`api/movies/${id}/favorite`)
+                            .then(function (response) {
+                                console.log(response);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         },
     }
 };

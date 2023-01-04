@@ -187,7 +187,7 @@ func PostMovieWatched(c *gin.Context) {
 	sql := `INSERT INTO user_watched (movie_id, user_id, watched_date) VALUES (?, ?, ?);`
 	_, err := database.DB.Exec(sql, id, user.(User).ID, time.Now().UTC())
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
 		return
 	}
 	c.JSON(http.StatusOK, OkMessage("Successfully added to watched."))
@@ -204,7 +204,7 @@ func DeleteMovieWatched(c *gin.Context) {
 	sql := `DELETE FROM user_watched WHERE movie_id = ? AND user_id = ?;`
 	_, err := database.DB.Exec(sql, id, user.(User).ID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
 		return
 	}
 	c.JSON(http.StatusOK, OkMessage("Successfully removed from watched."))
