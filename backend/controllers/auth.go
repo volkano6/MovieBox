@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"net/mail"
 	"os"
-	"regexp"
 	"strings"
 	"time"
 
@@ -30,11 +29,6 @@ func Register(c *gin.Context) {
 		return
 	}
 	// Validation check
-	// Username
-	if !regexp.MustCompile(`\s`).MatchString(userRegisterObj.Username) {
-		c.JSON(http.StatusOK, ErrorMessage("Username should not contain a space."))
-		return
-	}
 	// Email
 	_, err = mail.ParseAddress(userRegisterObj.Email)
 	if err != nil {
