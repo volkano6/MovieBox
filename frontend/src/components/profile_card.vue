@@ -1,8 +1,10 @@
 <template>
   <div class="col" style="margin-right: 3.5%;">
     <div class="profile-card" style="width: 18rem;">
-  <img src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg
+      <a :href="'/user/'+ id">
+        <img src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg
 " class="card-img-top">
+      </a>
   <div class="profile-content">
     <p class="text-center">{{username}}</p>
   </div>

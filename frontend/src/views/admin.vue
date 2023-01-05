@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Nav :logged=data.logged :perm=data.perm ></Nav>
+        <Nav :logged=data.logged :perm=data.perm></Nav>
 
 
         <div class="container mt-3">
@@ -375,22 +375,17 @@ export default {
         deleteFilm(movie_id = 9) {
             alert("delete:", movie_id)
         },
-        updateFilm() {
-            
-            alert(this.title)
+        async updateFilm() {
 
-            
+
         },
         deleteUser(user_id) {
-
-         },
-        async updateUser(user_id) {
-            await axios.put(`api/movies/${ass}`, {
-                title: "",
-                description: "",
-                release_date: "",
-                poster: "",
-                length: "",
+ axios.put(`api/movies/${ass}`, {
+                title: this.title,
+                description: this.description,
+                release_date: this.release_date,
+                poster: this.poster,
+                length: this.length,
 
             })
                 .then(function (response) {
@@ -399,7 +394,10 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                 });
-         },
+        },
+        async updateUser(user_id) {
+
+        },
     }
 }
 </script>

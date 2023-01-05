@@ -12,7 +12,7 @@ func Dashboard(c *gin.Context) {
 	user, exists := c.Get("user")
 	if !exists {
 		// Don't allow post
-		c.JSON(http.StatusForbidden, ErrorMessage("User not logged in."))
+		c.JSON(http.StatusOK, ErrorMessage("User not logged in."))
 		return
 	} else {
 		sql := `SELECT permission FROM user_admins WHERE user_id = ?;`
@@ -27,7 +27,7 @@ func Dashboard(c *gin.Context) {
 	WHERE user_id = ?;`
 	err := database.DB.QueryRow(sql, user.(User).ID).Scan(&id, &permission)
 	if err != nil || id == 0 || permission != "Admin" {
-		c.JSON(http.StatusForbidden, ErrorMessage("Insufficient permissions."))
+		c.JSON(http.StatusOK, ErrorMessage("Insufficient permissions."))
 		return
 	}
 	// Retrieve movies
@@ -37,7 +37,7 @@ func Dashboard(c *gin.Context) {
 	FROM movies	INNER JOIN movie_genres ON id = movie_genres.movie_id;`
 	rows, err := database.DB.Query(sql)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
 		return
 	}
 	var movies []Movie
@@ -56,7 +56,7 @@ func Dashboard(c *gin.Context) {
 	sql = `SELECT id, username, displayname, email, dateofbirth, avatar, bio, location, social_twitter, social_instagram FROM users`
 	rows, err = database.DB.Query(sql)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, ErrorMessage(err.Error()))
+		c.JSON(http.StatusOK, ErrorMessage(err.Error()))
 		return
 	}
 	var users []User
