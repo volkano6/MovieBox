@@ -77,6 +77,8 @@ export default {
                // Display user to try again.
                this.error = true
                this.err_message = response.data.message
+               
+               
             }
          })
          

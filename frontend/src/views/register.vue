@@ -16,17 +16,20 @@
       </div>
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Email address</label>
+
         <input type="email" class="form-control" v-model="email">
       </div>
       <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">Password</label>
+
         <input type="password" class="form-control" v-model="password" />
       </div>
       <div class="row">
         <div class="mb-4">
           <label for="exampleInputPassword1" class="form-label">Date of birth</label>
+
           <input class="datepicker form-control" v-model="date_of_birth" data-date-format="yyyy/mm/dd"
-            placeholder="yyyy/mm/dd">
+            placeholder="yyyy-mm-dd">
         </div>
       </div>
       <div class="row">
@@ -37,6 +40,13 @@
       <p class="text-center">
         <a href="/login" class="text-dark text-decoration-underline">Already have an account!!</a>
       </p>
+    </div>
+    <div class="row" v-if="error">
+      <div class="row">
+        <div class="border border-danger text-danger ms-2">
+          <p class="">{{ err_message }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -51,18 +61,30 @@ export default {
       user_name: '',
       email: '',
       password: '',
-      date_of_birth: ''
+      date_of_birth: '',
+      error: false,
+      err_message: '',
     }
   },
   methods: {
     async handleSubmit() {
-      const response = await axios.post('api/auth/register', {
+      await axios.post('api/auth/register', {
         user_name: this.user_name,
         email: this.email,
         password: this.password,
         date_of_birth: this.date_of_birth,
-      });
-      this.$router.push("/login")
+      }).then((response) => {
+
+        if (response.data.status == "ok") {
+          this.$router.push("/login")
+
+        } else {
+          this.error = true
+          this.err_message = response.data.message
+          
+        }
+      })
+
     }
   }
 };
