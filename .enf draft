@@ -1,0 +1,4 @@
+PORT=<port>
+ENV=<env>
+DB=<username>:<password>@<host>:<port>/<database>
+SECRET=<secretKey>
